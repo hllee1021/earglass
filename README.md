@@ -6,4 +6,4 @@
 
 ## 문서
 
-- [Git Conventions && 사용가이드](docs/conventions.md)
+- [문서 목록](docs/index.md)
