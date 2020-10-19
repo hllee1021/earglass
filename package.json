@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "format": "prettier . --write",
+    "check:format": "prettier . --check"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sebastianrcnt/earglass.git"
@@ -16,6 +19,10 @@
   },
   "homepage": "https://github.com/sebastianrcnt/earglass#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mariadb": "^2.5.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.1.2"
   }
 }
