@@ -3,10 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "node ./node_modules/babel-cli/bin/babel-node.js index.js",
-    "test": "node ./node_modules/mocha/bin/mocha --compilers js:babel-register --recursive ./**/*.spec.js"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sebastianrcnt/earglass.git"
@@ -18,14 +15,6 @@
     "url": "https://github.com/sebastianrcnt/earglass/issues"
   },
   "homepage": "https://github.com/sebastianrcnt/earglass#readme",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-node6": "^11.0.0",
-    "babel-register": "^6.26.0",
-    "chai": "^4.2.0",
-    "mocha": "^8.2.0",
-    "supertest": "^5.0.0"
-  },
   "dependencies": {
     "express": "^4.17.1"
   }
