@@ -6,7 +6,6 @@
   "scripts": {
     "format": "prettier . --write",
     "check:format": "prettier . --check",
-    "test": "jest --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -24,7 +23,6 @@
     "mariadb": "^2.5.0"
   },
   "devDependencies": {
-    "jest": "^26.5.3",
     "prettier": "^2.1.2"
   }
 }
