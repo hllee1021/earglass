@@ -1,9 +1,4 @@
-from database.connection import connect
+from services import sample_service
+from pprint import pprint
 
-conn = connect()
-cur = conn.cursor()
-cur.execute("SELECT * FROM SAMPLE")
-
-for res in cur:
-    print(res)
-
+pprint(sample_service.get_all())
