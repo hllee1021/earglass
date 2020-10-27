@@ -31,3 +31,12 @@ def queryall(sql):
 
     cur.execute(sql)
     return cur.fetchall()
+
+def executeone(sql):
+    conn = connect()
+    cur = conn.cursor()
+
+    cur.execute(sql)
+
+def executemany(sql):
+    pass
