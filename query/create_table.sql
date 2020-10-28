@@ -21,8 +21,8 @@ USE `earglass` ;
 -- Table `earglass`.`USERTYPE`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `earglass`.`USERTYPE` (
-  `Type_name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Type_name`))
+  `TypeName` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`TypeName`))
 ENGINE = InnoDB;
 
 
@@ -35,19 +35,19 @@ CREATE TABLE IF NOT EXISTS `earglass`.`USER` (
   `Password` VARCHAR(45) NOT NULL,
   `Name` VARCHAR(45) NOT NULL,
   `Gender` VARCHAR(1) NOT NULL,
-  `Address` VARCHAR(100) NOT NULL,
+  `Address` VARCHAR(100),
   `Birth` VARCHAR(8) NOT NULL,
   `Phonenumber` VARCHAR(13) NOT NULL,
-  `USERTYPE_Type_name` VARCHAR(45) NOT NULL,
-  `user_score` FLOAT NULL DEFAULT 0,
+  `FK_TypeName` VARCHAR(45) NOT NULL,
+  `UserScore` FLOAT NULL DEFAULT 0,
   PRIMARY KEY (`idUSER`),
   UNIQUE KEY (`Id` ASC),
   UNIQUE KEY (`idUSER` ASC),
   UNIQUE KEY (`Phonenumber` ASC),
-  INDEX `fk_USER_USERTYPE1_idx` (`USERTYPE_Type_name` ASC),
+  INDEX `fk_USER_USERTYPE1_idx` (`FK_TypeName` ASC),
   CONSTRAINT `fk_USER_USERTYPE1`
-    FOREIGN KEY (`USERTYPE_Type_name`)
-    REFERENCES `earglass`.`USERTYPE` (`Type_name`)
+    FOREIGN KEY (`FK_TypeName`)
+    REFERENCES `earglass`.`USERTYPE` (`TypeName`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -57,15 +57,15 @@ ENGINE = InnoDB;
 -- Table `earglass`.`TASK`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `earglass`.`TASK` (
-  `Name` VARCHAR(45) NOT NULL,
+  `TaskName` VARCHAR(45) NOT NULL,
   `Description` TEXT(1000) NOT NULL,
-  `Min_period` INT NOT NULL DEFAULT 0,
+  `MinPeriod` INT NOT NULL DEFAULT 0,
   `Status` VARCHAR(45) NOT NULL DEFAULT 'ongoing',
-  `FK_idManager` INT NOT NULL,
-  PRIMARY KEY (`Name`),
-  INDEX `fk_TASK_USER1_idx` (`FK_idManager` ASC),
+  `FK_IdManager` INT NOT NULL,
+  PRIMARY KEY (`TaskName`),
+  INDEX `fk_TASK_USER1_idx` (`FK_IdManager` ASC),
   CONSTRAINT `fk_TASK_USER1`
-    FOREIGN KEY (`FK_idManager`)
+    FOREIGN KEY (`FK_IdManager`)
     REFERENCES `earglass`.`USER` (`idUSER`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
@@ -77,8 +77,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `earglass`.`ORIGIN_DATA_TYPE` (
   `idORIGIN_DATA_TYPE` INT NOT NULL AUTO_INCREMENT,
-  `Schema_info` VARCHAR(1000) NOT NULL,
-  `Mapping_info` VARCHAR(1000) NOT NULL,
+  `SchemaInfo` VARCHAR(1000) NOT NULL,
+  `MappingInfo` VARCHAR(1000) NOT NULL,
   PRIMARY KEY (`idORIGIN_DATA_TYPE`))
 ENGINE = InnoDB;
 
@@ -87,14 +87,14 @@ ENGINE = InnoDB;
 -- Table `earglass`.`MAPPING_TASK_TYPE`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `earglass`.`MAPPING_TASK_TYPE` (
-  `FK_TASK_Name` VARCHAR(45) NOT NULL,
-  `FK_idORIGIN_DATA_TYPE` INT NOT NULL,
-  PRIMARY KEY (`FK_TASK_Name`, `FK_idORIGIN_DATA_TYPE`),
+  `FK_TaskName` VARCHAR(45) NOT NULL,
+  `FK_IdORIGIN_DATA_TYPE` INT NOT NULL,
+  PRIMARY KEY (`FK_TaskName`, `FK_idORIGIN_DATA_TYPE`),
   INDEX `fk_TASK_has_ORIGIN_DATA_TYPE_ORIGIN_DATA_TYPE1_idx` (`FK_idORIGIN_DATA_TYPE` ASC),
-  INDEX `fk_TASK_has_ORIGIN_DATA_TYPE_TASK1_idx` (`FK_TASK_Name` ASC),
+  INDEX `fk_TASK_has_ORIGIN_DATA_TYPE_TASK1_idx` (`FK_TaskName` ASC),
   CONSTRAINT `fk_TASK_has_ORIGIN_DATA_TYPE_TASK1`
-    FOREIGN KEY (`FK_TASK_Name`)
-    REFERENCES `earglass`.`TASK` (`Name`)
+    FOREIGN KEY (`FK_TaskName`)
+    REFERENCES `earglass`.`TASK` (`TaskName`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_TASK_has_ORIGIN_DATA_TYPE_ORIGIN_DATA_TYPE1`
@@ -110,19 +110,19 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `earglass`.`ORIGIN_DSF` (
   `idORIGIN_DSF` INT NOT NULL AUTO_INCREMENT,
-  `Origin_file` VARCHAR(200) NOT NULL,
-  `Summit_num` INT NOT NULL DEFAULT 0,
+  `OriginFile` VARCHAR(200) NOT NULL,
+  `SummitNum` INT NOT NULL DEFAULT 0,
   `Date` DATETIME NOT NULL,
-  `FK_TASK_Name` VARCHAR(45) NOT NULL,
+  `FK_TaskName` VARCHAR(45) NOT NULL,
   `FK_idORIGIN_DATA_TYPE` INT NOT NULL,
   `FK_idUSER` INT NULL,
   PRIMARY KEY (`idORIGIN_DSF`),
   UNIQUE KEY (`idORIGIN_DSF` ASC),
-  INDEX `fk_ORIGIN_DSF_MAPPING_TASK_TYPE1_idx` (`FK_TASK_Name` ASC, `FK_idORIGIN_DATA_TYPE` ASC),
+  INDEX `fk_ORIGIN_DSF_MAPPING_TASK_TYPE1_idx` (`FK_TaskName` ASC, `FK_idORIGIN_DATA_TYPE` ASC),
   INDEX `fk_ORIGIN_DSF_USER1_idx` (`FK_idUSER` ASC),
   CONSTRAINT `fk_ORIGIN_DSF_MAPPING_TASK_TYPE1`
-    FOREIGN KEY (`FK_TASK_Name` , `FK_idORIGIN_DATA_TYPE`)
-    REFERENCES `earglass`.`MAPPING_TASK_TYPE` (`FK_TASK_Name` , `FK_idORIGIN_DATA_TYPE`)
+    FOREIGN KEY (`FK_TaskName` , `FK_idORIGIN_DATA_TYPE`)
+    REFERENCES `earglass`.`MAPPING_TASK_TYPE` (`FK_TaskName` , `FK_idORIGIN_DATA_TYPE`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_ORIGIN_DSF_USER1`
@@ -138,22 +138,22 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `earglass`.`PARSING_DSF` (
   `idPARSING_DSF` INT NOT NULL AUTO_INCREMENT,
-  `Parsing_file` VARCHAR(200) NOT NULL,
-  `Submit_num` INT NOT NULL DEFAULT 0,
-  `Num_row` INT NOT NULL DEFAULT 0,
-  `Duplicate_row` INT NOT NULL DEFAULT 0,
-  `Null_subtitles` FLOAT NOT NULL DEFAULT 0,
-  `Null_starttime` FLOAT NOT NULL DEFAULT 0,
-  `Null_endtime` FLOAT NOT NULL DEFAULT 0,
-  `Null_duration` FLOAT NOT NULL DEFAULT 0,
-  `Num_longvalue` INT NOT NULL DEFAULT 0,
-  `Num_Lduration` INT NOT NULL DEFAULT 0,
-  `Num_Sduration` INT NOT NULL DEFAULT 0,
+  `ParsingFile` VARCHAR(200) NOT NULL,
+  `SubmitNum` INT NOT NULL DEFAULT 0,
+  `NumRow` INT NOT NULL DEFAULT 0,
+  `DuplicateRow` INT NOT NULL DEFAULT 0,
+  `NullSubtitles` FLOAT NOT NULL DEFAULT 0,
+  `NullStartTime` FLOAT NOT NULL DEFAULT 0,
+  `NullEndTime` FLOAT NOT NULL DEFAULT 0,
+  `NullDuration` FLOAT NOT NULL DEFAULT 0,
+  `NumLongValue` INT NOT NULL DEFAULT 0,
+  `NumLongDuration` INT NOT NULL DEFAULT 0,
+  `NumShortDuration` INT NOT NULL DEFAULT 0,
   `FK_idORIGIN_DSF` INT NOT NULL DEFAULT 0,
-  `System_score` INT NOT NULL DEFAULT 0,
+  `SystemScore` INT NOT NULL DEFAULT 0,
   `Pass` BINARY(1) NULL,
-  `Average_score` FLOAT NULL,
-  `Total_status` VARCHAR(45) NULL,
+  `AverageScore` FLOAT NULL,
+  `TotalStatus` VARCHAR(45) NULL,
   `FK_idUSER` INT NOT NULL,
   PRIMARY KEY (`idPARSING_DSF`),
   UNIQUE KEY (`idPARSING_DSF` ASC),
@@ -172,19 +172,19 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `earglass`.`TASK_DATA` (
   `idTASK_DATA` INT NOT NULL AUTO_INCREMENT,
-  `FK_TASK_Name` VARCHAR(45) NULL,
-  `Start` VARCHAR(11) NOT NULL,
-  `End` VARCHAR(11) NOT NULL,
+  `FK_TaskName` VARCHAR(45) NULL,
+  `StartTime` VARCHAR(11) NOT NULL,
+  `EndTime` VARCHAR(11) NOT NULL,
   `Caption` VARCHAR(1000) NOT NULL,
-  `Part_num` INT NOT NULL DEFAULT 1,
+  `PartNum` INT NOT NULL DEFAULT 1,
   `FK_idPARSING_DSF` INT NULL,
   `FK_idUSER` INT NULL,
   PRIMARY KEY (`idTASK_DATA`, `FK_idPARSING_DSF`),
-  INDEX `fk_TASK_DATA_TASK1_idx` (`FK_TASK_Name` ASC),
+  INDEX `fk_TASK_DATA_TASK1_idx` (`FK_TaskName` ASC),
   INDEX `fk_TASK_DATA_PARSING_DSF1_idx` (`FK_idPARSING_DSF` ASC),
   CONSTRAINT `fk_TASK_DATA_TASK1`
-    FOREIGN KEY (`FK_TASK_Name`)
-    REFERENCES `earglass`.`TASK` (`Name`)
+    FOREIGN KEY (`FK_TaskName`)
+    REFERENCES `earglass`.`TASK` (`TaskName`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_TASK_DATA_PARSING_DSF1`
@@ -204,8 +204,8 @@ CREATE TABLE IF NOT EXISTS `earglass`.`EVALUATION` (
   `FK_idUSER` INT NULL,
   `Score` INT NULL,
   `Pass` VARCHAR(45) NULL,
-  `Start_time` VARCHAR(11) NOT NULL,
-  `End_time` VARCHAR(11) NOT NULL,
+  `StartTime` VARCHAR(11) NOT NULL,
+  `EndTime` VARCHAR(11) NOT NULL,
   `Deadline` DATETIME NOT NULL,
   `Status` VARCHAR(45) NOT NULL DEFAULT 'ongoing',
   PRIMARY KEY (`idEVALUATION`),
