@@ -1,13 +1,12 @@
-import mariadb
+import pymysql
 import sys
 
-from . import config
-config = config.db_config
+from database import config
+config = config.config
 
-# mariadb-python driver documentation: https://mariadb-corporation.github.io/mariadb-connector-python/index.html
-
+# PyMySQL Documentation: https://pymysql.readthedocs.io/en/latest/index.html
 def connect():
-    connection = mariadb.connect(
+    connection = pymysql.connect(
         user=config['user'],
         password=config['password'],
         host=config['host'],
@@ -31,12 +30,3 @@ def queryall(sql):
 
     cur.execute(sql)
     return cur.fetchall()
-
-def executeone(sql):
-    conn = connect()
-    cur = conn.cursor()
-
-    cur.execute(sql)
-
-def executemany(sql):
-    pass
