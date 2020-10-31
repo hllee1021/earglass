@@ -13,7 +13,8 @@ def connect():
         password=config['password'],
         host=config['host'],
         port=config['port'],
-        database=config['database']
+        database=config['database'],
+        cursorclass=pymysql.cursors.DictCursor
     )
     return connection
 
