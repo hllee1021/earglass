@@ -5,7 +5,7 @@ app = Flask(__name__, template_folder="views")
 
 @app.route("/", methods=["GET"])
 def index():
-    return "<h1>This is the index page</h1>"
+    return render_template("index.html")
 
 app.register_blueprint(users.users_router, url_prefix="/users")
 
