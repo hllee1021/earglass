@@ -1,0 +1,12 @@
+{% extends "./partials/layout.html" %} {% block body %}
+<h1>Welcome, {{ user['Name']}} !</h1>
+<ul>
+  <li><p>id: {{ user['Id'] }}</p></li>
+  <li><p>Name: {{ user['Name'] }}</p></li>
+  <li><p>Address: {{ user['Address'] }}</p></li>
+</ul>
+<ul>
+  <li><a href="/">홈으로 돌아가기</a></li>
+  <li><a href="/users/logout">로그아웃</a></li>
+</ul>
+{% endblock %}

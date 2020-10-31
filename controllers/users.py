@@ -1,17 +1,45 @@
-from flask import Blueprint, render_template, redirect
-import json
+from flask import Blueprint, render_template, redirect, request, make_response, flash
+from services import users
+
+controller = Blueprint("controller", __name__)
 
 
-users_router = Blueprint("users_router", __name__)
-
-@users_router.route("/login", methods=["GET"])
+@controller.route("/login", methods=["GET"])
 def get_login_page():
-  return render_template('login.html')
+    return render_template('login.html')
 
-@users_router.route("/login", methods=["POST"])
+
+@controller.route("/login", methods=["POST"])
 def post_login_data():
-  return redirect("my")
+    username = request.form.get("username")
+    password = request.form.get("password")
 
-@users_router.route("/my", methods=["GET"])
+    # 로그인 성공
+    if users.verify_user(username, password):
+        # not "/my", "my". "my" == "/users/my", "/my" = "/my"
+        res = make_response(redirect('my'))
+        res.set_cookie("user", username)
+        flash("성공적으로 로그인되었습니다")
+        return res
+
+    # 로그인 실패
+    else:
+        flash("로그인에 실패하였습니다")
+        return redirect('my')
+
+
+@controller.route("/my", methods=["GET"])
 def get_my_page():
-  return "성공적으로 로그인이 완료되었습니다."
+    username = request.cookies.get("user")
+    user = users.get_user_by_id(username)
+    if user:
+        return render_template("my.html", user=user)
+    else:
+        return redirect("login")
+
+
+@controller.route("/logout", methods=["GET"])
+def logout():
+    res = make_response(redirect('login'))
+    res.delete_cookie('user')
+    return res
