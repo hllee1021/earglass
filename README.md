@@ -20,3 +20,4 @@
 
 ### 프론트 팀
 - `views/`: 프론트엔드 웹 페이지 모듈(flask template folder로 사용됨) 
+- `publishing/`: 실제로 작동하지는 않는 껍데기뿐인 html파일 모음
