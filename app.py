@@ -10,11 +10,10 @@ def index():
     return render_template("index.html")
 
 
-# Blueprint
+# Blueprint(Routers)
 app.register_blueprint(users.controller, url_prefix="/users")
 app.register_blueprint(admin.admin_bp, url_prefix="/admin")
 
 
 # run
 app.run(port=8080, host="0.0.0.0", debug=True)
-
