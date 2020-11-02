@@ -3,7 +3,7 @@ from services import admin
 
 # writed by seungsu
 
-admin_bp = Blueprint("admin", __name__)
+controller = Blueprint("controller", __name__)
 
 
 @admin_bp.route("/", methods=["GET"])
@@ -16,16 +16,16 @@ def get_detail_submitter(user_id):
     return render_template()
 
 
-@admin_bp.route("/estimator/<int:user_id>", methods=["GET"])
+@controller.route("/estimator/<int:user_id>", methods=["GET"])
 def get_detail_estimator(user_id):
     return render_template()
 
 
-@admin_bp.route("/task", methods=["POST"])
+@controller.route("/task", methods=["POST"])
 def add_task():
     return render_template()
 
-@admin_bp.route("/task", methods=["PUT"])
+@controller.route("/task", methods=["PUT"])
 def modify_task():
     return render_template()
 
