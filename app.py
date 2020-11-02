@@ -12,7 +12,7 @@ def index():
 
 # Blueprint(Routers)
 app.register_blueprint(users.controller, url_prefix="/users")
-app.register_blueprint(admin.admin_bp, url_prefix="/admin")
+app.register_blueprint(admin.controller, url_prefix="/admin")
 
 
 # run
