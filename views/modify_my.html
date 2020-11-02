@@ -1,0 +1,46 @@
+{% extends "./partials/layout.html" %}
+{% block body %}
+<h1>개인정보수정</h1>
+<form action="/users/modify_my" method="POST">
+    <lable>
+        <a href="/">홈으로 돌아가기</a>
+    </lable>
+    <label for="username">
+      <p>아이디</p>
+      <input type="text" name="username" value=user['Id'] />
+    </label>
+    <label for="password">
+      <p>패스워드</p>
+      <input type="password" name="password", />
+    </label>
+    <label for="realname">
+        <p>성함</p>
+        <input type="text" name="realname" />
+    </label>
+    <label for="gender">
+        <p>성별</p>
+        <input type="radio" name="gender" value="M" />남자
+        <input type="radio" name="gender" value="W" />여자
+    </label>
+    <label for="address">
+        <p>주소</p>
+        <input type="text" name="address" />
+    </label>
+    <label for="birth">
+        <p>생년월일</p>
+        <input type="text" name="birth" />
+    </label>
+    <label for="phonenumber">
+        <p>휴대폰 번호</p>
+        <input type="text" name="phonenumber" />
+    </label>
+    <label for="usertype">
+        <p>가입유형</p>
+        <input type="radio" name="usertype" value="submitter" />제출자
+        <input type="radio" name="usertype" value="evaluater" />평가자
+    </label><br><br>
+    <label for="submit">
+        <input type="submit" value="완료" />
+    </label>
+  </form>
+{% endblock %}

@@ -3,9 +3,17 @@
 <ul>
   <li><p>id: {{ user['Id'] }}</p></li>
   <li><p>Name: {{ user['Name'] }}</p></li>
-  <li><p>Address: {{ user['Address'] }}</p></li>
+  <li><p>password: {{ user['password'] }}</p></li>
+  <li><p>realname: {{ user['realname'] }}</p></li>
+  <li><p>gender: {{ user['gender'] }}</p></li>
+  <li><p>address: {{ user['address'] }}</p></li>
+  <li><p>birth: {{ user['birth'] }}</p></li>
+  <li><p>phonenumber: {{ user['phonenumber'] }}</p></li>
+  <li><p>usertype: {{ user['usertype'] }}</p></li>
 </ul>
 <ul>
+  <li><a href="/users/modify_my">수정</a></li>
+  <li><a href="/users/modify_my">탈퇴</a></li>
   <li><a href="/">홈으로 돌아가기</a></li>
   <li><a href="/users/logout">로그아웃</a></li>
 </ul>
