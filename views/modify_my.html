@@ -1,21 +1,17 @@
-{% extends "./partials/layout.html" %}
-{% block body %}
-<h1>개인정보수정</h1>
-<form action="/users/modify_my" method="POST">
-    <lable>
-        <a href="/">홈으로 돌아가기</a>
-    </lable>
+{% extends "./partials/layout.html" %} {% block body %}
+<h1>Welcome, {{ user['Name']}} !</h1>
+<form action="/users/sign_up" method="POST">
     <label for="username">
       <p>아이디</p>
-      <input type="text" name="username" value=user['Id'] />
+      <input type="text" name="username" value=기존아이디>
     </label>
     <label for="password">
       <p>패스워드</p>
-      <input type="password" name="password", />
+      <input type="password" name="password" value=기존패스워드>
     </label>
     <label for="realname">
         <p>성함</p>
-        <input type="text" name="realname" />
+        <input type="text" name="realname" value=기존이름>
     </label>
     <label for="gender">
         <p>성별</p>
@@ -24,23 +20,24 @@
     </label>
     <label for="address">
         <p>주소</p>
-        <input type="text" name="address" />
+        <input type="text" name="address" value= 기존주소>
     </label>
     <label for="birth">
         <p>생년월일</p>
-        <input type="text" name="birth" />
+        <input type="text" name="birth" value= 기존생년월일>
     </label>
     <label for="phonenumber">
         <p>휴대폰 번호</p>
-        <input type="text" name="phonenumber" />
+        <input type="text" name="phonenumber" value=기존전화번호>
     </label>
-    <label for="usertype">
-        <p>가입유형</p>
-        <input type="radio" name="usertype" value="submitter" />제출자
-        <input type="radio" name="usertype" value="evaluater" />평가자
-    </label><br><br>
     <label for="submit">
         <input type="submit" value="완료" />
     </label>
   </form>
+<ul>
+  <li><a href="/users/modify_my">수정</a></li>
+  <li><a href="/users/modify_my">탈퇴</a></li>
+  <li><a href="/">홈으로 돌아가기</a></li>
+  <li><a href="/users/logout">로그아웃</a></li>
+</ul>
 {% endblock %}
