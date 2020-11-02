@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from controllers import users, admin
+from controllers import users, admin, demo
 
 app = Flask(__name__, template_folder="views")
 app.secret_key = "earglass"
@@ -13,7 +13,9 @@ def index():
 # Blueprint
 app.register_blueprint(users.controller, url_prefix="/users")
 app.register_blueprint(admin.admin_bp)
+app.register_blueprint(demo.demo_bp, url_prefix="/demo")
 
 
 # run
 app.run(port=8080, host="0.0.0.0", debug=True)
+
