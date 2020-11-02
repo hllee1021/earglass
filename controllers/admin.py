@@ -6,12 +6,12 @@ from services import admin
 controller = Blueprint("controller", __name__)
 
 
-@admin_bp.route("/", methods=["GET"])
+@controller.route("/", methods=["GET"])
 def get_main_admin():
     return render_template()
 
 
-@admin_bp.route("/submitter/<int:user_id>", methods=["GET"])
+@controller.route("/submitter/<int:user_id>", methods=["GET"])
 def get_detail_submitter(user_id):
     return render_template()
 
@@ -31,7 +31,7 @@ def modify_task():
 
 
 
-@admin_bp.route("/task/<int:task_id>", methods=["GET"])
+@controller.route("/task/<int:task_id>", methods=["GET"])
 def detail_task(task_id):
     # show task detail
     return render_template()
