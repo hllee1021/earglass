@@ -21,17 +21,14 @@ def get_detail_estimator(user_id):
     return render_template()
 
 
-@admin_bp.route("/task", methods=("POST", "PUT"))
-def task():
-    # task 추가
-    if request.method == "POST":
-        pass
-
-    # task 수정
-    elif request.method == "PUT":
-        pass
-
+@admin_bp.route("/task", methods=("POST"))
+def add_task():
     return render_template()
+
+@admin_bp.route("/task", methods=("PUT"))
+def modify_task():
+    return render_template()
+
 
 
 @admin_bp.route("/task/<int:task_id>", methods=["GET"])
