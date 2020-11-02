@@ -12,8 +12,7 @@ def index():
 
 # Blueprint
 app.register_blueprint(users.controller, url_prefix="/users")
-app.register_blueprint(pages.pages_bp, url_prefix="/pages")
-app.register_blueprint(admin.admin_bp)
+app.register_blueprint(admin.admin_bp, url_prefix="/admin")
 
 
 # run

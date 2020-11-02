@@ -3,7 +3,7 @@ from services import admin
 
 # writed by seungsu
 
-admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
+admin_bp = Blueprint("admin", __name__)
 
 
 @admin_bp.route("/", methods=["GET"])
