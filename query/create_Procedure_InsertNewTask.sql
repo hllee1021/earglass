@@ -22,7 +22,8 @@ checkdupli:BEGIN
     -- if (varRowCount > 0) then task already exits.
     IF (varRowCount > 0) THEN
         -- Print message
-        SELECT 'Task name already exists.';
+        SELECT 'Task name already exists.'
+            AS InsertNewTaskErrorMessage;
             ROLLBACK;
         LEAVE checkdupli;
     END IF;
@@ -40,7 +41,8 @@ checkdupli:BEGIN
             AND FK_TypeName = '관리자';
         
         IF (varIdManager IS NULL) THEN
-        SELECT 'Invalid Manager ID';
+        SELECT 'Invalid Manager ID'
+            AS InsertNewTaskErrorMessage;
 		    ROLLBACK;
         LEAVE inserttask;    
  	      END IF;
@@ -50,7 +52,8 @@ checkdupli:BEGIN
            VALUES(newTaskName, newDescription,
 		  		  newMinPeriod, 'ongoing', newFK_idManager);
 
-        SELECT 'Insert new task successfully';
+        SELECT 'Insert new task successfully'
+            AS InsertNewTaskSuccessMessage;
 
       -- END inserttask
     END inserttask;

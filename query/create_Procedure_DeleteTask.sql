@@ -29,7 +29,8 @@ checkrow:BEGIN
         DELETE FROM TASK 
         WHERE TaskName = currentTaskName;
 
-        SELECT 'Delete task successfully';
+        SELECT 'Delete task successfully'
+            AS DeleteTaskSuccessMessage;
 
     END IF;
 

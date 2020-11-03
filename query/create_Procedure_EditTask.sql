@@ -1,4 +1,4 @@
--- 관리자가 task table에서 특정 row delete
+-- 관리자가 task table에서 특정 row의 정보 edit
 
 DELIMITER //
 
@@ -21,18 +21,19 @@ checkrow:BEGIN
     IF (varRowCount = 0) THEN
         -- Print message
         SELECT 'Task name does not exist.'
-            AS DeleteTaskErrorMessage;
+            AS EditTaskErrorMessage;
             ROLLBACK;
         LEAVE checkrow;
     END IF;
 
-	-- if (varRowCount > 0) then task exists in database.
+	-- if (varRowCount = 1) then task exists in database.
     IF (varRowCount = 1) THEN
         UPDATE TASK
         SET Description = newDescription, MinPeriod = newMinPeriod
         WHERE TaskName = currentTaskName;
         
-        SELECT 'Edit task info successfully';
+        SELECT 'Edit task info successfully'
+            AS EditTaskSuccessMessage;
 
     END IF;
 

@@ -2,8 +2,9 @@
 
 DELIMITER //
 
-CREATE PROCEDURE UpdateTask
-            (IN currentTaskName     Varchar(45))
+CREATE PROCEDURE UpdateTaskStatus
+            (IN currentTaskName     Varchar(45),
+             IN newStatus           Varchar(45))
 
 checkrow:BEGIN
     
@@ -19,17 +20,24 @@ checkrow:BEGIN
     IF (varRowCount = 0) THEN
         -- Print message
         SELECT 'Task name does not exist.'
-            AS DeleteTaskErrorMessage;
+            AS UpdateTaskStatusErrorMessage;
             ROLLBACK;
         LEAVE checkrow;
     END IF;
 
 	-- if (varRowCount > 0) then task exists in database.
     IF (varRowCount = 1) THEN
-        DELETE FROM TASK 
-        WHERE TaskName = currentTaskName;
-
-        SELECT 'Delete task successfully';
+        IF newStatus IN ('ongoing', 'done', null) THEN
+            UPDATE TASK
+            SET Status = newStatus
+            WHERE TaskName = currentTaskName;
+        ELSE
+            SELECT 'Invalid status value'
+                AS UpdateTaskStatusErrorMessage;
+            LEAVE checkrow;
+        END IF;
+        SELECT 'update task status successfully'
+            AS UpdateTaskStatusSuccessMessage;
 
     END IF;
 
