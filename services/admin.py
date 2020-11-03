@@ -1,12 +1,12 @@
 from database.connection import connect
 
 
-def getTasks(page):
+def get_tasks(page):
     # 페이지 번호에 따른 task 리턴
     pass
 
 
-def getUsers(page):
+def get_users(page):
     # 페이지 번호에 따른 user 리턴
     pass
 
@@ -26,36 +26,36 @@ def searchUser(column, search_word, page):
     pass
 
 
-def showSubmitter(user_id):
+def show_submitter(user_id):
     # Submitter 에 대한 상세 정보 열람
     pass
 
 
-def showEstimator(user_id):
+def show_estimator(user_id):
     # Estimator에 대한 상세 정보 열람
     pass
 
 
-def addTask(data):
+def add_task(data):
     # 테스크 생성
     pass
 
 
-def removeTask(task_id):
+def remove_task(task_id):
     # 테스크 제거
     pass
 
 
-def editTask(task_id, data):
+def edit_task(task_id, data):
     # 테스크 수정
     pass
 
 
-def showEstimateStatus(user_id):
+def show_estimate_status(user_id):
     # 평가자 평가파일 현황
     pass
 
 
-def showSubmitStatus(user_id):
+def show_submit_status(user_id):
     # 제출자 제출 현황
     pass

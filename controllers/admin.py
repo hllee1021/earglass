@@ -3,38 +3,35 @@ from services import admin
 
 # writed by seungsu
 
-admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
+controller = Blueprint("controller", __name__)
 
 
-@admin_bp.route("/", methods=["GET"])
+@controller.route("/", methods=["GET"])
 def get_main_admin():
     return render_template()
 
 
-@admin_bp.route("/submitter/<int:user_id>", methods=["GET"])
+@controller.route("/submitter/<int:user_id>", methods=["GET"])
 def get_detail_submitter(user_id):
     return render_template()
 
 
-@admin_bp.route("/estimator/<int:user_id>", methods=["GET"])
+@controller.route("/estimator/<int:user_id>", methods=["GET"])
 def get_detail_estimator(user_id):
     return render_template()
 
 
-@admin_bp.route("/task", methods=("POST", "PUT"))
-def task():
-    # task 추가
-    if request.method == "POST":
-        pass
+@controller.route("/task", methods=["POST"])
+def add_task():
+    return render_template()
 
-    # task 수정
-    elif request.method == "PUT":
-        pass
-
+@controller.route("/task", methods=["PUT"])
+def modify_task():
     return render_template()
 
 
-@admin_bp.route("/task/<int:task_id>", methods=["GET"])
+
+@controller.route("/task/<int:task_id>", methods=["GET"])
 def detail_task(task_id):
     # show task detail
     return render_template()
