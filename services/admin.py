@@ -11,6 +11,16 @@ def getUsers(page):
     pass
 
 
+def get_UserPage():
+    # 유저 페이지 수 리턴
+    pass
+
+
+def get_TaskPage():
+    # 테스크 페이지 수 리턴
+    pass
+
+
 def searchUser(column, search_word, page):
     # column에 word로 검색한 결과를 page에 따라 리턴
     pass
