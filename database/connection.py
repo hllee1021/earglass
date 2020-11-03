@@ -16,6 +16,7 @@ def connect():
         database=config['database'],
         cursorclass=pymysql.cursors.DictCursor
     )
+    
     return connection
 
 
