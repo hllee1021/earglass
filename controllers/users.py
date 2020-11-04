@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, request, make_response, flash
 from services import users
 
-controller = Blueprint("controller", __name__)
+controller = Blueprint("users", __name__)
 
 
 @controller.route("/login", methods=["GET"])
