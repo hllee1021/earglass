@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from controllers import users, admin, pages
+from controllers import users, admin
 
 app = Flask(__name__, template_folder="views")
 app.secret_key = "earglass"
