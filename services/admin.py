@@ -2,38 +2,66 @@ from database.connection import connect
 
 connect = connect()
 cursor = connect.cursor()
+import math
 
 def get_tasks(page):
     # 페이지 번호에 따른 task 리턴
+    conn = connect()
+    cur = conn.cursor()
     sql = "SELECT * FROM TASK LIMIT %s OFFSET %s"
-    cursor.execute(sql, (20, 20*int(page)))    
-    data = cursor.fetchall()
+    cur.execute(sql, (20, 20*int(page)))    
+    data = cur.fetchall()
     return data
 
 
 def get_users(page):
     # 페이지 번호에 따른 user 리턴
-    pass
+    conn = connect()
+    cur = conn.cursor()
+    sql = "SELECT * FROM USER LIMIT %s OFFSET %s"
+    cur.execute(sql, (20, 20*int(page)))    
+    data = cur.fetchall()
+    return data
 
 
 def get_UserPage():
     # 유저 페이지 수 리턴
-    pass
+    conn = connect()
+    cur = conn.cursor()
+    sql = "SELECT COUNT(*) AS C FROM USER"
+    cur.execute(sql)
+    data = math.ceil(float(cur.fetchone()["C"])/20)
+    return data
 
 
 def get_TaskPage():
     # 테스크 페이지 수 리턴
-    pass
+    conn = connect()
+    cur = conn.cursor()
+    sql = "SELECT COUNT(*) AS C FROM TASK"
+    cur.execute(sql)
+    data = math.ceil(float(cur.fetchone()["C"])/20)
+    return data
 
 
 def searchUser(column, search_word, page):
     # column에 word로 검색한 결과를 page에 따라 리턴
-    pass
+    conn = connect()
+    cur = conn.cursor()
+    sql = f"SELECT * FROM USER WHERE {column} = %s LIMIT %s OFFSET %s"
+    cur.execute(sql, (search_word, 20, 20*int(page)))
+    data = cur.fetchall()
+    return data
 
 
 def show_submitter(user_id):
     # Submitter 에 대한 상세 정보 열람
-    pass
+    conn = connect()
+    cur = conn.cursor()
+    sql = "SELECT * FROM USER WHERE idUSER = %s and FK_TypeName = \"제출자\""
+    cur.execute(sql, (int(user_id)))
+    data = cur.fetchone()
+    return data 
 
 
 def show_estimator(user_id):
@@ -84,4 +112,7 @@ def show_estimate_status(user_id, page):
 
 def show_submit_status(user_id):
     # 제출자 제출 현황
-    return ;
+    sql = "SELECT * FROM ORIGIN_DSF WHERE FK_idUSER = %s"
+    cursor.execute(sql, (int(user_id)))
+    data = cursor.fetchone()
+    return data 
