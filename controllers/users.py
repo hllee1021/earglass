@@ -28,9 +28,6 @@ def logout():
     res.delete_cookie("user")
     return res
 
-@controller.route("/signup", methods=["GET"])
-def sign_up():
-    return render_template("sign_up.html")
 
 @controller.route("/my", methods=['GET'])
 def mypage():
@@ -43,3 +40,10 @@ def mypage():
     else:
         flash("로그인되지 않았습니다")
         return redirect("/")
+
+
+@controller.route("/signup", methods=["GET"])
+def sign_up():
+    return render_template("sign_up.html")
+
+
