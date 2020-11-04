@@ -8,4 +8,10 @@ CREATE PROCEDURE InsertNewParticipation
 
 BEGIN
 
-    DE
+    INSERT INTO PARTICIPATION (FK_TaskName, FK_idUSER, status)
+        VALUES(new_FK_TaskName, new_FK_idUSER, "waiting");
+
+END
+//
+
+DELIMITER ;
