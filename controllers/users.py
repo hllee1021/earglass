@@ -51,24 +51,33 @@ def sign_up_form():
 def sign_up():
     print(request.form)
     data = request.form
-    log = users.sign_up(data["id"], data["password"], data["name"], data["birth"], data["phonenumber"], data["gender"], data["address"], data["role"])
-    flash(log)
 
-    # date of birth
-    # phonenumber
-    # password
+    # check validation by
+    valid_password = re.fullmatch('/^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]|.*[0-9]).{8,24}$/', data["password"])
+    valid_birth = re.fullmatch('', data["birth"])
+    valid_phonenumber = re.fullmatch('/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/', data["birth"])
+
+    if not (valid_password):
+        flash("비밀번호는 8~24자 영문대소문자, 숫자, 특수문자 혼합 사용해야합니다.")
+        return render_template("back.html")
+
+    if not (valid_birth):
+        flash("생년월일 형식이 알맞지 않습니다. YYYYMMDD")
+        return render_template("back.html")
+
+    if not (valid_phonenumber):
+        flash("전화번호 형식이 알맞지 않습니다. XXX-XXXX-XXXX")
+        return render_template("back.html")
 
     # [{'InsertNewUserErrorMessage': 'User ID already exists.'}]
-
-
     # [{'InsertNewUserSuccessMessage': 'Insert new User successfully'}]
     # log_type = log[0].keys()[0]
     # log_value = log[0].items()[0]
-
     # print(log_type, log_value)
+
+    log = users.sign_up(data["id"], data["password"], data["name"], data["birth"], data["phonenumber"], data["gender"], data["address"], data["role"])
     print(log)
-
-
+    flash(log)
 
 
 
