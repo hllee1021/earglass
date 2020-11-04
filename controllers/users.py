@@ -43,3 +43,8 @@ def logout():
     res = make_response(redirect('login'))
     res.delete_cookie('user')
     return res
+
+
+@controller.route("/test", methods=["GET"])
+def test():
+    return render_template('sign_up.html')
