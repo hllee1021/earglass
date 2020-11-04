@@ -135,7 +135,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `earglass`.`ORIGIN_DSF` (
   `idORIGIN_DSF` INT NOT NULL AUTO_INCREMENT,
-  `OriginFile` VARCHAR(200) NOT NULL,
+  `OriginFile` LONGTEXT NOT NULL,
   `SubmitNum` INT NOT NULL DEFAULT 0,
   `Date` DATETIME NOT NULL,
   `FK_TaskName` VARCHAR(45) NULL,
@@ -164,7 +164,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `earglass`.`PARSING_DSF` (
   `idPARSING_DSF` INT NOT NULL AUTO_INCREMENT,
-  `ParsingFile` VARCHAR(200) NOT NULL,
+  `ParsingFile` LONGTEXT NOT NULL,
   `SubmitNum` INT NOT NULL DEFAULT 0,
   `NumRow` INT NOT NULL DEFAULT 0,
   `DuplicateRow` INT NOT NULL DEFAULT 0,
@@ -179,7 +179,6 @@ CREATE TABLE IF NOT EXISTS `earglass`.`PARSING_DSF` (
   `Pass` BINARY(1) NULL,
   `AverageScore` FLOAT NULL,
   `TotalStatus` VARCHAR(45) NULL,
-  `idUSER` INT NULL,
   `FK_idORIGIN_DSF` INT NULL,
   PRIMARY KEY (`idPARSING_DSF`),
   UNIQUE KEY (`idPARSING_DSF` ASC),
