@@ -7,7 +7,7 @@
   </button>
 </nav>
 
-<form>
+<form method="POST" action="/users/login">
   <div class="form-group">
    <label for="exampleInputEmail1">ID</label>
    <input type="id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter ID">
@@ -17,8 +17,7 @@
    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
   </div>
   <button type="submit" class="btn btn-primary">SignIn</button>
-  <button type="button" class="btn btn-primary" onClick="location.href='/users/test'">Signup</button>
-  
+  <a type="button" class="btn btn-primary" href='sign_up.html'">Signup</button>
 </form>
 
 {% endblock %}
