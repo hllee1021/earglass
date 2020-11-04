@@ -1,34 +1,36 @@
 {% extends "./partials/layout.html" %}
 {% block body %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-     <span class="navbar-toggler-icon"></span>
-    </button>
+   <a class="navbar-brand" href="#">Navbar</a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+   </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-     <ul class="navbar-nav mr-auto">
-       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-       </li>
-       <li class="nav-item">
-        <a class="nav-link" href="#">MyPage</a>
-       </li>
-       <li class="nav-item">
-        <a class="nav-link" href="#">Logout</a>
-       </li>
-     </ul>
-    </div>
-  </nav>
-  </br>
-  
-  <h2>SignUp Page</h2>
-  
-  </br>
-  <form method="POST" action="/users/signup">
+   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+         <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" href="#">MyPage</a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" href="#">Logout</a>
+         </li>
+      </ul>
+   </div>
+</nav>
+</br>
+
+<h2>SignUp Page</h2>
+
+</br>
+<form method="POST" action="/users/signup">
    <div class="form-group">
       <label for="exampleInputEmail1">ID</label>
-      <input type="text" name="id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter ID">
+      <input type="text" name="id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+         placeholder="Enter ID">
    </div>
    <div class="form-group">
       <label for="exampleInputPassword1">Password</label>
@@ -36,28 +38,44 @@
    </div>
    <div class="form-group">
       <label for="exampleInputEmail1">Name</label>
-      <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Name">
+      <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+         placeholder="Enter Name">
    </div>
    <div class="form-group">
       <label for="exampleInputEmail1">Date of Birth</label>
-      <input type="text" name="birth" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter DOB">
+      <input type="text" name="birth" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+         placeholder="Enter DOB">
    </div>
    <div class="form-group">
       <label for="exampleInputEmail1">Phone Number</label>
-      <input type="text" name="phonenumber" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Phone Number">
+      <input type="text" name="phonenumber" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+         placeholder="Enter Phone Number">
    </div>
-   <div class="input-group mb-3">
-   <div class="input-group-prepend">
-      <label for="exampleInputEmail1">Gender</label>
-   
-      <button class="btn btn-outline-secondary" type="button" name="M">Male</button>
-      <button class="btn btn-outline-secondary" type="button" name="W">Female</button>
+
+   <fieldset class="form-group">
+      <div class="row">
+         <legend class="col-form-label col-sm-2 pt-0">Sex</legend>
+         <div class="col-sm-10">
+            <div class="form-check">
+               <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+               <label class="form-check-label" for="gridRadios1">
+                  Male
+               </label>
+            </div>
+            <div class="form-check">
+               <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+               <label class="form-check-label" for="gridRadios2">
+                  Female
+               </label>
+            </div>
+         </div>
       </div>
-   </div>
+   </fieldset>
+
    <div class="form-group">
       <label for="inputAddress">Address</label>
       <input type="text" name="address" class="form-control" id="inputAddress" placeholder="Address">
    </div>
-      <button type="submit" class="btn btn-primary">Sign Up</button>
-   </form>
+   <button type="submit" class="btn btn-primary">Sign Up</button>
+</form>
 {% endblock %}
