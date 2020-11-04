@@ -1,3 +1,4 @@
+import re
 from flask import Blueprint, render_template, redirect, request, make_response, flash
 from services import users
 
@@ -43,7 +44,32 @@ def mypage():
 
 
 @controller.route("/signup", methods=["GET"])
-def sign_up():
+def sign_up_form():
     return render_template("sign_up.html")
 
+@controller.route("/signup", methods=["POST"])
+def sign_up():
+    print(request.form)
+    data = request.form
+    log = users.sign_up(data["id"], data["password"], data["name"], data["birth"], data["phonenumber"], data["gender"], data["address"], data["role"])
+    flash(log)
 
+    # date of birth
+    # phonenumber
+    # password
+
+    # [{'InsertNewUserErrorMessage': 'User ID already exists.'}]
+
+
+    # [{'InsertNewUserSuccessMessage': 'Insert new User successfully'}]
+    # log_type = log[0].keys()[0]
+    # log_value = log[0].items()[0]
+
+    # print(log_type, log_value)
+    print(log)
+
+
+
+
+
+    return redirect("/")
