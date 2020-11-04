@@ -18,6 +18,14 @@
    - 현재 저장소와 충돌이 있을 경우에는 충돌을 해결해서 추가적으로 commit 하여야 한다.
 7. 저장소 주인이 pull request를 merge함으로써 본인이 코딩한 변경 사항이 이 저장소에 반영된다.
 
+## pull request 충돌 발생 시
+1. git fetch [upstream] master
+2. git rebase [upstream]/master
+3. 충돌이 발생한 파일 확인 및 수정
+4. git rebase --continue
+5. git push [origin] master
+6. pull request
+
 ## 커밋 메세지 가이드
 
 ### 커밋 메세지 형태

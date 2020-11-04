@@ -8,10 +8,11 @@ def get_user_by_id(id):
     user = cur.fetchone()
     return user
 
+
 def verify_user(id, password):
     user = get_user_by_id(id)
     if not user:
         return False
-    elif user['Password'] != password:
+    elif user["Password"] != password:
         return False
     return True
