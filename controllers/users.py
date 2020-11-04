@@ -28,6 +28,9 @@ def logout():
     res.delete_cookie("user")
     return res
 
+@controller.route("/signup", methods=["GET"])
+def sign_up():
+    return render_template("sign_up.html")
 
 @controller.route("/my", methods=['GET'])
 def mypage():
