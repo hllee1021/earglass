@@ -6,18 +6,20 @@ controller = Blueprint("controller", __name__)
 
 @controller.route("/login", methods=["GET"])
 def get_login_page():
-    return render_template('login.html')
+    return render_template("login.html")
 
 
 @controller.route("/login", methods=["POST"])
 def post_login_data():
     username = request.form.get("username")
     password = request.form.get("password")
+    print(username)
+    print(password)
 
     # 로그인 성공
     if users.verify_user(username, password):
         # not "/my", "my". "my" == "/users/my", "/my" = "/my"
-        res = make_response(redirect('my'))
+        res = make_response(redirect("my"))
         res.set_cookie("user", username)
         flash("성공적으로 로그인되었습니다")
         return res
@@ -25,7 +27,7 @@ def post_login_data():
     # 로그인 실패
     else:
         flash("로그인에 실패하였습니다")
-        return redirect('my')
+        return redirect("my")
 
 
 @controller.route("/my", methods=["GET"])
@@ -40,11 +42,12 @@ def get_my_page():
 
 @controller.route("/logout", methods=["GET"])
 def logout():
-    res = make_response(redirect('login'))
-    res.delete_cookie('user')
+    res = make_response(redirect("login"))
+    res.delete_cookie("user")
     return res
 
 
 @controller.route("/test", methods=["GET"])
 def test():
-    return render_template('sign_up.html')
+    return render_template("sign_up.html")
+
