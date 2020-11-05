@@ -1,31 +1,6 @@
 {% extends "./partials/layout.html" %}
 {% block body %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-   <a class="navbar-brand" href="#">Navbar</a>
-   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-   </button>
-
-   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-         <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-         </li>
-         <li class="nav-item">
-            <a class="nav-link" href="#">MyPage</a>
-         </li>
-         <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
-         </li>
-      </ul>
-   </div>
-</nav>
-</br>
-
 <h2>SignUp Page</h2>
-
-</br>
 <form method="POST" action="/users/signup">
    <div class="form-group">
       <label for="exampleInputEmail1">ID</label>
@@ -34,7 +9,7 @@
    </div>
    <div class="form-group">
       <label for="exampleInputPassword1">Password</label>
-      <input type="text" name="password" class="form-control" id="exampleInputPassword1"
+      <input type="password" name="password" class="form-control" id="exampleInputPassword1"
          placeholder="8~24자 영문대소문자, 숫자, 특수문자 혼합 사용" required>
    </div>
    <div class="form-group">

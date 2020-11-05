@@ -26,7 +26,7 @@ def post_login_data():
 @controller.route("/logout", methods=["GET"])
 def logout():
     res = make_response(redirect("/"))
-    res.delete_cookie("user")
+    res.delete_cookie("user_id")
     return res
 
 
@@ -53,9 +53,9 @@ def sign_up():
     data = request.form
 
     # check validation by
-    valid_password = re.fullmatch('/^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]|.*[0-9]).{8,24}$/', data["password"])
-    valid_birth = re.fullmatch('', data["birth"])
-    valid_phonenumber = re.fullmatch('/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/', data["birth"])
+    valid_password = re.fullmatch("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$", data["password"])
+    valid_birth = re.fullmatch('\d{8}', data["birth"])
+    valid_phonenumber = re.fullmatch('^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$', data["phonenumber"])
 
     if not (valid_password):
         flash("비밀번호는 8~24자 영문대소문자, 숫자, 특수문자 혼합 사용해야합니다.")

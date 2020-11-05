@@ -20,8 +20,10 @@ def verify_user(id, password):
 
 def sign_up(id, password, name, birth, phonenumber, gender, address, role):
     # 테스크 상태 업데이트
-    cursor.callproc('InsertNewUser', (id, password, name,
+    conn = connect()
+    cur = conn.cursor()
+    cur.callproc('InsertNewUser', (id, password, name,
                                       birth, phonenumber, gender, address, role))
-    message = cursor.fetchall()
-    connect.commit()
+    message = cur.fetchall()
+    conn.commit()
     return message
