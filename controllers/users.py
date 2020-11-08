@@ -86,7 +86,7 @@ def sign_up():
 # made by 학림, 함수명은 목적 페이지로!
 @controller.route("/tests", methods=["GET"])
 def tests():
-    return render_template("submitter_home.html")
+    return render_template("admin/submitter.html")
 
 @controller.route("/agreement", methods=["GET"])
 def agreement():
