@@ -1,0 +1,144 @@
+{% extends "./partials/layout.html" %}
+
+{% block head %} 
+{% endblock %}
+
+
+{% block body %}
+<!-- <div include-html="/partials/navbar.html">
+</div> -->
+<div class="container">
+   <table class="table table-striped table-bordered">
+      <thead>
+         <tr>
+            <th>참여가능한 태스크</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td>태스크1
+               <a type="button" class="btn btn-primary" href='/users/task_detail'>상세</a>
+               <a type="button" class="btn btn-primary" href='/users/agreement'>참여신청</a>
+            </td>
+            
+         </tr>
+         <tr>
+            <td>태스크2
+               <a type="button" class="btn btn-primary" href='/users/task_detail'>상세</a>
+               <a type="button" class="btn btn-primary" href='/users/agreement'>참여신청</a>
+            </td>
+            
+         </tr>
+         <tr>
+            <td>태스크3
+               <a type="button" class="btn btn-primary" href='/users/task_detail'>상세</a>
+               <a type="button" class="btn btn-primary" href='/users/agreement'>참여신청</a>
+            </td>
+         </tr>
+      </tbody> 
+   </table>
+</div>
+
+<div class="container">
+   <table class="table table-striped table-bordered">
+      <thead>
+         <tr>
+            <th>제출자의 참여 태스크 목록</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td>태스크1
+               <a type="button" class="btn btn-primary" href='/users/task_detail'>상세</a>
+               <a type="button" class="btn btn-primary" href='/users/submitpage'>제출</a>
+            </td>
+            
+         </tr>
+         <tr>
+            <td>태스크2
+               <a type="button" class="btn btn-primary" href='/users/task_detail'>상세</a>
+               <a type="button" class="btn btn-primary" href='/users/submitpage'>제출</a>
+            </td>
+            
+         </tr>
+         <tr>
+            <td>태스크3
+               <a type="button" class="btn btn-primary" href='/users/task_detail'>상세</a>
+               <a type="button" class="btn btn-primary" href='/users/submitpage'>제출</a>
+            </td>
+         </tr>
+      </tbody> 
+   </table>
+</div>
+
+<div class="container">
+   <table class="table table-striped table-bordered">
+      <thead>
+         자기 제출 현황    
+         <tr>
+            <th>태스크 이름</th>
+            <th>deadline</th>
+            <th>제출형식</th>
+            <th>제출날짜</th>
+            <th>점수</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td>태스크1
+               <a type="button" class="btn btn-primary" href='/users/agreement'>상세</a>
+               <a type="button" class="btn btn-primary" href='/users/task_detail'>제출</a>
+            </td>
+            <td>
+               2020/08/06 12:00
+            </td>
+            <td>
+               csv
+            </td>
+            <td>
+               2020/08/01 05:37
+            </td>
+            <td>
+               36
+            </td>
+         </tr>
+         <tr>
+            <td>태스크2
+               <a type="button" class="btn btn-primary" href='/users/agreement'>상세</a>
+               <a type="button" class="btn btn-primary" href='/users/task_detail'>제출</a>
+            </td>
+            <td>
+               2020/08/06 12:00
+            </td>
+            <td>
+               csv
+            </td>
+            <td>
+               2020/08/01 05:37
+            </td>
+            <td>
+               36
+            </td>
+         </tr>
+         <tr>
+            <td>태스크3
+               <a type="button" class="btn btn-primary" href='/users/agreement'>상세</a>
+               <a type="button" class="btn btn-primary" href='/users/task_detail'>제출</a>
+            </td>
+            <td>
+               2020/08/06 12:00
+            </td>
+            <td>
+               csv
+            </td>
+            <td>
+               2020/08/01 05:37
+            </td>
+            <td>
+               36
+            </td>
+         </tr>
+      </tbody> 
+   </table>
+</div>
+{% endblock %}
