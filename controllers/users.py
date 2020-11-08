@@ -100,7 +100,6 @@ def Taskdetail():
 def get_submitter_home():
     return render_template("submitter_home.html")
 
-
 @controller.route("/agree", methods=["POST"])
 def submitter_home():
     agree = request.form.get("agree")
