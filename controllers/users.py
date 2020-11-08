@@ -86,7 +86,7 @@ def sign_up():
 # made by 학림, 함수명은 목적 페이지로!
 @controller.route("/tests", methods=["GET"])
 def tests():
-    return render_template("submitter_home.html")
+    return render_template("/estimate/estimator_home.html")
 
 @controller.route("/agreement", methods=["GET"])
 def agreement():
@@ -99,7 +99,6 @@ def Taskdetail():
 @controller.route("/submitter_home", methods=["GET"])
 def get_submitter_home():
     return render_template("submitter_home.html")
-
 
 @controller.route("/agree", methods=["POST"])
 def submitter_home():
@@ -115,3 +114,12 @@ def submit_page():
 def submit_task():
     # new task processing code
     return redirect("submitter_home")
+
+@controller.route("/pdsf_detail", methods=["GET"])
+def pdsf_detail():
+    return render_template("/estimate/pdsf_detail.html")
+
+@controller.route("/pdsf_detail_task", methods=["POST"])
+def pdsf_detail_task():
+    # new task processing code
+    return render_template("/estimate/estimator_home.html")

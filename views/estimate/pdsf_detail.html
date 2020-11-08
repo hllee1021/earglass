@@ -1,0 +1,51 @@
+
+<!-- <div include-html="/partials/navbar.html">
+</div> -->
+{% extends "./partials/layout.html" %}
+{% block body %}
+<h1>파싱 데이터 시퀀스 파일</h1>
+<br>
+<table class="table table-bordered table-striped mt-2">
+    <tbody>
+        <tr>
+            <th>중복 row 수</th>
+            <td>3개</td>
+        </tr>
+        <tr>
+            <th>어쩌구저쩌구</th>
+            <td>추가추가추가</td>
+        </tr>
+        <tr>
+            <th>시스템 점수</th>
+            <td>78점</td>
+        </tr>
+    </tbody>
+</table>
+<div>
+    <a class="btn btn-outline-info mb-4 float-right" href="#">형식 다운로드(CSV)</a>
+</div>
+<br><br>
+<div>
+    <h1>태스크 정보</h1>
+    <table class='table'>
+        <tbody>
+            <tr>
+                <th>url</th>
+                <td><a href="#">youtube.com/123123</a></td>
+            </tr>
+            <tr>
+                <th>description</th>
+                <td>Desc</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<form method="POST" action="/users/pdsf_detail_task">
+    <div class="form-group">
+        <label>평가자 점수</label>
+        <input type="number" class="form-control" name="estimate_score" value="estimate_score">
+    </div>
+    <button type="submit" class="btn btn-primary float-right mb-3">완료</button>
+</form>
+{% endblock %}
