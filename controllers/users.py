@@ -96,10 +96,22 @@ def agreement():
 def Taskdetail():
     return render_template("task_detail.html")
 
-@controller.route("/submitter_home", methods=["POST"])
-def submitter_home():
+@controller.route("/submitter_home", methods=["GET"])
+def get_submitter_home():
     return render_template("submitter_home.html")
 
-@controller.route("/submitter_home", methods=["GET"])
+
+@controller.route("/agree", methods=["POST"])
+def submitter_home():
+    agree = request.form.get("agree")
+    # agreement processing code
+    return redirect("submitter_home")
+
+@controller.route("/submit_page", methods=["GET"])
 def submit_page():
     return render_template("submit_page.html")
+
+@controller.route("/submit_task", methods=["POST"])
+def submit_task():
+    # new task processing code
+    return redirect("submitter_home")
