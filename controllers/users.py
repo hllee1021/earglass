@@ -115,3 +115,12 @@ def submit_page():
 def submit_task():
     # new task processing code
     return redirect("submitter_home")
+
+@controller.route("/pdsf_detail", methods=["GET"])
+def pdsf_detail():
+    return render_template("/estimate/pdsf_detail.html")
+
+@controller.route("/pdsf_detail_task", methods=["POST"])
+def pdsf_detail_task():
+    # new task processing code
+    return render_template("/estimate/estimator_home.html")
