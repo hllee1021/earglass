@@ -1,0 +1,29 @@
+{% extends "./partials/layout.html" %} {% block body %}
+<form action="/users/submit_task" method="POST">
+    <div class="form-group">
+        <h3>태스크 이름</h3>
+        <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<task name>" disabled>
+        <small class="form-text text-muted"></small>
+    </div>
+    <h3>태스크 링크</h3>
+    <a href="#">
+        <p>google.com</p>
+    </a>
+    <h3>형식 다운로드</h3>
+    <a class="btn btn-outline-info mb-4" href="#">형식 다운로드(CSV)</a>
+    <div class="form-group">
+        <h3>제출 파일 업로드</h3>
+        <input type="file" class="form-control-file">
+    </div>
+    <div>
+        <button type="submit" class="btn btn-info mb-4 float-right">제출</button>
+    </div>
+</form>
+<style>
+    h3 {
+        font-weight: bold;
+        font-size: 1.4rem;
+    }
+</style>
+
+{% endblock %}
