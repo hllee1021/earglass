@@ -46,4 +46,8 @@ def mypage():
 def sign_up():
     return render_template("sign_up.html")
 
+@controller.route("/tests", methods=["POST"])
+def tests():
+    return render_template("submitterhome.html")
+
 

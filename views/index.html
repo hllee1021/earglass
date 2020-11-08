@@ -1,4 +1,5 @@
 {% extends "./partials/layout.html" %}
+{% block head %} {% endblock %}
 {% block body %}
 <div class="container">
   <form method="POST" action="/users/login">
@@ -15,5 +16,8 @@
     <button type="submit" class="btn btn-primary">SignIn</button>
     <a type="button" class="btn btn-primary" href='/users/signup'">Signup</a>
   </form>
+  <!-- 테스트용 링크 -->
+  <a href='/users/tests'>test</a>
+  <!-- 테스트용 링크 -->
 </div>
 {% endblock %}
