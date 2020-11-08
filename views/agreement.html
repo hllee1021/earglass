@@ -1,0 +1,31 @@
+{% extends "./partials/layout.html" %}
+{% block body %}
+</br>
+</br>
+<form method="POST" action="/users/signup">
+    <div class="container">
+        <div class="card">
+            <h5 class="card-header" style="background-color: white;"><b>참여신청</b></h5>
+            <div class="card-body" style="background-color: #d8e0e7;">
+                <h5 class="card-title"><b>개인정보 동의</b></h5>
+                <p class="card-text">개인정보 동의서 내용</p>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                    동의
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                    <label class="form-check-label" for="exampleRadios2">
+                    미동의
+                    </label>
+                </div>
+            </div>
+        </br>
+        <a href="#" class="btn btn-primary">제출</a>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

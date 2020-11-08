@@ -73,3 +73,16 @@ def sign_up():
 
 
     return redirect("/")
+
+# made by 학림, 함수명은 목적 페이지로!
+@controller.route("/tests", methods=["GET"])
+def tests():
+    return render_template("submitterhome.html")
+
+@controller.route("/agreement", methods=["GET"])
+def agreement():
+    return render_template("agreement.html")
+
+@controller.route("/Taskdetail", methods=["GET"])
+def Taskdetail():
+    return render_template("Taskdetail.html")
