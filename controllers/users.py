@@ -1,3 +1,4 @@
+import re
 from flask import Blueprint, render_template, redirect, request, make_response, flash
 from services import users
 
@@ -25,7 +26,7 @@ def post_login_data():
 @controller.route("/logout", methods=["GET"])
 def logout():
     res = make_response(redirect("/"))
-    res.delete_cookie("user")
+    res.delete_cookie("user_id")
     return res
 
 
@@ -43,11 +44,58 @@ def mypage():
 
 
 @controller.route("/signup", methods=["GET"])
-def sign_up():
+def sign_up_form():
     return render_template("sign_up.html")
 
-@controller.route("/tests", methods=["POST"])
+@controller.route("/signup", methods=["POST"])
+def sign_up():
+    print(request.form)
+    data = request.form
+
+    # check validation by
+    valid_password = re.fullmatch("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$", data["password"])
+    valid_birth = re.fullmatch('\d{8}', data["birth"])
+    valid_phonenumber = re.fullmatch('^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$', data["phonenumber"])
+
+    if not (valid_password):
+        flash("비밀번호는 8~24자 영문대소문자, 숫자, 특수문자 혼합 사용해야합니다.")
+        return render_template("back.html")
+
+    if not (valid_birth):
+        flash("생년월일 형식이 알맞지 않습니다. YYYYMMDD")
+        return render_template("back.html")
+
+    if not (valid_phonenumber):
+        flash("전화번호 형식이 알맞지 않습니다. XXX-XXXX-XXXX")
+        return render_template("back.html")
+
+    # [{'InsertNewUserErrorMessage': 'User ID already exists.'}]
+    # [{'InsertNewUserSuccessMessage': 'Insert new User successfully'}]
+    # log_type = log[0].keys()[0]
+    # log_value = log[0].items()[0]
+    # print(log_type, log_value)
+
+    log = users.sign_up(data["id"], data["password"], data["name"], data["birth"], data["phonenumber"], data["gender"], data["address"], data["role"])
+    print(log)
+    flash(log)
+
+
+
+    return redirect("/")
+
+# made by 학림, 함수명은 목적 페이지로!
+@controller.route("/tests", methods=["GET"])
 def tests():
-    return render_template("submitterhome.html")
+    return render_template("submitter_home.html")
 
+@controller.route("/agreement", methods=["GET"])
+def agreement():
+    return render_template("agreement.html")
 
+@controller.route("/task_detail", methods=["GET"])
+def Taskdetail():
+    return render_template("task_detail.html")
+
+@controller.route("/submitter_home", methods=["POST"])
+def submitter_home():
+    return render_template("submitter_home.html")
