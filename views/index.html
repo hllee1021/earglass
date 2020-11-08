@@ -1,22 +1,20 @@
 {% extends "./partials/layout.html" %}
 {% block body %}
-<div class="container">
-  <form method="POST" action="/users/login">
-    <div class="form-group">
-      <label for="exampleInputEmail1">ID</label>
-      <input name="username" type="id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-        placeholder="Enter ID" required>
-    </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">Password</label>
-      <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
-        required>
-    </div>
-    <button type="submit" class="btn btn-primary">SignIn</button>
-    <a type="button" class="btn btn-primary" href='/users/signup'>Signup</a>
-  </form>
+<form method="POST" action="/users/login">
+  <div class="form-group">
+    <label for="exampleInputEmail1">ID</label>
+    <input name="username" type="id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+      placeholder="Enter ID" required>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+      required>
+  </div>
+  <button type="submit" class="btn btn-primary">SignIn</button>
+  <a type="button" class="btn btn-primary" href='/users/signup'">Signup</a>
   <!-- 테스트용 링크 -->
   <a href='/users/tests'>test</a>
   <!-- 테스트용 링크 -->
-</div>
+</form>
 {% endblock %}
