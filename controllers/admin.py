@@ -40,3 +40,7 @@ def get_admin_page():
 @controller.route("/add_task", methods=["GET"])
 def get_add_task_page():
     return render_template("admin/add_task.html")
+
+@controller.route("/task", methods=["GET"])
+def get_task_page():
+    return render_template("admin/task.html")
