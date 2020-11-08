@@ -99,3 +99,7 @@ def Taskdetail():
 @controller.route("/submitter_home", methods=["POST"])
 def submitter_home():
     return render_template("submitter_home.html")
+
+@controller.route("/submitter_home", methods=["GET"])
+def submit_page():
+    return render_template("submit_page.html")
