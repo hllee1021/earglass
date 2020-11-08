@@ -44,3 +44,7 @@ def get_add_task_page():
 @controller.route("/task", methods=["GET"])
 def get_task_page():
     return render_template("admin/task.html")
+
+@controller.route("/check_submitter", methods=["GET"])
+def get_submitter_page():
+    return render_template("admin/submitter.html")
