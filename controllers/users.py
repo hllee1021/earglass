@@ -75,15 +75,13 @@ def mypage():
     user_id = request.cookies.get("user_id")
     print('user_id:', user_id)
     user = users.get_user_by_id(user_id)
-    print(user)
+
     if user:  # 로그인 된 경우
         return render_template("my.html", user=user)
     else:
         flash("로그인되지 않았습니다")
         return redirect("/")
-
-@controller.route("/")
-
+        
 
 # made by 학림, 함수명은 목적 페이지로!
 @controller.route("/tests", methods=["GET"])

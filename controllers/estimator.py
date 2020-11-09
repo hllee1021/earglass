@@ -6,4 +6,4 @@ controller = Blueprint("estimator", __name__)
 
 @controller.route("/", methods=["GET"])
 def get_estimator_home():
-    return render_template("estimator_home.html")
+    return render_template("estimator/estimator_home.html")

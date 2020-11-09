@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from controllers import users, admin, task, submitter, estimator
 from werkzeug.wrappers import Request
+from services import users as users_db
 import services
 
-app = Flask(__name__, template_folder="views")
+app = Flask(__name__, template_folder="templates")
 app.secret_key = "earglass"
 
 @app.context_processor
@@ -19,7 +20,7 @@ def inject_user():
 @app.route("/", methods=["GET"])
 def index():
     user_id = request.cookies.get("user_id")
-    user = users.get_user_by_id(user_id)
+    user = users_db.get_user_by_id(user_id)
     if user:
         # admin:
         if user["Role"] == "관리자":
@@ -27,13 +28,13 @@ def index():
 
         # submitter:
         if user["Role"] == "제출자":
-            pass
+            return redirect("/submitter")
 
         # estimator:
         if user["Role"] == "평가자":
             pass
-
-    return render_template("index.html")
+    else:
+        return render_template("index.html")
 
 # Blueprint(Routers)
 app.register_blueprint(users.controller, url_prefix="/users")
