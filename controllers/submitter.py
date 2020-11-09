@@ -9,6 +9,11 @@ def get_submitter_home():
     return render_template("submitter/submitter_home.html")
 
 
+@controller.route("/agreement", methods=["GET"])
+def agreement():
+    return render_template("submitter/agreement.html")
+
+
 @controller.route("/agree", methods=["POST"])
 def submitter_home():
     agree = request.form.get("agree")

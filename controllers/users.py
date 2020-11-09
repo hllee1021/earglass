@@ -29,7 +29,7 @@ def logout():
 
 @controller.route("/signup", methods=["GET"])
 def sign_up_form():
-    return render_template("sign_up.html")
+    return render_template("auth/sign_up.html")
 
 
 @controller.route("/signup", methods=["POST"])
@@ -77,17 +77,13 @@ def mypage():
     user = users.get_user_by_id(user_id)
 
     if user:  # 로그인 된 경우
-        return render_template("my.html", user=user)
+        return render_template("auth/my.html", user=user)
     else:
         flash("로그인되지 않았습니다")
         return redirect("/")
-        
+
 
 # made by 학림, 함수명은 목적 페이지로!
 @controller.route("/tests", methods=["GET"])
 def tests():
-    return render_template("submitter_home.html")
-
-@controller.route("/agreement", methods=["GET"])
-def agreement():
-    return render_template("agreement.html")
+    return render_template("submitter/submitter_home.html")
