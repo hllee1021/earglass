@@ -9,8 +9,6 @@ controller = Blueprint("users", __name__)
 def post_login_data():
     user_id = request.form.get("username")
     password = request.form.get("password")
-    print(user_id)
-    print(password)
 
     # 로그인 성공
     if users.verify_user(user_id, password):
@@ -29,23 +27,10 @@ def logout():
     res.delete_cookie("user_id")
     return res
 
-
-@controller.route("/my", methods=['GET'])
-def mypage():
-    # 쿠키가 있다 -> 로그인된 유저라면
-    user_id = request.cookies.get("user_id")
-    print('user_id:', user_id)
-    user = users.get_user_by_id(user_id)
-    if user:  # 로그인 된 경우
-        return render_template("my.html", user=user)
-    else:
-        flash("로그인되지 않았습니다")
-        return redirect("/")
-
-
 @controller.route("/signup", methods=["GET"])
 def sign_up_form():
     return render_template("sign_up.html")
+
 
 @controller.route("/signup", methods=["POST"])
 def sign_up():
@@ -71,17 +56,34 @@ def sign_up():
 
     # [{'InsertNewUserErrorMessage': 'User ID already exists.'}]
     # [{'InsertNewUserSuccessMessage': 'Insert new User successfully'}]
-    # log_type = log[0].keys()[0]
-    # log_value = log[0].items()[0]
-    # print(log_type, log_value)
-
-    log = users.sign_up(data["id"], data["password"], data["name"], data["birth"], data["phonenumber"], data["gender"], data["address"], data["role"])
-    print(log)
-    flash(log)
-
-
+    try:
+        # try sign up
+        log = users.sign_up(data["id"], data["password"], data["name"], data["birth"], data["phonenumber"], data["gender"], data["address"], data["role"])
+        print(log)
+        log_type = log[0].keys()[0]
+        log_value = log[0].items()[0]
+        print(log_type, log_value)
+    except:
+        pass
 
     return redirect("/")
+
+
+@controller.route("/my", methods=['GET'])
+def mypage():
+    # 쿠키가 있다 -> 로그인된 유저라면
+    user_id = request.cookies.get("user_id")
+    print('user_id:', user_id)
+    user = users.get_user_by_id(user_id)
+    print(user)
+    if user:  # 로그인 된 경우
+        return render_template("my.html", user=user)
+    else:
+        flash("로그인되지 않았습니다")
+        return redirect("/")
+
+@controller.route("/")
+
 
 # made by 학림, 함수명은 목적 페이지로!
 @controller.route("/tests", methods=["GET"])
@@ -91,27 +93,3 @@ def tests():
 @controller.route("/agreement", methods=["GET"])
 def agreement():
     return render_template("agreement.html")
-
-@controller.route("/task_detail", methods=["GET"])
-def Taskdetail():
-    return render_template("task_detail.html")
-
-@controller.route("/submitter_home", methods=["GET"])
-def get_submitter_home():
-    return render_template("submitter_home.html")
-
-
-@controller.route("/agree", methods=["POST"])
-def submitter_home():
-    agree = request.form.get("agree")
-    # agreement processing code
-    return redirect("submitter_home")
-
-@controller.route("/submit_page", methods=["GET"])
-def submit_page():
-    return render_template("submit_page.html")
-
-@controller.route("/submit_task", methods=["POST"])
-def submit_task():
-    # new task processing code
-    return redirect("submitter_home")
