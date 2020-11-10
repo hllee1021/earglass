@@ -17,8 +17,15 @@ def agreement():
 @controller.route("/agree", methods=["POST"])
 def submitter_home():
     agree = request.form.get("agree")
-    # agreement processing code
-    return redirect("submitter/agreement.html")
+    print(agree)
+    if agree == "agree":
+        # agreement processing code
+        flash("테스크 참여 신청되었습니다.")
+        return redirect("/")
+    else:
+        flash("개인정보 활용에 동의하셔야 테스크에 참여가 가능합니다.")
+        return redirect("/")
+        
 
 
 @controller.route("/submit_page", methods=["GET"])
@@ -29,4 +36,5 @@ def submit_page():
 @controller.route("/submit_task", methods=["POST"])
 def submit_task():
     # new task processing code
-    return redirect("submitter/submitter_home")
+    flash("제출되었습니다.")
+    return redirect("/")

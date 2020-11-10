@@ -23,15 +23,15 @@ def index():
     user = users_db.get_user_by_id(user_id)
     if user:
         # admin:
-        if user["Role"] == "관리자":
+        if user["FK_UserTypeName"] == "관리자":
             pass
 
         # submitter:
-        if user["Role"] == "제출자":
+        if user["FK_UserTypeName"] == "제출자":
             return redirect("/submitter")
 
         # estimator:
-        if user["Role"] == "평가자":
+        if user["FK_UserTypeName"] == "평가자":
             pass
     else:
         return render_template("index.html")
