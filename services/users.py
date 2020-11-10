@@ -1,16 +1,18 @@
 from database.connection import connect
 
+# connect to db
 connect = connect()
 cursor = connect.cursor()
 
-# user 정보 받아오기
 def get_user_by_id(id):
+    # user 정보 받아오기
     cursor.execute("SELECT Id, Password, Name, Gender, Address, Birth, PhoneNumber, FK_TypeName AS Role, UserScore FROM USER WHERE Id=%s", (id,))
     user = cursor.fetchone() 
     return user
 
-# 유저 로그인 확인
+
 def verify_user(id, password):
+    # 유저 로그인 확인
     user = get_user_by_id(id)
     if not user:
         return False
@@ -19,14 +21,15 @@ def verify_user(id, password):
     return True
 
 
-# 회원가입
 def sign_up(id, password, name, birth, phonenumber, gender, address, role):
+    # 회원가입
     cursor.callproc('InsertNewUser', (id, password, name,
                                       birth, phonenumber, gender, address, role))
     message = cursor.fetchall()
     connect.commit()
     return message
 
-# 회원탈퇴?
+
 def withdrawal():
+    # 회원탈퇴?
     pass

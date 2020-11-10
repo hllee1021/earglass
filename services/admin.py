@@ -1,15 +1,9 @@
 from database.connection import connect
 
+# connect to db
 connect = connect()
 cursor = connect.cursor()
 import math
-
-def get_tasks(page):
-    # 페이지 번호에 따른 task 리턴
-    sql = "SELECT * FROM TASK LIMIT %s OFFSET %s"
-    cursor.execute(sql, (20, 20*int(page)))    
-    data = cursor.fetchall()
-    return data
 
 
 def get_users(page):
@@ -60,35 +54,6 @@ def show_estimator(user_id):
     return data
 
 
-def add_task(task_name, description, min_period, manager_id):
-    # 테스크 생성
-    cursor.callproc('InsertNewTask', (task_name, description, min_period, manager_id))    
-    message = cursor.fetchall()
-    connect.commit()
-    return message
-
-
-def remove_task(task_name):
-    # 테스크 제거
-    cursor.callproc('DeleteTask', (task_name,) )
-    message = cursor.fetchall()
-    connect.commit()
-    return message
-
-
-def edit_task(task_name, description, min_period):
-    # 테스크 수정
-    cursor.callproc('EditTask', (task_name, description, min_period))
-    message = cursor.fetchall()
-    connect.commit()
-    return message
-
-def update_task_status(task_name, status):
-    # 테스크 상태 업데이트
-    cursor.callproc('UpdateTaskStatus', (task_name, status))
-    message = cursor.fetchall()
-    connect.commit()
-    return message
 
 def show_estimate_status(user_id, page):
     # 평가자 평가파일 현황
