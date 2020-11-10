@@ -1,29 +1,29 @@
 {% extends "./partials/layout.html" %} {% block body %}
 <h1>Welcome, {{ user['Name']}} !</h1>
 <ul>
-  <li>
-    <p>id: {{ user['Id'] }}</p>
-  </li>
-  <li>
-    <p>Name: {{ user['Name'] }}</p>
-  </li>
-  <!-- <li><p>password: {{ user['Password'] }}</p></li> -->
-  <li>
-    <p>gender: {{ user['Gender'] }}</p>
-  </li>
-  <li>
-    <p>address: {{ user['Address'] }}</p>
-  </li>
-  <li>
-    <p>birth: {{ user['Birth'] }}</p>
-  </li>
-  <li>
-    <p>phonenumber: {{ user['PhoneNumber'] }}</p>
-  </li>
-  <li>
-    <p>usertype: {{ user['FK_TypeName'] }}</p>
-  </li>
-  <a href="">수정</a>
-  <a href="">탈퇴</a>
-  <a href="/users/logout">로그아웃</a>
-  {% endblock %}
+    <li>
+        <p>id: {{ user['Id'] }}</p>
+    </li>
+    <li>
+        <p>Name: {{ user['Name'] }}</p>
+    </li>
+    <!-- <li><p>password: {{ user['Password'] }}</p></li> -->
+    <li>
+        <p>gender: {{ user['Gender'] }}</p>
+    </li>
+    <li>
+        <p>address: {{ user['Address'] }}</p>
+    </li>
+    <li>
+        <p>birth: {{ user['Birth'] }}</p>
+    </li>
+    <li>
+        <p>phonenumber: {{ user['PhoneNumber'] }}</p>
+    </li>
+    <li>
+        <p>usertype: {{ user['FK_TypeName'] }}</p>
+    </li>
+    <a href="">수정</a>
+    <a href="">탈퇴</a>
+    <a href="/users/logout">로그아웃</a>
+    {% endblock %}
