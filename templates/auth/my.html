@@ -21,9 +21,9 @@
         <p>phonenumber: {{ user['PhoneNumber'] }}</p>
     </li>
     <li>
-        <p>usertype: {{ user['FK_TypeName'] }}</p>
+        <p>usertype: {{ user['Role'] }}</p>
     </li>
-    <a href="">수정</a>
+    <a href="/users/my/edit">수정</a>
     <a href="">탈퇴</a>
     <a href="/users/logout">로그아웃</a>
     {% endblock %}

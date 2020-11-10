@@ -1,13 +1,15 @@
 from database.connection import connect
 
+connect = connect()
+cursor = connect.cursor()
 
+# user 정보 받아오기
 def get_user_by_id(id):
-    conn = connect()
-    cur = conn.cursor()
-    cur.execute("SELECT Id, Name, Gender, Address, Birth, PhoneNumber, FK_TypeName AS Role, UserScore FROM USER WHERE Id=%s", (id,))
-    user = cur.fetchone()
+    cursor.execute("SELECT Id, Password, Name, Gender, Address, Birth, PhoneNumber, FK_TypeName AS Role, UserScore FROM USER WHERE Id=%s", (id,))
+    user = cursor.fetchone() 
     return user
 
+# 유저 로그인 확인
 def verify_user(id, password):
     user = get_user_by_id(id)
     if not user:
@@ -17,12 +19,14 @@ def verify_user(id, password):
     return True
 
 
+# 회원가입
 def sign_up(id, password, name, birth, phonenumber, gender, address, role):
-    # 테스크 상태 업데이트
-    conn = connect()
-    cur = conn.cursor()
-    cur.callproc('InsertNewUser', (id, password, name,
+    cursor.callproc('InsertNewUser', (id, password, name,
                                       birth, phonenumber, gender, address, role))
-    message = cur.fetchall()
-    conn.commit()
+    message = cursor.fetchall()
+    connect.commit()
     return message
+
+# 회원탈퇴?
+def withdrawal():
+    pass
