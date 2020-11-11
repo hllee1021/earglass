@@ -8,14 +8,12 @@ def get_user_by_id(id):
     # user 정보 받아오기
     cursor.execute("SELECT * FROM USER WHERE Id=%s", (id,))
     user = cursor.fetchone() 
-    print(user)
     return user
 
 
 def verify_user(id, password):
     # 유저 로그인 확인
     user = get_user_by_id(id)
-    print(user)
     if not user:
         return False
     elif user["Password"] != password:

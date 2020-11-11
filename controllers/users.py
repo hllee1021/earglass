@@ -74,7 +74,6 @@ def sign_up():
 def mypage():
     # 쿠키가 있다 -> 로그인된 유저라면
     user_id = request.cookies.get("user_id")
-    print('user_id:', user_id)
     user = users.get_user_by_id(user_id)
 
     if user:  # 로그인 된 경우

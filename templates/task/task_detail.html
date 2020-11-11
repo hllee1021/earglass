@@ -53,9 +53,18 @@
   {% include "task/task_my_submits.html" %}
 </div>
 
+
+{% if False %}
+<div id="Submit" class="tabcontent">
+  <div class="container">
+    <h1>신청이 우선</h1>
+  </div>
+</div>
+{% else %}
 <div id="Submit" class="tabcontent">
   {% include "task/task_submit_page.html" %}
 </div>
+{% endif %}
 
 <script>
   function openPage(pageName, elmnt, color) {

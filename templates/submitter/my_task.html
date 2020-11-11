@@ -3,7 +3,7 @@
 <div class="container">
     <table class="table table-striped table-bordered">
         <thead>
-            <h>참여 태스크 목록</h>
+            <h1>참여 태스크 목록</h1>
             <tr>
                 <th>Index</th>
                 <th>태스크명</th>
@@ -31,8 +31,8 @@
                     2
                 </td>
                 <td>
-                    <a type="button" class="btn btn-primary" href="/task/detail">상세보기</a>
-                    <a type="button" class="btn btn-primary" href="/task/detail/submit">제출</a>
+                    <a class="btn btn-primary" href="#" onclick="page_move('/task/detail', 'info' );">상세보기</a>
+                    <a class="btn btn-primary" href="#" onclick="page_move('/task/detail', 'submit' );">제출</a>
                 </td>
             </tr>
             <tr>
@@ -52,8 +52,8 @@
                     2
                 </td>
                 <td>
-                    <a type="button" class="btn btn-primary" href="/task/detail">상세보기</a>
-                    <a type="button" class="btn btn-primary" href="/task/detail/submit">제출</a>
+                    <a class="btn btn-primary" href="#" onclick="page_move('/task/detail', 'info' );">상세보기</a>
+                    <a class="btn btn-primary" href="#" onclick="page_move('/task/detail', 'submit' );">제출</a>
                 </td>
             </tr>
             <tr>
@@ -73,12 +73,39 @@
                     2
                 </td>
                 <td>
-                    <a type="button" class="btn btn-primary" href="/task/detail">상세보기</a>
-                    <a type="button" class="btn btn-primary" href="/task/detail/submit">제출</a>
+                    <a class="btn btn-primary" href="#" onclick="page_move('/task/detail', 'info' );">상세보기</a>
+                    <a class="btn btn-primary" href="#" onclick="page_move('/task/detail', 'submit' );">제출</a>
+                    <!-- <a type="button" class="btn btn-primary" href="/task/detail">상세보기</a>
+                    <a type="button" class="btn btn-primary" href="/task/detail">제출</a> -->
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
+
+<script>
+    function page_move(url, some_data) {
+        var form = document.createElement("form");
+        var parm = new Array();
+        var input = new Array();
+
+        form.action = url;
+        form.method = "post";
+
+        parm.push(['opt', some_data]);
+
+
+        for (var i = 0; i < parm.length; i++) {
+            input[i] = document.createElement("input");
+            input[i].setAttribute("type", "hidden");
+            input[i].setAttribute('name', parm[i][0]);
+            input[i].setAttribute("value", parm[i][1]);
+            form.appendChild(input[i]);
+        }
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+</script>
 
 {% endblock %}

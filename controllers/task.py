@@ -8,7 +8,7 @@ def task_detail():
     opt = "info"
     return render_template("task/task_detail.html", opt=opt)
 
-@controller.route("/detail/submit", methods=["GET"])
-def task_detail_submit():
-    opt = "submit"
+@controller.route("/detail", methods=["POST"])
+def task_detail_post():
+    opt = request.form.get("opt", "info")
     return render_template("task/task_detail.html", opt=opt)
