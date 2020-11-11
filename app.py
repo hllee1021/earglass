@@ -37,7 +37,7 @@ def index():
     if user:
         # admin:
         if user["FK_UserTypeName"] == "관리자":
-            pass
+            return redirect("/admin")
 
         # submitter:
         if user["FK_UserTypeName"] == "제출자":
