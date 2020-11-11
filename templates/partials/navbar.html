@@ -13,7 +13,26 @@
             <li class="nav-item">
                 <a class="nav-link" href="/users/logout">Logout</a>
             </li>
+
+            {% if is_submitter() %}
+            <li class="nav-item">
+                <a class="nav-link" href="/users/my">TaskBoard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users/logout">MyTask</a>
+            </li>
+
+            {% elif is_estimator() %}
+            <li class="nav-item">
+                <a class="nav-link" href="/users/my">평가자담당테스크 목록</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users/logout">그만해...!</a>
+            </li>
+            {% endif %}
+
             {% else %}
+
             <li class="nav-item">
                 <a class="nav-link" href="/">Login</a>
             </li>
