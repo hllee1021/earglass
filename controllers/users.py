@@ -10,22 +10,22 @@ def post_login_data():
     user_id = request.form.get("username")
     password = request.form.get("password")
 
-    # 로그인 성공
+    response = make_response(redirect("/"))
+    # login 성공 여부 확인
     if users.verify_user(user_id, password):
         # not "/my", "my". "my" == "/users/my", "/my" = "/my"
-        res = make_response(redirect("my"))
-        res.set_cookie("user_id", user_id)
-        return res
+        response.set_cookie("user_id", user_id)
+        return response
     else:
         flash("로그인 실패. 다시 시도하세요")
-        return redirect("/")
+    return response
 
 
 @controller.route("/logout", methods=["GET"])
 def logout():
-    res = make_response(redirect("/"))
-    res.delete_cookie("user_id")
-    return res
+    response = make_response(redirect("/"))
+    response.delete_cookie("user_id")
+    return response
 
 @controller.route("/signup", methods=["GET"])
 def sign_up_form():
@@ -54,6 +54,7 @@ def sign_up():
         flash("전화번호 형식이 알맞지 않습니다. XXX-XXXX-XXXX")
         return render_template("back.html")
 
+    # 디비가 구축되고 나면 해야함!!!!
     # [{'InsertNewUserErrorMessage': 'User ID already exists.'}]
     # [{'InsertNewUserSuccessMessage': 'Insert new User successfully'}]
     try:
@@ -81,6 +82,12 @@ def mypage():
     else:
         flash("로그인되지 않았습니다")
         return redirect("/")
+
+# template가 불안정
+@controller.route("/my/edit", methods=['GET'])
+def edit_my_form():
+    return render_template("auth/modify_my.html")
+
 
 
 # made by 학림, 함수명은 목적 페이지로!

@@ -4,70 +4,76 @@
 {% block body %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-     <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-     <ul class="navbar-nav mr-auto">
-       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-       </li>
-       <li class="nav-item">
-        <a class="nav-link" href="#">MyPage</a>
-       </li>
-       <li class="nav-item">
-        <a class="nav-link" href="#">Logout</a>
-       </li>
-     </ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">MyPage</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Logout</a>
+            </li>
+        </ul>
     </div>
-  </nav>
-  </br>
-  
-  <h2>SignUp Page</h2>
-  
-  </br>
-  
-  <form method="POST" action="/users/signup">
+</nav>
+</br>
+
+<h2>SignUp Page</h2>
+
+</br>
+
+<form method="POST" action="/users/signup">
     <div class="form-group">
-       <label for="exampleInputEmail1">ID</label>
-       <input type="text" name="id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ user['id']}}">
-    </div>
-    <div class="form-group">
-       <label for="exampleInputPassword1">Password</label>
-       <input type="text" name="password" class="form-control" id="exampleInputPassword1" value="{{ user['password']}}">
+        <label for="exampleInputEmail1">ID</label>
+        <input type="text" name="id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            value="{{ user['id']}}">
     </div>
     <div class="form-group">
-       <label for="exampleInputEmail1">Name</label>
-       <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ user['name']}}">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="text" name="password" class="form-control" id="exampleInputPassword1"
+            value="{{ user['password']}}">
     </div>
     <div class="form-group">
-       <label for="exampleInputEmail1">Date of Birth</label>
-       <input type="text" name="birth" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ user['birth']}}">
+        <label for="exampleInputEmail1">Name</label>
+        <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            value="{{ user['name']}}">
     </div>
     <div class="form-group">
-       <label for="exampleInputEmail1">Phone Number</label>
-       <input type="text" name="phonenumber" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ user['phonenumber']}}">
+        <label for="exampleInputEmail1">Date of Birth</label>
+        <input type="text" name="birth" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            value="{{ user['birth']}}">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Phone Number</label>
+        <input type="text" name="phonenumber" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            value="{{ user['phonenumber']}}">
     </div>
     <div class="input-group mb-3">
-    <div class="input-group-prepend">
-       <label for="exampleInputEmail1">Gender</label>
- 
-       <button class="btn btn-outline-secondary" type="button" name="M">Male</button>
-       <button class="btn btn-outline-secondary" type="button" name="W">Female</button>
-       </div>
+        <div class="input-group-prepend">
+            <label for="exampleInputEmail1">Gender</label>
+
+            <button class="btn btn-outline-secondary" type="button" name="M">Male</button>
+            <button class="btn btn-outline-secondary" type="button" name="W">Female</button>
+        </div>
     </div>
     <div class="form-group">
-       <label for="inputAddress">Address</label>
-       <input type="text" name="address" class="form-control" id="inputAddress" value="{{ user['address']}}">
+        <label for="inputAddress">Address</label>
+        <input type="text" name="address" class="form-control" id="inputAddress" value="{{ user['address']}}">
     </div>
-       <button type="submit" class="btn btn-primary">Sign Up</button>
-    </form>
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+</form>
 {% endblock %}
 <ul>
-  <li><a href="/users/modify_my">수정</a></li>
-  <li><a href="/users/modify_my">탈퇴</a></li>
-  <li><a href="/">홈으로 돌아가기</a></li>
-  <li><a href="/users/logout">로그아웃</a></li>
+    <li><a href="/users/modify_my">수정</a></li>
+    <li><a href="/users/modify_my">탈퇴</a></li>
+    <li><a href="/">홈으로 돌아가기</a></li>
+    <li><a href="/users/logout">로그아웃</a></li>
 </ul>
 {% endblock %}
