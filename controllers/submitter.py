@@ -25,12 +25,10 @@ def submitter_home():
     else:
         flash("개인정보 활용에 동의하셔야 테스크에 참여가 가능합니다.")
         return redirect("/")
-        
 
-
-@controller.route("/submit_page", methods=["GET"])
-def submit_page():
-    return render_template("submitter/submit_page.html")
+@controller.route("/my_task", methods=["GET"])
+def get_my_task_submitter():
+    return render_template("submitter/my_task.html")
 
 
 @controller.route("/submit_task", methods=["POST"])

@@ -7,13 +7,31 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             {% if is_logged_in() %}
+            {% if is_submitter() %}
+            <li class="nav-item">
+                <a class="nav-link" href="/submitter">TaskBoard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/submitter/my_task">MyTask</a>
+            </li>
+
+            {% elif is_estimator() %}
+            <li class="nav-item">
+                <a class="nav-link" href="/estimator">평가자담당테스크 목록</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users/logout">그만해...!</a>
+            </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="/users/my">MyPage</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/users/logout">Logout</a>
             </li>
+
             {% else %}
+
             <li class="nav-item">
                 <a class="nav-link" href="/">Login</a>
             </li>

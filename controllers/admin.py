@@ -34,7 +34,7 @@ controller = Blueprint("admin", __name__)
 
 
 @controller.route("/", methods=["GET"])
-def get_admin_page():
+def admin_home():
     return render_template("admin/admin.html")
 
 @controller.route("/add_task", methods=["GET"])

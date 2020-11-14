@@ -2,78 +2,100 @@
 
 
 {% block body %}
-<h1>
-    태스크 현황(태스크 상세보기)
-</h1>
-<div class="container">
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>제출자 ID</th>
-                <th>제출날짜</th>
-                <th>제출형식</th>
-                <th>점수</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    hllee1021
-                </td>
-                <td>
-                    2020/08/06 12:00
-                </td>
-                <td>
-                    csv
-                </td>
-                <td>
-                    36
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    qwe123
-                </td>
-                <td>
-                    2020/09/11 12:00
-                </td>
-                <td>
-                    csv
-                </td>
-                <td>
-                    50
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    hllee1021
-                </td>
-                <td>
-                    2020/08/06 12:00
-                </td>
-                <td>
-                    csv
-                </td>
-                <td>
-                    100
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<style>
+  /* Set height of body and the document to 100% to enable "full page tabs" */
+  body,
+  html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial;
+  }
+
+  /* Style tab links */
+  .tablink {
+    background-color: #555;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 25%;
+  }
+
+  .tablink:hover {
+    background-color: #777;
+  }
+
+  /* Style the tab content (and add height:100% for full page content) */
+  .tabcontent {
+    color: black;
+    display: none;
+    padding: 100px 20px;
+    height: 100%;
+  }
+</style>
+<button class="tablink" onclick="openPage('Info', this, 'gray')" id="defaultOpen">Info</button>
+<button class="tablink" onclick="openPage('LeaderBoard', this, 'gray')">LeaderBoard</button>
+<button class="tablink" onclick="openPage('My Submit', this, 'gray')">My Submit</button>
+<button class="tablink" onclick="openPage('Submit', this, 'gray')" id="submit_button">Submit</button>
+
+<div id="Info" class="tabcontent">
+  {% include "task/task_info.html" %}
 </div>
-<div>
-    <h1>태스크 정보</h1>
-    <table class='table'>
-        <tbody>
-            <tr>
-                <th>url</th>
-                <td><a href="#">youtube.com/123123</a></td>
-            </tr>
-            <tr>
-                <th>description</th>
-                <td>Desc</td>
-            </tr>
-        </tbody>
-    </table>
+
+<div id="LeaderBoard" class="tabcontent">
+  {% include "task/task_leader_board.html" %}
 </div>
+
+<div id="My Submit" class="tabcontent">
+  {% include "task/task_my_submits.html" %}
+</div>
+
+
+{% if False %}
+<div id="Submit" class="tabcontent">
+  <div class="container">
+    <h1>신청이 우선</h1>
+  </div>
+</div>
+{% else %}
+<div id="Submit" class="tabcontent">
+  {% include "task/task_submit_page.html" %}
+</div>
+{% endif %}
+
+<script>
+  function openPage(pageName, elmnt, color) {
+    // Hide all elements with class="tabcontent" by default */
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Remove the background color of all tablinks/buttons
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].style.backgroundColor = "";
+    }
+
+    // Show the specific tab content
+    document.getElementById(pageName).style.display = "block";
+
+    // Add the specific color to the button used to open the tab content
+    elmnt.style.backgroundColor = color;
+  }
+
+  // Get the element with id="defaultOpen" and click on it
+  var opt = '{{ opt }}';
+  console.log(opt)
+  if (opt == "submit") {
+    document.getElementById("submit_button").click();
+  } else {
+    document.getElementById("defaultOpen").click();
+  }
+</script>
+
 {% endblock %}
