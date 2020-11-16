@@ -7,60 +7,142 @@
 {% block body %}
 <!-- <div include-html="/partials/navbar.html">
 </div> -->
-<div class="container">
+<style media="screen">
+    .wrap{
+      width: 1000px;
+      height: 300px;
+      overflow-x: scroll;
+      white-space:nowrap;
+      overflow: auto;
+    }
+    .wrap img{
+        width:300px;
+        height:100%;
+    }
+</style>
+
+<div class="container screen wrap">
+    <h3> 평가할 파일(대기목록)</h3>
     <table class="table table-striped table-bordered">
         <thead>
-            <tr>
-                <th>평가할 목록</th>
-            </tr>
+            <th>Index</th>
+            <th>태스크명</th>
+            <th>제출자 ID</th>
+            <th>Deadline</th>
+            <th>파일</th>
+            <th>평가점수</th>
+            <th>P/NP</th>
+            <th></th>
         </thead>
         <tbody>
             <tr>
-                <td>태스크1
-                    <a type="button" class="btn btn-primary float-right" href='/estimator/pdsf_detail'>평가하기</a>
+                <td>
+                    1
                 </td>
-
+                <td>
+                    <a href="/">태스크1</a>
+                </td>
+                <td>
+                    hllee1021
+                </td>
+                <td>
+                    2020.11.19
+                </td>
+                <form>
+                    <td>
+                        <a class="btn btn-primary" href="#" role="button">다운로드</a>
+                    </td>
+                    <td>
+                        <div class="form group">
+                            <input type="score" class="form-control" id="score1" aria-describedby="emailHelp" placeholder="100" required>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form group">
+                            <select class="form-control form-control-sm">
+                                <option>P</option>
+                                <option>N</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">평가완료</button>
+                    </td>
+                </form>
             </tr>
             <tr>
-                <td>태스크2
-                    <a type="button" class="btn btn-primary float-right" href='/estimator/pdsf_detail'>평가하기</a>
+                <td>
+                    2
                 </td>
-
+                <td>
+                    <a href="/">태스크2</a>
+                </td>
+                <td>
+                    hllee1021
+                </td>
+                <td>
+                    2020.11.19
+                </td>
+                <form>
+                    <td>
+                        <a class="btn btn-primary" href="#" role="button">다운로드</a>
+                    </td>
+                    <td>
+                        <div class="form group">
+                            <input type="score" class="form-control" id="score1" aria-describedby="emailHelp" placeholder="100" required>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form group">
+                            <select class="form-control form-control-sm">
+                                <option>P</option>
+                                <option>N</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">평가완료</button>
+                    </td>
+                </form>
             </tr>
             <tr>
-                <td>태스크3
-                    <a type="button" class="btn btn-primary float-right" href='/estimator/pdsf_detail'>평가하기</a>
+                <td>
+                    3
                 </td>
+                <td>
+                    <a href="/">태스크3</a>
+                </td>
+                <td>
+                    hllee1021
+                </td>
+                <td>
+                    2020.11.19
+                </td>
+                <form>
+                    <td>
+                        <a class="btn btn-primary" href="#" role="button">다운로드</a>
+                    </td>
+                    <td>
+                        <div class="form group">
+                            <input type="score" class="form-control" id="score1" aria-describedby="emailHelp" placeholder="100" required>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form group">
+                            <select class="form-control form-control-sm">
+                                <option>P</option>
+                                <option>N</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">평가완료</button>
+                    </td>
+                </form>
             </tr>
         </tbody>
     </table>
 </div>
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-</nav>
-
-<table class="table table-bordered table-striped mt-5">
-    <tbody>
-        <tr>
-            <th>태스크 1</th>
-            <td>점수</td>
-        </tr>
-        <tr>
-            <th>태스크 2</th>
-            <td>점수</td>
-        </tr>
-        <tr>
-            <th>태스크 3</th>
-            <td>점수</td>
-        </tr>
-    </tbody>
-</table>
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
