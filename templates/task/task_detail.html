@@ -36,35 +36,40 @@
     height: 100%;
   }
 </style>
-<button class="tablink" onclick="openPage('Info', this, 'gray')" id="defaultOpen">Info</button>
-<button class="tablink" onclick="openPage('LeaderBoard', this, 'gray')">LeaderBoard</button>
-<button class="tablink" onclick="openPage('My Submit', this, 'gray')">My Submit</button>
-<button class="tablink" onclick="openPage('Submit', this, 'gray')" id="submit_button">Submit</button>
+<div>
+  <button class="tablink" onclick="openPage('Info', this, 'gray')" id="defaultOpen">Info</button>
+  <button class="tablink" onclick="openPage('LeaderBoard', this, 'gray')">LeaderBoard</button>
+  <button class="tablink" onclick="openPage('My Submit', this, 'gray')">My Submit</button>
+  <button class="tablink" onclick="openPage('Submit', this, 'gray')" id="submit_button">Submit</button>
 
-<div id="Info" class="tabcontent">
-  {% include "task/task_info.html" %}
-</div>
-
-<div id="LeaderBoard" class="tabcontent">
-  {% include "task/task_leader_board.html" %}
-</div>
-
-<div id="My Submit" class="tabcontent">
-  {% include "task/task_my_submits.html" %}
-</div>
-
-
-{% if False %}
-<div id="Submit" class="tabcontent">
-  <div class="container">
-    <h1>신청이 우선</h1>
+  <div id="Info" class="tabcontent">
+    {% include "task/task_info.html" %}
   </div>
+
+  <div id="LeaderBoard" class="tabcontent">
+    {% include "task/task_leader_board.html" %}
+  </div>
+
+  <div id="My Submit" class="tabcontent">
+    {% include "task/task_my_submits.html" %}
+  </div>
+
+
+  {% if False %}
+  <div id="Submit" class="tabcontent">
+    <div class="container">
+      <h1>신청이 우선</h1>
+    </div>
+  </div>
+  {% else %}
+  <div id="Submit" class="tabcontent">
+    {% include "task/task_submit_page.html" %}
+  </div>
+  {% endif %}
+
+
+  <button type="button" class="btn btn-primary float-right">뒤로가기</button>
 </div>
-{% else %}
-<div id="Submit" class="tabcontent">
-  {% include "task/task_submit_page.html" %}
-</div>
-{% endif %}
 
 <script>
   function openPage(pageName, elmnt, color) {
