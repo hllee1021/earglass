@@ -75,15 +75,13 @@ def csv_file_download_with_stream():
 
     filename = f"{odsf_type['TaskName']}_{odsf_type['DataTypeName']}"
 
+    # schema에 맞는 df 생성
     schema = json.loads(odsf_type['MappingInfo'])
     schema = list(schema.keys())
-    print(schema)
-    print(type(schema))
-
+    temp_df = pd.DataFrame(columns=schema)
 
     # dataframe을 저장할 IO stream 
     output_stream = StringIO()
-    temp_df = pd.DataFrame({'col1':[1,2,3], 'col2':[4,5,6]})
 
     # 그 결과를 앞서 만든 IO stream에 저장
     temp_df.to_csv(output_stream)

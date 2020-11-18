@@ -64,6 +64,9 @@ def show_participating_task_info(user_id):
     WHERE SQ.Status == 'ongoing' GROUP BY SQ.TaskName"
     return queryall(sql, (user_id, ))
 
+def update_participation_status(task_name, user_id, new_status, comment):
+    '''제출자의 참여 상태 업데이트'''
+    return callproc('UpdateParticipationStatus', (task_name, user_id, new_status, comment,))
 
 def sort_by_origin_data_type(user_id, task_name):
     '''원본 데이터 타입 별로 보여주기
@@ -71,7 +74,7 @@ def sort_by_origin_data_type(user_id, task_name):
     sql = "SELECT O.DataTypeName,  MAX(COALESCE(D.SubmitNum, 0)) AS Submit_num, \
         SUM(CASE COALESCE(D.Pass, 'NP') WHEN 'P' THEN 1 ELSE 0 END) AS Pass_num \
         FROM PARSING_DSF AS P, ORIGIN_DATA_TYPE AS O WHERE P.OriginDataTypeID = O.idORIGIN_DATA_TYPE \
-            AND P.SubmitterID = $s AND P.TaskName = $s"
+             AND P.SubmitterID = %s AND P.TaskName = %s"
     return queryall(sql, (user_id, task_name, ))
 
 def edit_task(current_task_name, description, min_period, status, task_data_table_name,
@@ -101,7 +104,7 @@ def delete_task(task_name):
 def show_task_participation_list(task_name):
     '''index, 참여자 id, 제출자 평가 점수'''
     sql = "SELECT P.Status, U.Id, U.UserScore \
-        FROM Participation AS P, User AS U \
+        FROM PARTICIPATION AS P, USER AS U \
         WHERE P.FK_idUSER = U.idUSER AND P.FK_TaskName = %s"
     return queryall(sql, (task_name, ))
 
@@ -109,16 +112,18 @@ def sort_task_participation_list(task_name, status):
     '''참여 상태별로 sorting'''
     sql = "SELECT All_Status.Status, All_Status.Id, All_Status.UserScore \
         FROM (SELECT P.Status, U.Id, U.UserScore \
-        FROM Participation AS P, User AS U \
+        FROM PARTICIPATION AS P, USER AS U \
         WHERE P.FK_idUSER = U.idUSER AND P.FK_TaskName = %s) AS All_Status \
         WHERE All_Status.Status = %s"
     return queryall(sql, (task_name, status, ))
 
 
-def add_task():
-    '''태스크 추가
-    taskname, description, 최소업로드주기, table 이름, 스키마, 원본 데이터 타입, 시스템 pass 기준, 평가자 pass 기준'''
-    pass
+def add_task(task_name, description, min_period, status, task_data_table_name,
+         deadline, max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria):
+    '''태스크 추가'''
+    return callproc('InsertNewTask', (task_name, description, min_period, status, task_data_table_name,
+         deadline, max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria,))
+
 
 def get_all_tasks():
     '''taskname, task 통계(제출 파일 수, pass된 파일 수), task data table 위치'''

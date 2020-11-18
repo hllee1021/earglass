@@ -1,7 +1,7 @@
 -- 관리자가 task table에 정보 insert
--- taskname, description, 최소업로드주기, table 이름, 스키마, 원본 데이터 타입, 
+-- taskname, description, 최소업로드주기, table 이름, 스키마, 원본 데이터 타입,
 -- 시스템 pass 기준, 평가자 pass 기준
-    
+
 DELIMITER //
 
 CREATE PROCEDURE InsertNewTask
@@ -16,7 +16,7 @@ CREATE PROCEDURE InsertNewTask
              IN newPassCriteria             text)
 
 checkdupli:BEGIN
-    
+
     DECLARE varRowCount  Int;
     DECLARE varIdManager Int;
 
@@ -44,10 +44,10 @@ checkdupli:BEGIN
         -- get idUSER surrogate key value, check for validity.
         SELECT idUSER INTO varIdManager
         FROM USER
-        WHERE FK_TypeName = '관리자';
+        WHERE FK_UserTypeName = '관리자';
 
         -- Insert new Customer data.
-	    INSERT INTO TASK (TaskName, Description, MinPeriod, Status, 
+	    INSERT INTO TASK (TaskName, Description, MinPeriod, Status,
         TaskDataTableName, Deadline, FK_idManager, MaxDuplicatedRowRatio,
         MaxNullRatioPerColumn, PassCriteria)
            VALUES(newTaskName, newDescription,
