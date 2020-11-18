@@ -9,7 +9,7 @@ def get_submitter_home():
 
     user_id = request.cookies.get("user_id")
     tasks = submitter.tasklist_detail(user_id)
-
+    print(user_id)
     return render_template("submitter/submitter_home.html", tasks=tasks)
 
 

@@ -8,10 +8,12 @@ def task_detail():
     task_id = request.args.get('id', 0)
 
     # db 테스크 정보를 주세요
-    
     print(task_id)
     opt = "info"
-    return render_template("task/task_detail.html", opt=opt, task_id=task_id)
+    task={}
+    test = [{"id": 1, "name":"aa", "deadline":"1234"},{"id": 2, "name":"bb", "deadline":"1234"},{"id": 3, "name":"cc", "deadline":"1234"}]
+    data_type=["csv","smi","scv"]
+    return render_template("task/task_detail.html", opt=opt, task=task, test=test, data_type=data_type)
 
 @controller.route("/detail", methods=["POST"])
 def task_detail_post():
