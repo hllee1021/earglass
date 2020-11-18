@@ -18,15 +18,8 @@ def verify_user(id, password):
 
 def sign_up(id, password, name, birth, phonenumber, gender, address, role):
     # 회원가입
-    conn = connect()
-    cur = conn.cursor()
-    cur.callproc('InsertNewUser', (id, password, name,
+    return callproc('InsertNewUser', (id, password, name,
                                       birth, phonenumber, gender, address, role))
-    conn.commit()
-    conn.close()
-    message = cursor.fetchall()
-    connect.commit()
-    return message
 
 
 def withdrawal():

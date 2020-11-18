@@ -67,7 +67,9 @@ def callproc(sql, fmt=tuple()):
         conn = connect()
         cur = conn.cursor()
         cur.callproc(sql, fmt)
+        message = cur.fetchall()
         conn.commit()
+        return message
     except Exception as e:
         print(e)
         raise e

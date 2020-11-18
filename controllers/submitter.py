@@ -8,7 +8,7 @@ controller = Blueprint("submitter", __name__)
 def get_submitter_home():
 
     user_id = request.cookies.get("user_id")
-    tasks = tasklist_detail(user_id)
+    tasks = submitter.tasklist_detail(user_id)
 
     return render_template("submitter/submitter_home.html", tasks=tasks)
 
