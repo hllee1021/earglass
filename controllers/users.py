@@ -54,7 +54,7 @@ def sign_up():
         flash("전화번호 형식이 알맞지 않습니다. XXX-XXXX-XXXX")
         return render_template("back.html")
 
-    # 디비가 구축되고 나면 해야함!!!!
+    # 디비가 구축되고 나면 해야함!!!
     # [{'InsertNewUserErrorMessage': 'User ID already exists.'}]
     # [{'InsertNewUserSuccessMessage': 'Insert new User successfully'}]
     try:

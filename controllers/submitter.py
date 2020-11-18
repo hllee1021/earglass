@@ -1,13 +1,16 @@
 from flask import Blueprint, render_template, redirect, request, make_response, flash
-from services import users
+from services import users, submitter
 
 controller = Blueprint("submitter", __name__)
 
 
 @controller.route("/", methods=["GET"])
 def get_submitter_home():
-    test = [{"id": 1, "name":"aa", "deadline":"1234"},{"id": 2, "name":"bb", "deadline":"1234"},{"id": 3, "name":"cc", "deadline":"1234"}]
-    return render_template("submitter/submitter_home.html", test=test)
+
+    user_id = request.cookies.get("user_id")
+    tasks = tasklist_detail(user_id)
+
+    return render_template("submitter/submitter_home.html", tasks=tasks)
 
 
 @controller.route("/agreement", methods=["GET"])

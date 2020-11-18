@@ -108,9 +108,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `earglass`.`ORIGIN_DATA_TYPE` (
   `idORIGIN_DATA_TYPE` INT NOT NULL AUTO_INCREMENT,
-  `SchemaInfo` VARCHAR(1000) NOT NULL,
+  `SchemaInfo` VARCHAR(1000) NULL,
   `MappingInfo` VARCHAR(1000) NOT NULL,
-  `DataTypeName` VARCHAR(45) NULL,
+  `DataTypeName` JSON NULL,
   `TaskName` VARCHAR(45) NULL,
   PRIMARY KEY (`idORIGIN_DATA_TYPE`),
   INDEX `fk_ORIGIN_DATA_TYPE_TASK1_idx` (`TaskName` ASC),

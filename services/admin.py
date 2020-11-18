@@ -1,49 +1,26 @@
-from database.connection import connect
-
-# connect to db
-connect = connect()
-cursor = connect.cursor()
+from database.connection import *
 import math
 
 
-def get_users(page):
-    # 페이지 번호에 따른 user 리턴
-    sql = "SELECT * FROM USER LIMIT %s OFFSET %s"
-    cursor.execute(sql, (20, 20*int(page)))    
-    data = cursor.fetchall()
-    return data
-
-
-def get_UserPage():
-    # 유저 페이지 수 리턴
-    sql = "SELECT COUNT(*) AS C FROM USER"
-    cursor.execute(sql)
-    data = math.ceil(float(cursor.fetchone()["C"])/20)
-    return data
-
-
-def searchUser(column, search_word, page):
-    # column에 word로 검색한 결과를 page에 따라 리턴
-    sql = f"SELECT * FROM USER WHERE {column} = %s LIMIT %s OFFSET %s"
-    cursor.execute(sql, (search_word, 20, 20*int(page)))
-    data = cursor.fetchall()
-    return data
+def get_users():
+    # 전체 USER 상세 정보 리턴
+    sql = "SELECT Id, Name, Gender, BirthDate, PhoneNum, Address, UserScore \
+            FROM USER WHERE FK_UserTypeName != \'관리자\'"
+    return queryall(sql)
 
 
 def show_submitter(user_id):
-    # Submitter 에 대한 상세 정보 열람
-    sql = "SELECT * FROM USER WHERE idUSER = %s and FK_TypeName = \'제출자\'"
-    cursor.execute(sql, (int(user_id)))
-    data = cursor.fetchone()
-    return data
-
+    # Submitter 에 대한 상세 정보 및 참여중인 task 열람
+    sql = "SELECT Id, Name, Gender, BirthDate, PhoneNum, Address, UserScore \
+            FROM USER WHERE Id = %s and FK_UserTypeName = \'제출자\'"
+    return queryall(sql, (user_id))
+    
 
 def show_estimator(user_id):
-    # Estimator에 대한 상세 정보 열람
-    sql = "SELECT * FROM USER WHERE idUSER = %s and FK_TypeName = \'평가자\'"
-    cursor.execute(sql, user_id)   
-    data = cursor.fetchall()
-    return data
+    # Estimator에 대한 상세 정보 및 참여중인 task 열람
+    sql = "SELECT Id, Name, Gender, BirthDate, PhoneNum, Address, UserScore \
+            FROM USER WHERE Id = %s and FK_UserTypeName = \'평가자\'"
+    return queryall(sql, (user_id))
 
 
 def show_estimate_status(user_id, page):
@@ -63,7 +40,7 @@ def show_submit_status(user_id):
 
 def show_task():
     #taskname, task 통계(제출 파일 수, pass된 파일 수), task data table 위치
-    sql = "SELECT TaskName, "
+    sql = "SELECT TaskName, COUNT(*) AS TotalSubmitNum, "
 
     pass
 
