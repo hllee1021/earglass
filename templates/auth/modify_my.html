@@ -1,7 +1,6 @@
-{% extends "./partials/layout.html" %} {% block body %}
-<h1>Welcome, {{ user['Name']}} !</h1>
 {% extends "./partials/layout.html" %}
 {% block body %}
+<h1>Welcome, {{ user['Name']}} !</h1>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -69,7 +68,6 @@
     </div>
     <button type="submit" class="btn btn-primary">Sign Up</button>
 </form>
-{% endblock %}
 <ul>
     <li><a href="/users/modify_my">수정</a></li>
     <li><a href="/users/modify_my">탈퇴</a></li>

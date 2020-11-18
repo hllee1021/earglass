@@ -1,8 +1,5 @@
 from database.connection import *
 
-# connect to db
-connect = connect()
-cursor = connect.cursor()
 
 def tasklist_detail(user_id):
     #진행 중인 태스크에 taskname, deadline
@@ -37,16 +34,18 @@ def my_submission_list():
     #회차, 기간, 제출파일명, 원본데이터타입, 날짜, 시스템점수, 평가자점수(평균), total 점수, pass여부
     #원본데이터타입별로 sorting(전체, 타입 1, 타입2)
     #pass 여부별로 sorting
+    sql = "SELECT O."
     pass
 
 def score_detail():
     #시스템점수 상세 보기
+    #파싱 파일 안에서 가져와야 함
     pass
 
 def submit_info(task_name):
     #taskname, 스키마 정보, 매핑 정보
-    sql = "SELECT TaskName, SchemaInfo, MappingInfo FROM ORIGIN_DATA_TYPE WHERE TaskName = %s"
-    return queryone(sql, (task_name))
+    sql = "SELECT SchemaInfo FROM ORIGIN_DATA_TYPE WHERE TaskName = %s"
+    return queryall(sql, (task_name))
 
 def submit():
     #제출자 파일을 받으면 origin_dsf로 저장
