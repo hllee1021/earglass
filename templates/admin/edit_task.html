@@ -1,0 +1,73 @@
+{% extends "./partials/layout.html" %}
+{% block body %}
+
+<!-- form 제출로 묶어서 Task 추가되도록 설정해야함 -->
+
+<h1>Edit Task</h1>
+</br>
+</br>
+<form class="">
+    <div class="form-group">
+        <label class="form-group col-md-2">TaskName</label>
+        <input value="gyusika" type="text" class="form-group col-md-2" contenteditable="true">>
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">Description</label>
+        <textarea style="margin-left:15px;"cols="30" rows="10" class="form-control" contenteditable="true">description</textarea>></textarea>
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">최소 업로드 주기</label>
+        <input value="2" type="text" class="form-group col-md-2" contenteditable="true"> week
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">테이블 이름</label>
+        <input value="table name" type="text" class="form-group col-md-2" contenteditable="true">
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">스키마</label>
+        <input value="schema" type="text" class="form-group col-md-2" contenteditable="true">
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2 d-inline-block"><h5><b>원본 데이터 타입</b></h5></label>
+        <div style="margin-bottom: 5px;" class="input-group col-md-6">
+            <div class="input-group-prepend">
+              <span style="height: 62%;" class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="inputGroupFile01"
+                aria-describedby="inputGroupFileAddon01">
+              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
+            <button style="margin-left:15px" type="submit" class="btn btn-primary mb-4">삭제</button>
+        </div>  
+        <div style="margin-bottom: 10px;" class="input-group col-md-6">
+            <div class="input-group-prepend">
+              <span style="height: 62%;" class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="inputGroupFile01"
+                aria-describedby="inputGroupFileAddon01">
+              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
+            <button style="margin-left:15px" type="submit" class="btn btn-primary mb-4">삭제</button>
+        </div>
+        <button style="margin-left:15px" type="submit" class="btn btn-primary mb-4">추가</button>
+    </div>
+</br>
+    <h5 style="margin-left: 15px; margin-bottom: 10px;"><b>시스템 Pass 기준 설정</b></h5>
+    <div class="form-group">
+        <label class="form-group col-md-3" >최대 중복 Tuple 비율</label>
+        <input value="10" type="text" class="form-group col-md-2" contenteditable="true">%
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-3">최대 Column별 Null 비율</label>
+        <input value="10" type="text" class="form-group col-md-2" contenteditable="true">%
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-4"><h5><b>평가자 정성평가 Pass 기준설명</b></h5></label>
+        <textarea style="margin-left: 15px;"cols="30" rows="10" class="form-control" contenteditable="true">description</textarea>
+    </div>
+    </br>
+    <button type="submit" class="btn btn-primary float-right mb-4">수정 완료</button>
+</form>
+{% endblock %}

@@ -41,6 +41,10 @@ def admin_home():
 def get_add_task_page():
     return render_template("admin/add_task.html")
 
+@controller.route("/edit_task", methods=["GET"])
+def get_edit_task_page():
+    return render_template("admin/edit_task.html")
+
 @controller.route("/task", methods=["GET"])
 def get_task_page():
     return render_template("admin/task.html")
@@ -48,3 +52,16 @@ def get_task_page():
 @controller.route("/task_info", methods=["GET"])
 def get_task_info_page():
     return render_template("admin/task_info.html")
+
+@controller.route("/submitter", methods=["GET"])
+def get_admin_submitter_page():
+    return render_template("admin/submitter.html")
+
+@controller.route("/estimator", methods=["GET"])
+def get_admin_estimator_page():
+    return render_template("admin/estimator.html")
+
+@controller.route("/my", methods=["GET"])
+def get_admin_my_page():
+    return render_template("admin/my.html")
+
