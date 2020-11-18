@@ -35,7 +35,36 @@
             <th></th>
         </thead>
         <tbody>
+            {%for task in tasks%}
             <tr>
+                <td>{{task.get("id",0)}}</td>
+                <td>{{task.get("name",0)}}</td>
+                <td>{{task.get("submitter_name",0)}}</td>
+                <td>{{task.get("deadline",0)}}</td>
+                <form id={{q}}>
+                    <td>
+                        <a class="btn btn-primary" href="#" role="button">다운로드</a>
+                    </td>
+                    <td>
+                        <div class="form group">
+                            <input type="score" class="form-control" id="score1" aria-describedby="emailHelp" placeholder="100" required>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form group">
+                            <select class="form-control form-control-sm">
+                                <option>P</option>
+                                <option>N</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">평가완료</button>
+                    </td>
+                </form>
+            </tr>
+            {%endfor%}
+            <!-- <tr>
                 <td>
                     1
                 </td>
@@ -139,7 +168,7 @@
                         <button type="submit" class="btn btn-primary">평가완료</button>
                     </td>
                 </form>
-            </tr>
+            </tr> -->
         </tbody>
     </table>
 </div>

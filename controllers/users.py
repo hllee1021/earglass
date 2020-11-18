@@ -1,6 +1,6 @@
 import re
 from flask import Blueprint, render_template, redirect, request, make_response, flash
-from services import users
+import services
 
 controller = Blueprint("users", __name__)
 
@@ -12,9 +12,11 @@ def post_login_data():
 
     response = make_response(redirect("/"))
     # login 성공 여부 확인
-    if users.verify_user(user_id, password):
-        # not "/my", "my". "my" == "/users/my", "/my" = "/my"
+    if services.users.verify_user(user_id, password):
+        user = services.users.get_user_by_id(user_id)
         response.set_cookie("user_id", user_id)
+        response.set_cookie("id", str(user["idUSER"]))
+        print(user["idUSER"])
         return response
     else:
         flash("로그인 실패. 다시 시도하세요")
@@ -59,7 +61,7 @@ def sign_up():
     # [{'InsertNewUserSuccessMessage': 'Insert new User successfully'}]
     try:
         # try sign up
-        log = users.sign_up(data["id"], data["password"], data["name"], data["birth"], data["phonenumber"], data["gender"], data["address"], data["role"])
+        log = services.users.sign_up(data["id"], data["password"], data["name"], data["birth"], data["phonenumber"], data["gender"], data["address"], data["role"])
         print(log)
         log_type = log[0].keys()[0]
         log_value = log[0].items()[0]
@@ -74,7 +76,7 @@ def sign_up():
 def mypage():
     # 쿠키가 있다 -> 로그인된 유저라면
     user_id = request.cookies.get("user_id")
-    user = users.get_user_by_id(user_id)
+    user = services.users.get_user_by_id(user_id)
 
     if user:  # 로그인 된 경우
         return render_template("auth/my.html", user=user)

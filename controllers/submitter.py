@@ -7,9 +7,10 @@ controller = Blueprint("submitter", __name__)
 @controller.route("/", methods=["GET"])
 def get_submitter_home():
 
-    user_id = request.cookies.get("user_id")
-    tasks = submitter.tasklist_detail(user_id)
-    print(user_id)
+    id = int(request.cookies.get("id"))
+    tasks = submitter.tasklist_detail(id)
+    tasks = list(zip(range(1, len(tasks)+1), tasks))
+    print(tasks)
     return render_template("submitter/submitter_home.html", tasks=tasks)
 
 

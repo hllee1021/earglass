@@ -6,16 +6,17 @@
 
 {% block body %}
 <style media="screen">
-    .wrap{
-      width: 1000px;
-      height: 1000px;
-      overflow-x: scroll;
-      white-space:nowrap;
-      overflow: auto;
+    .wrap {
+        width: 1000px;
+        height: 1000px;
+        overflow-x: scroll;
+        white-space: nowrap;
+        overflow: auto;
     }
-    .wrap img{
-        width:300px;
-        height:100%;
+
+    .wrap img {
+        width: 300px;
+        height: 100%;
     }
 </style>
 <div class="container wrap">
@@ -37,13 +38,14 @@
             {% for task in tasks %}
 
             <tr>
-                <td>{{ task["id"] }}</td>
-                <td>{{ task["name"] }}</td>
-                <td>{{ task["deadline"] }}</td>
+                <td>{{ task[0] }}</td>
+                <td>{{ task[1]["TaskName"] }}</td>
+                <td>{{ task[1]["Deadline"] }}</td>
                 <td class="text-center">
                     <a type="button" class="btn btn-primary mr-2"
-                        href='/submitter/agreement?id={{ task["id"] }}'>참여신청</a>
-                    <a type="button" class="btn btn-primary mr-2" href='/task/detail?id={{ task["id"] }}'>상세</a>
+                        href='/submitter/agreement?id={{ task[1]["TaskName"] }}'>참여신청</a>
+                    <a type="button" class="btn btn-primary mr-2"
+                        href='/task/detail?id={{ task[1]["TaskName"] }}'>상세</a>
                 </td>
             </tr>
 

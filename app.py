@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from controllers import users, admin, task, submitter, estimator
 from werkzeug.wrappers import Request
-from services import users as users_db
 import services
 
 app = Flask(__name__, template_folder="templates")
@@ -39,7 +38,7 @@ def inject_user():
 @app.route("/", methods=["GET"])
 def index():
     user_id = request.cookies.get("user_id")
-    user = users_db.get_user_by_id(user_id)
+    user = services.users.get_user_by_id(user_id)
     if user:
         # admin:
         if user["FK_UserTypeName"] == "관리자":
