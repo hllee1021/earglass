@@ -41,11 +41,11 @@ def admin_home():
         user_id = user['idUSER']
         tasks = queryall("SELECT FK_TaskName FROM PARTICIPATION WHERE FK_idUSER=%s AND Status = \'ongoing\'", (user_id, ))
         user['Tasks'] = tasks
-        
+
     estimators = queryall("SELECT * FROM USERS WHERE FK_UserTypeName = \'평가자\'")
     for user in estimators:
         user_id = user['idUSER']
-        tasks = queryall("SELECT FK_TaskName FROM EVALUATION AS E  \
+        tasks = queryall("SELECT P.FK_TaskName FROM EVALUATION AS E  \
             LEFT JOIN PARSING_DSF AS P ON E.FK_idPASRSING_DSF = P.idPARSING_DSF WHERE E.FK_idEstimator=%s AND E.Status = \'ongoing\' " , (user_id, ))
         user['Tasks'] = tasks
 

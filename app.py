@@ -4,10 +4,9 @@ from werkzeug.wrappers import Request
 import services
 import os
 
-UPLOAD_DIR = os.path.abspath("./data")
+
 
 app = Flask(__name__, template_folder="templates")
-app.config['UPLOAD_DIR'] = UPLOAD_DIR
 app.secret_key = "earglass"
 
 @app.context_processor
