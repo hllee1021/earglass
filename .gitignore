@@ -6,3 +6,7 @@ database/__pycache__/
 *.swp
 
 **/*.pyc
+
+# cool
+cool/
+cool.py

@@ -1,13 +1,25 @@
-def tasklist_detail():
-    #진행 중인 태스크에 index, taskname, deadline, 참여상태(진행중, 대기중, 거절됨.. 이거는 버튼에 반영) 보여주기
-    pass
+from database.connection import connect
+
+# connect to db
+connect = connect()
+cursor = connect.cursor()
+
+def tasklist_detail(user_id):
+    #진행 중인 태스크에 index, taskname, deadline
+    #참여상태(진행중, 대기중, 거절됨.. 이거는 버튼에 반영) 보여주기 
+    sql = "SELECT ROW_NUMBER() AS num, T.TaskName, T.Deadline, P.Status FROM TASK AS T LEFT JOIN PARTICIPATION AS P ON P.FK_TaskName = T.TaskName WHERE P.FK_idUSER = %s"
+    cursor.execute(sql, (user_id))
+    data = cursor.fetchall()
+    return data
 
 def participating_tasklist():
     #간단한 태스크 정보 index, taskname, deadline, submit_num, pass 수
+    sql = "SELECT ROW_NUMBER() AS num, TaskName"
     pass
 
 def task_info():
     #태스크 정보
+    
     pass
 
 def leaderboard():

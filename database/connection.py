@@ -20,19 +20,23 @@ def connect():
     return connection
 
 
-def queryone(sql):
+def queryone(sql, fmt=tuple()):
     # executes 1 query and fetches one
     conn = connect()
     cur = conn.cursor()
 
     cur.execute(sql)
-    return cur.fetchone()
+    result = cur.fetchone()
+    conn.close()
+    return result
 
 
-def queryall(sql):
+def queryall(sql, fmt=tuple()):
     # executes 1 query and fetches all
     conn = connect()
     cur = conn.cursor()
 
     cur.execute(sql)
-    return cur.fetchall()
+    result = cur.fetchall()
+    conn.close()
+    return result

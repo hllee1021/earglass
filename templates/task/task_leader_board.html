@@ -10,7 +10,16 @@
             </tr>
         </thead>
         <tbody>
+            {%for item in test%}
             <tr>
+                <td>{{item["id"]}}</td>
+                <td>{{item["user_id"]}}</td>
+                <td>{{item["data_type"]}}</td>
+                <td>{{item["total_score"]}}</td>
+                <td>{{item["pass"]}}</td>
+            </tr>
+            {%endfor}
+            <!-- <tr>
                 <td>
                     1
                 </td>
@@ -60,7 +69,7 @@
                 <td>
                     P
                 </td>
-            </tr>
+            </tr> -->
         </tbody>
     </table>
 </div>

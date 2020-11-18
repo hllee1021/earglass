@@ -62,7 +62,9 @@ def show_submit_status(user_id):
     return data 
 
 def show_task():
-    #index, taskname, task 통계(제출 파일 수, pass된 파일 수), task data table 위치
+    #taskname, task 통계(제출 파일 수, pass된 파일 수), task data table 위치
+    sql = "SELECT TaskName, "
+
     pass
 
 def show_task_detail():
