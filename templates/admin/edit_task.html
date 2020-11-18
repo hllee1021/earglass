@@ -3,73 +3,71 @@
 
 <!-- form 제출로 묶어서 Task 추가되도록 설정해야함 -->
 
-<h1>ADD Task</h1>
+<h1>Edit Task</h1>
 </br>
 </br>
-<form method="POST" action="/admin/adding_task">
+<form class="">
     <div class="form-group">
         <label class="form-group col-md-2">TaskName</label>
-        <input type="text" class="form-group col-md-2" name="task_name" placeholder="taskname">
+        <input value="gyusika" type="text" class="form-group col-md-2" contenteditable="true">>
     </div>
     <div class="form-group">
         <label class="form-group col-md-2">Description</label>
-        <textarea style="margin-left:15px;"cols="30" rows="10" class="form-control" name="task_description" placeholder="description"></textarea>
+        <textarea style="margin-left:15px;"cols="30" rows="10" class="form-control" contenteditable="true">description</textarea>></textarea>
     </div>
     <div class="form-group">
         <label class="form-group col-md-2">최소 업로드 주기</label>
-        <input type="text" class="form-group col-md-2" name="period" placeholder="0"> week
+        <input value="2" type="text" class="form-group col-md-2" contenteditable="true"> week
     </div>
     <div class="form-group">
         <label class="form-group col-md-2">테이블 이름</label>
-        <input type="text" class="form-group col-md-2" name="table_name" placeholder="table_name">
+        <input value="table name" type="text" class="form-group col-md-2" contenteditable="true">
     </div>
     <div class="form-group">
         <label class="form-group col-md-2">스키마</label>
-        <input type="text" class="form-group col-md-2" name="schema" placeholder="schema">
+        <input value="schema" type="text" class="form-group col-md-2" contenteditable="true">
     </div>
     <div class="form-group">
         <label class="form-group col-md-2 d-inline-block"><h5><b>원본 데이터 타입</b></h5></label>
         <div style="margin-bottom: 5px;" class="input-group col-md-6">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+              <span style="height: 62%;" class="input-group-text" id="inputGroupFileAddon01">Upload</span>
             </div>
             <div class="custom-file">
               <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01" name="file">
+                aria-describedby="inputGroupFileAddon01">
               <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
             </div>
-        </div>
+            <button style="margin-left:15px" type="submit" class="btn btn-primary mb-4">삭제</button>
+        </div>  
         <div style="margin-bottom: 10px;" class="input-group col-md-6">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+              <span style="height: 62%;" class="input-group-text" id="inputGroupFileAddon01">Upload</span>
             </div>
             <div class="custom-file">
               <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01" name="file">
+                aria-describedby="inputGroupFileAddon01">
               <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
             </div>
+            <button style="margin-left:15px" type="submit" class="btn btn-primary mb-4">삭제</button>
         </div>
-        <svg style="margin-left:15px;" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-            <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-        </svg>
-        <label class="d-inline-block">추가</label>
+        <button style="margin-left:15px" type="submit" class="btn btn-primary mb-4">추가</button>
     </div>
 </br>
     <h5 style="margin-left: 15px; margin-bottom: 10px;"><b>시스템 Pass 기준 설정</b></h5>
     <div class="form-group">
-        <label class="form-group col-md-3">최대 중복 Tuple 비율</label>
-        <input type="text" class="form-group col-md-2" name="tuple_ratio" placeholder="0">%
+        <label class="form-group col-md-3" >최대 중복 Tuple 비율</label>
+        <input value="10" type="text" class="form-group col-md-2" contenteditable="true">%
     </div>
     <div class="form-group">
         <label class="form-group col-md-3">최대 Column별 Null 비율</label>
-        <input type="text" class="form-group col-md-2" name="tuple_ratio" placeholder="0">%
+        <input value="10" type="text" class="form-group col-md-2" contenteditable="true">%
     </div>
     <div class="form-group">
         <label class="form-group col-md-4"><h5><b>평가자 정성평가 Pass 기준설명</b></h5></label>
-        <textarea style="margin-left: 15px;"cols="30" rows="10" class="form-control" name="pass_criteria_description" placeholder="description"></textarea>
+        <textarea style="margin-left: 15px;"cols="30" rows="10" class="form-control" contenteditable="true">description</textarea>
     </div>
     </br>
-    <button type="submit" class="btn btn-primary float-right mb-4">Task 생성</button>
+    <button type="submit" class="btn btn-primary float-right mb-4">수정 완료</button>
 </form>
 {% endblock %}

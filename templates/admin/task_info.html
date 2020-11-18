@@ -29,44 +29,130 @@
         <label class="form-group col-md-2">스키마</label>
         <input placeholder="aaaaa" type="text" class="form-group col-md-2" disabled>
     </div>
-    <div class="form-group">
-        <label class="form-group col-md-2 d-inline-block"><h5><b>원본 데이터 타입</b></h5></label>
-        <div style="margin-bottom: 5px;" class="input-group col-md-6">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-            </div>
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01">
-              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-            </div>
-        </div>
-        <div style="margin-bottom: 10px;" class="input-group col-md-6">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-            </div>
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01">
-              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-            </div>
-        </div>
-    </div>
 </br>
-    <h5 style="margin-left: 15px; margin-bottom: 10px;"><b>시스템 Pass 기준 설정</b></h5>
-    <div class="form-group">
-        <label class="form-group col-md-3">최대 중복 Tuple 비율</label>
-        <input type="text" class="form-group col-md-2">%
-    </div>
-    <div class="form-group">
-        <label class="form-group col-md-3">최대 Column별 Null 비율</label>
-        <input type="text" class="form-group col-md-2">%
-    </div>
-    <div class="form-group">
-        <label class="form-group col-md-4"><h5><b>평가자 정성평가 Pass 기준설명</b></h5></label>
-        <textarea style="margin-left: 15px;"cols="30" rows="10" class="form-control"></textarea>
-    </div>
+    <table style="margin-left: 5px; margin-bottom: 20px;" class="table table-striped table-bordered" id="target-table">
+        <thead>
+            <th>원본데이터 타입</th>
+            <th>제출파일 수</th>
+            <th>Pass된 파일 수</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    타입1
+                </td>
+                <td>
+                    13
+                </td>
+                <td>
+                    5
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    타입2
+                </td>
+                <td>
+                    12
+                </td>
+                <td>
+                    6
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    타입3
+                </td>
+                <td>
+                    14
+                </td>
+                <td>
+                    2
+                </td>
+            </tr>
+        </tbody>
+    </table>
     </br>
-    <button type="submit" class="btn btn-primary float-right mb-4">Task 생성</button>
+    <!-- 참여현황으로 sort되도록 jquery 적용해야함 -->
+    <h5 style="margin-top: 20px;"><b>참여명단</b></h5>
+    <table style="margin-left: 5px; margin-bottom: 20px;" class="table table-striped table-bordered" id="target-table2">
+        <thead>
+            <th>현황</th>
+            <th>참여자ID</th>
+            <th>평가점수</th>
+            <th>승인</th>
+            <th>거절</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    대기
+                </td>
+                <td>
+                    gyusika1
+                </td>
+                <td>
+                    95
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary">승인</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary">거절</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    승인
+                </td>
+                <td>
+                    gyusika2
+                </td>
+                <td>
+                    96
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    거절
+                </td>
+                <td>
+                    gyusika3
+                </td>
+                <td>
+                    92
+                </td>
+                <td>    
+                </td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </form>
+</br>
+</br>
+</br>
+</br>
+
+<style>
+    #target-table {
+        min-height: 50px;
+    }
+</style>
+<script>
+    $(document).ready(function() {
+        $("#target-table").DataTable();
+    })
+</script>
+<script>
+    $(document).ready(function() {
+        $("#target-table2").DataTable();
+    })
+</script>
 {% endblock %}
