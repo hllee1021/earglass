@@ -5,9 +5,32 @@
 
 
 {% block body %}
-<!-- <div include-html="/partials/navbar.html">
-</div> -->
-<h2>Task이름</h2>
-<h4>기본정보들~~~</h4>
-<h4>Pass 기준</h4>
+<!-- 태스크이름
+디스크립션
+스키마정보(테이블)
+데드라인
+pass기준  -->
+<h1>태스크 정보</h1>
+<br><br>
+<table class='table mt-3'>
+    <tbody>
+        <tr>
+            <th>description</th>
+            <td>{{tasks["description"]}}</td>
+        </tr>
+        <tr>
+            <th>schema_info</th>
+            <td>{{tasks["schema_info"]}}</td>
+        </tr>
+        <tr>
+            <th>deadline</th>
+            <td>{{tasks["deadline"]}}</td>
+        </tr>
+        <tr>
+            <th>pass_cut</th>
+            <td>{{tasks["pass_cut"]}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
 {% endblock %}

@@ -20,7 +20,7 @@
     }
 </style>
 <div class="container wrap">
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered" id="target-table">
         <thead>
             <h1>진행중인 태스크</h1>
             <p style="text-align: right;">
@@ -42,10 +42,16 @@
                 <td>{{ task[1]["TaskName"] }}</td>
                 <td>{{ task[1]["Deadline"] }}</td>
                 <td class="text-center">
+                    {% if task[1]["Status"] == "ongoing" %}
+                    <button type="button" class="btn btn-primary mr-2 " disabled>참여중</button>
+                    {% elif task[1]["Status"] == "waiting" %}
+                    <a type="button" class="btn btn-primary mr-2" disabled>승인대기중</a>
+                    {% else %}
                     <a type="button" class="btn btn-primary mr-2"
-                        href='/submitter/agreement?id={{ task[1]["TaskName"] }}'>참여신청</a>
+                        href='/submitter/agreement?task_id={{ task[1]["TaskName"] }}'>참여신청</a>
+                    {% endif %}
                     <a type="button" class="btn btn-primary mr-2"
-                        href='/task/detail?id={{ task[1]["TaskName"] }}'>상세</a>
+                        href='/task/detail?task_id={{ task[1]["TaskName"] }}'>상세</a>
                 </td>
             </tr>
 

@@ -26,11 +26,11 @@ def inject_user():
         if user["FK_UserTypeName"] == "평가자": return user
         else: return False
 # 관리자 추가 필요 (규식)
-    # def is_admin():
-    #     user_id = request.cookies.get("user_id")
-    #     user = services.users.get_user_by_id(user_id)
-    #     if user["FK_UserTypeName"] == "관리자": return user
-    #     else: return False
+    def is_admin():
+        user_id = request.cookies.get("user_id")
+        user = services.users.get_user_by_id(user_id)
+        if user["FK_UserTypeName"] == "관리자": return user
+        else: return False
 
     return dict(is_logged_in=is_logged_in, is_submitter=is_submitter, is_estimator=is_estimator)
 

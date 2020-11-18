@@ -13,57 +13,23 @@
         <th>파싱데이터 시퀀스 파일</th>
     </thead>
     <tbody>
+      {% for user in users %}
         <tr>
             <td>
-                1
+              {{ user['idUSER'] }}
             </td>
             <td>
-                <a href="/">gyusika1</a>
+              <a href="/">{{ user['Name'] }}</a>
             </td>
             <td>
-                평가자
+              {{ user['FK_UserTypeName'] }}
             </td>
             <td>
-                F
+              {{ user['Gender'] }} 
             </td>
             <form>
                 <td>
-                    23
-                </td>
-                <td>
-                    960316
-                </td>
-                <td>
-                    01031104029
-                </td>
-                <td>
-                    서울시 서초구
-                </td>
-                <td>
-                    <a href="/">Task1</a>
-                    <a href="/">Task2</a>
-                </td>
-                <td>
-                   <a href="/">상세보기</a>
-                </td>
-            </form>
-        </tr>
-        <tr>
-            <td>
-                2
-            </td>
-            <td>
-                <a href="/">gyusika2</a>
-            </td>
-            <td>
-                제출자
-            </td>
-            <td>
-                M
-            </td>
-            <form>
-                <td>
-                    20
+                  {{ user['BirthDate'] }} 
                 </td>
                 <td>
                     970428
@@ -77,45 +43,9 @@
                 <td>
                     <a href="/">Task2</a>
                 </td>
-                <td>
-                    <a href="/">상세보기</a>
-                </td>
             </form>
-        </tr>
-        <tr>
-            <td>
-                3
-            </td>
-            <td>
-                <a href="/">gyusika3</a>
-            </td>
-            <td>
-                제출자
-            </td>
-            <td>
-                M
-            </td>
-            <form>
-                <td>
-                    22
-                </td>
-                <td>
-                    000101
-                </td>
-                <td>
-                    01088874544
-                </td>
-                <td>
-                    경기도 안양시
-                </td>
-                <td>
-                    <a href="/">Task4</a>
-                </td>
-                <td>
-                    <a href="/">상세보기</a>
-                </td>
-            </form>
-        </tr>
+          </tr>
+        {% endfor %}
     </tbody>
 </table>
 <style>
