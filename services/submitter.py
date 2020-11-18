@@ -41,8 +41,14 @@ def my_submission_list(task_name, user_id):
 
 def submit_info(task_name):
     """taskname, 스키마 정보, 매핑 정보"""
-    sql = "SELECT SchemaInfo FROM ORIGIN_DATA_TYPE WHERE TaskName = %s"
+    sql = "SELECT SchemaInfo, MappingInfo FROM ORIGIN_DATA_TYPE WHERE TaskName = %s"
     return queryall(sql, (task_name, ))
+
+def odsf_type_schema_info(odsf_type_id):
+    """taskname, 스키마 정보, 매핑 정보"""
+    sql = "SELECT * FROM ORIGIN_DATA_TYPE WHERE idORIGIN_DATA_TYPE = %s"
+    return queryone(sql, (odsf_type_id, ))
+
 
 def submit(origin_file, datetime, period, task_name, user_id, origin_data_id):
     """제출자 파일을 받으면 origin_dsf로 저장"""

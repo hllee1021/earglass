@@ -1,6 +1,9 @@
 import os
+from io import StringIO
+import json
+import pandas as pd
 from werkzeug.utils import secure_filename
-from flask import Blueprint, render_template, redirect, request, make_response, flash
+from flask import Blueprint, render_template, redirect, request, make_response, flash, Response
 import services
 from settings import UPLOAD_DIR
 
@@ -55,6 +58,41 @@ def submit_task():
     fname = secure_filename(file.filename)
     path = os.path.join(UPLOAD_DIR + "/odsf/", fname)
     file.save(path)
-    flash("제출이 완료되었습니다. ㅅㅂ~ 그만 집에 보내줘...")
+    flash("제출이 완료되었습니다. ㅅㄱ~ 그만 집에 보내줘...")
 
     return redirect("/")
+
+# , method=["POST"]
+@controller.route("/task/download")
+def csv_file_download_with_stream():
+
+    odsf_type_id = int(request.args.get('odsf_type_id', 0))
+
+    if odsf_type_id != 0:
+        odsf_type = services.submitter.odsf_type_schema_info(odsf_type_id)
+    else:
+        return redirect("/my_task")
+
+    filename = f"{odsf_type['TaskName']}_{odsf_type['DataTypeName']}"
+
+    schema = json.loads(odsf_type['MappingInfo'])
+    schema = list(schema.keys())
+    print(schema)
+    print(type(schema))
+
+
+    # dataframe을 저장할 IO stream 
+    output_stream = StringIO()
+    temp_df = pd.DataFrame({'col1':[1,2,3], 'col2':[4,5,6]})
+
+    # 그 결과를 앞서 만든 IO stream에 저장
+    temp_df.to_csv(output_stream)
+    response = Response(
+        output_stream.getvalue(), 
+        mimetype='text/csv', 
+        content_type='application/octet-stream',
+    )
+
+    response.headers["Content-Disposition"] = f"attachment; filename={filename}.csv"
+
+    return response 

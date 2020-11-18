@@ -1,16 +1,23 @@
 -- 관리자가 task table에 정보 insert
-
+-- taskname, description, 최소업로드주기, table 이름, 스키마, 원본 데이터 타입, 
+-- 시스템 pass 기준, 평가자 pass 기준
+    
 DELIMITER //
 
 CREATE PROCEDURE InsertNewTask
-            (IN newTaskName         Varchar(45),
-             IN newDescription      Varchar(45),
-             IN newMinPeriod        Int(11),
-             IN newFK_idManager     Int(11))
+            (IN newTaskName             Varchar(45),
+             IN newDescription          Varchar(45),
+             IN newMinPeriod            Int(11),
+             IN newStatus               varchar(45),
+             IN newTaskDataTableName    varchar(100),
+             IN newDeadline             datetime,
+             IN newMaxDuplicatedRowRatio    Float,
+             IN newMaxNullRatioPerColumn    Float,
+             IN newPassCriteria             text)
 
 checkdupli:BEGIN
     
-    DECLARE varRowCount     Int;
+    DECLARE varRowCount  Int;
     DECLARE varIdManager Int;
 
     -- check to see if varTaskName exist in database
@@ -37,20 +44,16 @@ checkdupli:BEGIN
         -- get idUSER surrogate key value, check for validity.
         SELECT idUSER INTO varIdManager
         FROM USER
-        WHERE idUSER = newFK_idManager
-            AND FK_TypeName = '관리자';
-        
-        IF (varIdManager IS NULL) THEN
-        SELECT 'Invalid Manager ID'
-            AS InsertNewTaskErrorMessage;
-		    ROLLBACK;
-        LEAVE inserttask;    
- 	      END IF;
+        WHERE FK_TypeName = '관리자';
 
         -- Insert new Customer data.
-	    INSERT INTO TASK (TaskName, Description, MinPeriod, Status, FK_idManager)
+	    INSERT INTO TASK (TaskName, Description, MinPeriod, Status, 
+        TaskDataTableName, Deadline, FK_idManager, MaxDuplicatedRowRatio,
+        MaxNullRatioPerColumn, PassCriteria)
            VALUES(newTaskName, newDescription,
-		  		  newMinPeriod, 'ongoing', newFK_idManager);
+		  		  newMinPeriod, newStatus, newTaskDataTableName,
+                    newDeadline, varIdManager, newMaxDuplicatedRowRatio,
+                    newMaxNullRatioPerColumn, newPassCriteria);
 
         SELECT 'Insert new task successfully'
             AS InsertNewTaskSuccessMessage;
