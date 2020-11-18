@@ -45,10 +45,6 @@ def get_add_task_page():
 def get_task_page():
     return render_template("admin/task.html")
 
-@controller.route("/estimator", methods=["GET"])
-def get_estimator_page():
-    return render_template("admin/estimator.html")
-
-@controller.route("/submitter", methods=["GET"])
-def get_submitor_page():
-    return render_template("admin/submitter.html")
+@controller.route("/task_info", methods=["GET"])
+def get_task_info_page():
+    return render_template("admin/task_info.html")

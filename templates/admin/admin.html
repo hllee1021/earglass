@@ -1,61 +1,85 @@
 {% extends "./partials/layout.html" %}
+
+
 {% block body %}
-<h1>Tasks</h1>
-<p style="text-align: right;">
-    <a href="/admin/add_task" class="btn btn-success">Task 추가</a>
-</p>
-<ul class="list-group">
-    <li class="list-group-item">
-        The Content
-        <button class="action btn btn-primary float-right">제거</button>
-        <button class="action btn btn-info float-right">수정</button>
-        <button class="action btn btn-success float-right">상세</button>
-    </li>
-</ul>
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-</nav>
-<h1>Users</h1>
-<p style="text-align: right;">
-    <input id="search-users" type="text" placeholder="🔎 여러기준으로 해야함">
-</p>
-<ul class="list-group">
-    <li class="list-group-item">
-        Submitter_user
-        <a class="action btn btn-primary float-right" href="/admin/submitter">상세정보</a>
-    </li>
-    <li class="list-group-item">
-        Estimator_user
-        <a class="action btn btn-primary float-right" href="/admin/estimator">상세정보</a>
-    </li>
-</ul>
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-</nav>
 <style>
-    button.action {
-        margin-left: 0.3rem;
-    }
+  /* Set height of body and the document to 100% to enable "full page tabs" */
+  body,
+  html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial;
+  }
 
-    ul.pagination {
-        margin-top: 10px;
-    }
+  /* Style tab links */
+  .tablink {
+    background-color: #555;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 25%;
+  }
 
-    #search-users {
-        padding: 6px;
-        outline: none;
-    }
+  .tablink:hover {
+    background-color: #777;
+  }
+
+  /* Style the tab content (and add height:100% for full page content) */
+  .tabcontent {
+    color: black;
+    display: none;
+    padding: 100px 20px;
+    height: 100%;
+  }
 </style>
+<div>
+  <button class="tablink" onclick="openPage('Task관리', this, 'gray')" id="defaultOpen">Task관리</button>
+  <button class="tablink" onclick="openPage('User관리', this, 'gray')">User관리</button>
+  
+
+  <div id="Task관리" class="tabcontent">
+    {% include "admin/admin_task.html" %}
+  </div>
+
+  <div id="User관리" class="tabcontent">
+    {% include "admin/admin_user.html" %}
+  </div>
+</div>
+
+<script>
+  function openPage(pageName, elmnt, color) {
+    // Hide all elements with class="tabcontent" by default */
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Remove the background color of all tablinks/buttons
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].style.backgroundColor = "";
+    }
+
+    // Show the specific tab content
+    document.getElementById(pageName).style.display = "block";
+
+    // Add the specific color to the button used to open the tab content
+    elmnt.style.backgroundColor = color;
+  }
+
+  // Get the element with id="defaultOpen" and click on it
+  var opt = '{{ opt }}';
+  console.log(opt)
+  if (opt == "submit") {
+    document.getElementById("submit_button").click();
+  } else {
+    document.getElementById("defaultOpen").click();
+  }
+</script>
+
 {% endblock %}
