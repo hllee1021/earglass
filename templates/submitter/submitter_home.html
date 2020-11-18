@@ -5,15 +5,26 @@
 
 
 {% block body %}
-<!-- <div include-html="/partials/navbar.html">
-</div> -->
-<p style="text-align: right;">
-    <input id="search-task" type="text" placeholder="🔎 여러기준으로 해야함">
-</p>
-<div class="container">
+<style media="screen">
+    .wrap{
+      width: 1000px;
+      height: 1000px;
+      overflow-x: scroll;
+      white-space:nowrap;
+      overflow: auto;
+    }
+    .wrap img{
+        width:300px;
+        height:100%;
+    }
+</style>
+<div class="container wrap">
     <table class="table table-striped table-bordered">
         <thead>
             <h1>진행중인 태스크</h1>
+            <p style="text-align: right;">
+                <input id="search-task" type="text" placeholder="🔎 여러기준으로 해야함">
+            </p>
             <tr>
                 <th style="width:10%">Index</th>
                 <th style="width:15%">태스크명</th>
@@ -22,140 +33,23 @@
             </tr>
         </thead>
         <tbody>
+
+            {% for task in tasks %}
+
             <tr>
-                <td>
-                    1
-                </td>
-                <td>
-                    태스크1
-                </td>
-                <td>
-                    2020/08/06 12:00
-                </td>
+                <td>{{ task["id"] }}</td>
+                <td>{{ task["name"] }}</td>
+                <td>{{ task["deadline"] }}</td>
                 <td class="text-center">
-                    <a type="button" class="btn btn-primary mr-2" href='/submitter/agreement'>참여신청</a>
-                    <a type="button" class="btn btn-primary mr-2" href='/task/detail'>상세</a>
+                    <a type="button" class="btn btn-primary mr-2"
+                        href='/submitter/agreement?id={{ task["id"] }}'>참여신청</a>
+                    <a type="button" class="btn btn-primary mr-2" href='/task/detail?id={{ task["id"] }}'>상세</a>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    1
-                </td>
-                <td>
-                    태스크1
-                </td>
-                <td>
-                    2020/08/06 12:00
-                </td>
-                <td class="text-center">
-                    <a type="button" class="btn btn-primary mr-2" href='/submitter/agreement'>참여신청</a>
-                    <a type="button" class="btn btn-primary mr-2" href='/task/detail'>상세</a>
-                </td>
-            </tr>
+
+            {% endfor %}
         </tbody>
     </table>
 </div>
 
-<!-- <div class="container">
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>제출자의 참여 태스크 목록</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>태스크1
-                    <a type="button" class="btn btn-primary" href='/task/detail'>상세</a>
-                    <a type="button" class="btn btn-primary" href='/submitter/submit_page'>제출</a>
-                </td>
-
-            </tr>
-            <tr>
-                <td>태스크2
-                    <a type="button" class="btn btn-primary" href='/task/detail'>상세</a>
-                    <a type="button" class="btn btn-primary" href='/submitter/submit_page'>제출</a>
-                </td>
-
-            </tr>
-            <tr>
-                <td>태스크3
-                    <a type="button" class="btn btn-primary" href='/task/detail'>상세</a>
-                    <a type="button" class="btn btn-primary" href='/submitter/submit_page'>제출</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="container">
-    <table class="table table-striped table-bordered">
-        <thead>
-            자기 제출 현황
-            <tr>
-                <th>태스크 이름</th>
-                <th>deadline</th>
-                <th>제출형식</th>
-                <th>제출날짜</th>
-                <th>점수</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>태스크1
-                    <a type="button" class="btn btn-primary" href='/task/detail'>상세</a>
-                    <a type="button" class="btn btn-primary" href='/task/detail'>제출?</a>
-                </td>
-                <td>
-                    2020/08/06 12:00
-                </td>
-                <td>
-                    csv
-                </td>
-                <td>
-                    2020/08/01 05:37
-                </td>
-                <td>
-                    36
-                </td>
-            </tr>
-            <tr>
-                <td>태스크2
-                    <a type="button" class="btn btn-primary" href='/task/detail'>상세</a>
-                    <a type="button" class="btn btn-primary" href='/task/detail'>제출?</a>
-                </td>
-                <td>
-                    2020/08/06 12:00
-                </td>
-                <td>
-                    csv
-                </td>
-                <td>
-                    2020/08/01 05:37
-                </td>
-                <td>
-                    36
-                </td>
-            </tr>
-            <tr>
-                <td>태스크3
-                    <a type="button" class="btn btn-primary" href='/task/detail'>상세</a>
-                    <a type="button" class="btn btn-primary" href='/task/detail'>제출?</a>
-                </td>
-                <td>
-                    2020/08/06 12:00
-                </td>
-                <td>
-                    csv
-                </td>
-                <td>
-                    2020/08/01 05:37
-                </td>
-                <td>
-                    36
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div> -->
 {% endblock %}

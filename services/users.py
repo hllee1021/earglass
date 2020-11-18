@@ -1,14 +1,9 @@
-from database.connection import connect
+from database.connection import *
 
-# connect to db
-connect = connect()
-cursor = connect.cursor()
 
 def get_user_by_id(id):
     # user 정보 받아오기
-    cursor.execute("SELECT * FROM USER WHERE Id=%s", (id,))
-    user = cursor.fetchone() 
-    return user
+    return queryone("SELECT * FROM USER WHERE Id=%s", (id,))
 
 
 def verify_user(id, password):
@@ -23,11 +18,8 @@ def verify_user(id, password):
 
 def sign_up(id, password, name, birth, phonenumber, gender, address, role):
     # 회원가입
-    cursor.callproc('InsertNewUser', (id, password, name,
+    return callproc('InsertNewUser', (id, password, name,
                                       birth, phonenumber, gender, address, role))
-    message = cursor.fetchall()
-    connect.commit()
-    return message
 
 
 def withdrawal():

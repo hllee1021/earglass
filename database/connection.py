@@ -20,19 +20,59 @@ def connect():
     return connection
 
 
-def queryone(sql):
+def queryone(sql, fmt=tuple()):
     # executes 1 query and fetches one
-    conn = connect()
-    cur = conn.cursor()
+    try:
+        conn = connect()
+        cur = conn.cursor()
+        cur.execute(sql, fmt)
+        return cur.fetchone()
+    except Exception as e:
+        print(e)
+        raise e
+    finally:
+        cur.close()
+        conn.close()
 
-    cur.execute(sql)
-    return cur.fetchone()
 
-
-def queryall(sql):
+def queryall(sql, fmt=tuple()):
     # executes 1 query and fetches all
-    conn = connect()
-    cur = conn.cursor()
+    try:
+        conn = connect()
+        cur = conn.cursor()
+        cur.execute(sql, fmt)
+        return cur.fetchall()
+    except Exception as e:
+        print(e)
+        raise e
+    finally:
+        cur.close()
+        conn.close()
 
-    cur.execute(sql)
-    return cur.fetchall()
+def execute(sql, fmt=tuple()):
+    try:
+        conn = connect()
+        cur = conn.cursor()
+        cur.execute(sql, fmt)
+        conn.commit()
+    except Exception as e:
+        print(e)
+        raise e
+    finally:
+        cur.close()
+        conn.close()
+
+def callproc(sql, fmt=tuple()):
+    try:
+        conn = connect()
+        cur = conn.cursor()
+        cur.callproc(sql, fmt)
+        message = cur.fetchall()
+        conn.commit()
+        return message
+    except Exception as e:
+        print(e)
+        raise e
+    finally:
+        cur.close()
+        conn.close()
