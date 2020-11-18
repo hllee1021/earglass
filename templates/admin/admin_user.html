@@ -1,16 +1,14 @@
 {% block body %}
-<table class="table table-striped table-bordered" id="target-table">
+<table class="table table-striped table-bordered" id="target-table-1">
     <thead>
         <th>Index</th>
         <th>ID</th>
         <th>역할</th>
         <th>성별</th>
-        <th>나이</th>
         <th>생년월일</th>
         <th>휴대전화</th>
         <th>주소</th>
         <th>참여중인 테스크</th>
-        <th>파싱데이터 시퀀스 파일</th>
     </thead>
     <tbody>
       {% for user in users %}
@@ -32,16 +30,15 @@
                   {{ user['BirthDate'] }} 
                 </td>
                 <td>
-                    970428
+                  {{ user['PhoneNum'] }} 
                 </td>
                 <td>
-                    01045121555
+                  {{ user['Address'] }} 
                 </td>
                 <td>
-                    서울시 서대문구
-                </td>
-                <td>
-                    <a href="/">Task2</a>
+                  {% for task in user['Tasks'] %}
+                    {{ task['FK_TaskName'] }}
+                  {% endfor %}
                 </td>
             </form>
           </tr>
@@ -62,7 +59,7 @@
 </style>
 <script>
     $(document).ready(function() {
-        $("#target-table").DataTable();
+        $("#target-table-1").DataTable();
     })
 </script>
 {% endblock %}

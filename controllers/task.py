@@ -11,8 +11,13 @@ def task_detail():
 
     # db 테스크 정보를 주세요
     task_info = services.submitter.task_info(task_id)
+
     leaderboard = services.submitter.leaderboard(task_id)
-    my_submit = services.submitter.my_submission_list(task_name, user_pk)
+    leaderboard = list(zip(range(1, len(leaderboard)+1), leaderboard))
+
+    my_submit = services.submitter.my_submission_list(task_id, user_pk)
+    my_submit = list(zip(range(1, len(my_submit)+1), my_submit))
+
+    odsf_type = services.submitter.all_origin_data_type(task_id);
     
-    data_type=["csv","smi","scv"]
-    return render_template("task/task_detail.html", opt=tab, task_info=task_info, leaderboard=leaderboard, my_submit=my_submit)
+    return render_template("task/task_detail.html", opt=tab, task_info=task_info, leaderboard=leaderboard, my_submit=my_submit, odsf_type=odsf_type)

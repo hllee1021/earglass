@@ -46,7 +46,7 @@
                 </td>
                 <td>{{task.get("submitter_name",0)}}</td>
                 <td>{{task.get("deadline",0)}}</td>
-                <form id={{task.get("id",0)}}>
+                <form form method="POST" action="/estimator/evaluate">
                     <td>
                         <a class="btn btn-primary" href="#" role="button">다운로드</a>
                     </td>

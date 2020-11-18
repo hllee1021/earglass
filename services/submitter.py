@@ -2,14 +2,14 @@ from database.connection import *
 
 
 def tasklist_detail(uid):
-    #진행 중인 태스크에 taskname, deadline
-    #참여상태(진행중, 대기중, 거절됨.. 이거는 버튼에 반영) 보여주기 
+    """진행 중인 태스크에 taskname, deadline
+    참여상태(진행중, 대기중, 거절됨.. 이거는 버튼에 반영) 보여주기""" 
     sql = "SELECT T.TaskName, T.Deadline, COALESCE(P.Status, '') AS Status \
     FROM TASK AS T LEFT OUTER JOIN PARTICIPATION AS P ON P.FK_TaskName = T.TaskName AND P.FK_idUSER = %s WHERE T.Status = 'ongoing'"
     return queryall(sql, (uid,))
 
 def participating_tasklist(uid):
-    #간단한 태스크 정보 taskname, deadline, submit_num, pass 수
+    """간단한 태스크 정보 taskname, deadline, submit_num, pass 수"""
     sql = "SELECT SQ.TaskName, SQ.Deadline, SQ.Status, MAX(COALESCE(D.SubmitNum, 0)) AS Submit_num, \
     SUM(CASE COALESCE(D.Pass, 'NP') WHEN 'P' THEN 1 ELSE 0 END) AS Pass_num \
     FROM (SELECT T.TaskName, T.Deadline, COALESCE(P.Status, '') AS Status\
@@ -19,54 +19,54 @@ def participating_tasklist(uid):
     return queryall(sql, (uid,))
 
 def task_info(task_name):
-    #태스크 정보
+    """태스크 정보"""
     sql = "SELECT * FROM TASK WHERE TaskName = %s"
     return queryone(sql, (task_name, ))
 
 def leaderboard(task_name):
-    #특정 태스크의 전체 참여자의 제출 현황
-    #제출자 id, 원본 데이터 타입, 평가점수, pass여부
-    #점수 순으로 sorting
+    """특정 태스크의 전체 참여자의 제출 현황
+    제출자 id, 원본 데이터 타입, 평가점수, pass여부
+    점수 순으로 sorting"""
     sql = "SELECT P.SubmitterID, O.DataTypeName, P.TotalScore, P.Pass \
     FROM PARSING_DSF AS P LEFT JOIN ORIGIN_DATA_TYPE AS O ON P.OriginDataTypeID = O.idORIGIN_DATA_TYPE \
     WHERE P.TaskName = %s ORDER BY P.TotalScore DESC"
     return queryall(sql, (task_name, ))
 
 def my_submission_list(task_name, user_id):
-    #회차, 기간, 제출파일명, 원본데이터타입, 날짜, 시스템점수, 평가자점수(평균), total 점수, pass여부
+    """회차, 기간, 제출파일명, 원본데이터타입, 날짜, 시스템점수, 평가자점수(평균), total 점수, pass여부"""
     sql = "SELECT P.Round, P.Period, P.ParsingFile, ODT.DataTypeName, O.DateTime, P.SystemScore, P.AverageScore, P.TotalScore, P.Pass \
     FROM PARSING_DSF AS P, ORIGIN_DSF AS O LEFT JOIN ORIGIN_DATA_TYPE AS ODT ON O.FK_idORIGIN_DATA_TYPE = ODT.idORIGIN_DATA_TYPE \
     WHERE P.FK_idORIGIN_DSF = O.idORIGIN_DSF and P.TaskName = %s and P.SubmitterID = %s"
     return queryall(sql, (task_name, user_id, ))
 
 def submit_info(task_name):
-    #taskname, 스키마 정보, 매핑 정보
+    """taskname, 스키마 정보, 매핑 정보"""
     sql = "SELECT SchemaInfo FROM ORIGIN_DATA_TYPE WHERE TaskName = %s"
     return queryall(sql, (task_name, ))
 
 def submit(origin_file, datetime, period, task_name, user_id, origin_data_id):
-    #제출자 파일을 받으면 origin_dsf로 저장
+    """제출자 파일을 받으면 origin_dsf로 저장"""
     return callproc('InsertOriginDSF', (origin_file, datetime, period, task_name, user_id, origin_data_id, ))
 
 def insert_participation(task_name, user_id):
-    #참여 요청
+    """참여 요청"""
     return callproc('InsertNewParticipation', (task_name, user_id,))
 
 def sort_by_origin_data_type(task_name, user_id, origin_data_type_id):
-    #원본 데이터 타입에 따라 내 제출 현황 보여주기
+    """원본 데이터 타입에 따라 내 제출 현황 보여주기"""
     sql = "SELECT P.Round, P.Period, P.ParsingFile, ODT.DataTypeName, O.DateTime, P.SystemScore, P.AverageScore, P.TotalScore, P.Pass \
     FROM PARSING_DSF AS P, ORIGIN_DSF AS O LEFT JOIN ORIGIN_DATA_TYPE AS ODT ON O.FK_idORIGIN_DATA_TYPE = ODT.idORIGIN_DATA_TYPE \
     WHERE P.FK_idORIGIN_DSF = O.idORIGIN_DSF and P.TaskName = %s and P.SubmitterID = %s and P.OriginDataTypeID = %s"
     return queryall(sql, (task_name, user_id, origin_data_type_id, ))
 
 def sort_by_pass(task_name, user_id,p_np):
-    #pass 여부에 따라 내 제출 현황 보여주기
+    """pass 여부에 따라 내 제출 현황 보여주기"""
     sql = "SELECT P.Round, P.Period, P.ParsingFile, ODT.DataTypeName, O.DateTime, P.SystemScore, P.AverageScore, P.TotalScore, P.Pass \
     FROM PARSING_DSF AS P, ORIGIN_DSF AS O LEFT JOIN ORIGIN_DATA_TYPE AS ODT ON O.FK_idORIGIN_DATA_TYPE = ODT.idORIGIN_DATA_TYPE \
     WHERE P.FK_idORIGIN_DSF = O.idORIGIN_DSF and P.TaskName = %s and P.SubmitterID = %s and P.Pass = %s"
     return queryall(sql, (task_name, user_id, p_np, ))
 
 def all_origin_data_type(task_name):
-    # 해당 task의 모든 원본 데이터 타입 리스트 반환
-    sql = "SELECT DataTypeName FROM ORIGIN_DATA_TYPE WHERE TaskName = %s"
+    """해당 task의 모든 원본 데이터 타입 리스트 반환"""
+    sql = "SELECT * FROM ORIGIN_DATA_TYPE WHERE TaskName = %s"
     return queryall(sql, (task_name, ))
