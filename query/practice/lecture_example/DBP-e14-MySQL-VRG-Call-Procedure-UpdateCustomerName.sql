@@ -1,1 +1,0 @@
-CALL UserOrderAvailableParkingLot("2019/11/11", "WED","16:00:00", "18:00:00", 36.483, 128.324, "101a134");

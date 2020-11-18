@@ -20,3 +20,9 @@ def get_pdsf_detail():
 def get_estimator_task_info():
     tasks = {"name":"im_task","description":"card data please~~ samsung good good", "schema_info":"스키마 인포 어떻게 쓰지이", "deadline":"2020/11/20","pass_cut":"중복 튜플 수에 대해서 널널하게 해도 되니까, null 비율에 엄격하게 해주세용"}
     return render_template("/estimator/estimator_task_info.html",tasks=tasks)
+
+#made_by 학림 evaluator_home에서 평가했을때 form action 라우터
+@controller.route("/estimator/evaluate", methods=["POST"])
+def evaluate():
+    #db문
+    return render_template("evaluator/evaluate_home.html")

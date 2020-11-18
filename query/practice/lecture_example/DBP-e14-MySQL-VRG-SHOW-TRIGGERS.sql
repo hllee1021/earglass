@@ -1,3 +1,0 @@
-/* *** SQL-SHOW-TRIGGERS-CH10C-01 *** */
-
-SHOW TRIGGERS;

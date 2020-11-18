@@ -1,14 +1,15 @@
 <style media="screen">
-  .wrap{
+  .wrap {
     width: 1000px;
     height: 300px;
     overflow-x: scroll;
-    white-space:nowrap;
+    white-space: nowrap;
     overflow: auto;
   }
-  .wrap img{
-      width:300px;
-      height:100%;
+
+  .wrap img {
+    width: 300px;
+    height: 100%;
   }
 </style>
 
@@ -19,6 +20,7 @@
       <tr>
         <th>Index</th>
         <th>파일의 정보기간</th>
+        <th>회차정보</th>
         <th>파일명</th>
         <th>데이터 타입</th>
         <th>제출 날짜</th>
@@ -30,24 +32,26 @@
       </tr>
     </thead>
     <tbody>
-      {%for item in test%}
+      {% for pdsf in my_submit %}
       <tr>
-        <td>{{task.get("id", 0)}}</td>
-        <td>{{task.get("날짜범위", 0)}}</td>
-        <td>{{task.get("파일명", 0)}}</td>
-        <td>{{task.get("데이터 타입", 0)}}</td>
-        <td>{{task.get("제출 날짜", 0)}}</td>
-        <td>{{task.get("시스템점수", 0)}}</td>
-        <td>{{task.get("평가점수", 0)}}</td>
-        <td>{{task.get("종합점수", 0)}}</td>
-        <td>{{task.get("Pass 여부", 0)}}</td>
+        <td>{{  pdsf[0] }}</td>
+        <td>{{  pdsf[1].get("Period", 0) }}</td>
+        <td>{{  pdsf[1].get("Round", 0) }}</td>
+        <td>{{  pdsf[1].get("ParsingFile", 0) }}</td>
+        <td>{{  pdsf[1].get("DataTypeName", 0) }}</td>
+        <td>{{  pdsf[1].get("DateTime", "None") }}</td>
+        <td>{{  pdsf[1].get("SystemScore", 0) }}</td>
+        <td>{{  pdsf[1].get("AverageScore", 0) }}</td>
+        <td>{{  pdsf[1].get("TotalScore", 0) }}</td>
+        <td>{{  pdsf[1].get("Pass", 'NP') }}</td>
         <td>
           <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
               상세보기
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-pdsf" href="#">
                 <table>
                   <thead>
                     <th>전체 튜플 수</th>
@@ -55,17 +59,17 @@
                     <th>column 별 null 비율</th>
                   </thead>
                   <tbody>
-                    <td>{{task.get("전체 튜플 수", 0)}}</td>
-                    <td>{{task.get("중복 튜플 수", 0)}}</td>
-                    <td>{{task.get("column 별 null 비율", 0)}}</td>
+                    <td>{{ pdsf[1].get("전체 튜플 수", 0) }}</td>
+                    <td>{{ pdsf[1].get("중복 튜플 수", 0) }}</td>
+                    <td>{{ pdsf[1].get("column 별 null 비율", 0) }}</td>
                   </tbody>
                 </table>
               </a>
             </div>
           </div>
-        </td> 
+        </td>
       </tr>
-      {%endfor%}
+      {% endfor %}
     </tbody>
-  </table> 
+  </table>
 </div>

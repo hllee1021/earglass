@@ -1,5 +1,8 @@
+import os
+from werkzeug.utils import secure_filename
 from flask import Blueprint, render_template, redirect, request, make_response, flash
 import services
+from settings import UPLOAD_DIR
 
 controller = Blueprint("submitter", __name__)
 
@@ -48,5 +51,10 @@ def get_my_task_submitter():
 @controller.route("/submit_task", methods=["POST"])
 def submit_task():
     # new task processing code
-    flash("제출되었습니다.")
+    file = request.files['file']
+    fname = secure_filename(file.filename)
+    path = os.path.join(UPLOAD_DIR + "/odsf/", fname)
+    file.save(path)
+    flash("제출이 완료되었습니다. ㅅㅂ~ 그만 집에 보내줘...")
+
     return redirect("/")
