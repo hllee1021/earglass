@@ -7,39 +7,56 @@
 {% block body %}
 <!-- <div include-html="/partials/navbar.html">
 </div> -->
+<p style="text-align: right;">
+    <input id="search-task" type="text" placeholder="🔎 여러기준으로 해야함">
+</p>
 <div class="container">
     <table class="table table-striped table-bordered">
         <thead>
+            <h1>진행중인 태스크</h1>
             <tr>
-                <th>참여가능한 태스크</th>
+                <th style="width:10%">Index</th>
+                <th style="width:15%">태스크명</th>
+                <th style="width:15%">deadline</th>
+                <th style="width:15%"></th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>태스크1
-                    <a type="button" class="btn btn-primary" href='/task/detail'>상세</a>
-                    <a type="button" class="btn btn-primary" href='/submitter/agreement'>참여신청</a>
+                <td>
+                    1
                 </td>
-
+                <td>
+                    태스크1
+                </td>
+                <td>
+                    2020/08/06 12:00
+                </td>
+                <td class="text-center">
+                    <a type="button" class="btn btn-primary mr-2" href='/submitter/agreement'>참여신청</a>
+                    <a type="button" class="btn btn-primary mr-2" href='/task/detail'>상세</a>
+                </td>
             </tr>
             <tr>
-                <td>태스크2
-                    <a type="button" class="btn btn-primary" href='/task/detail'>상세</a>
-                    <a type="button" class="btn btn-primary" href='/submitter/agreement'>참여신청</a>
+                <td>
+                    1
                 </td>
-
-            </tr>
-            <tr>
-                <td>태스크3
-                    <a type="button" class="btn btn-primary" href='/task/detail'>상세</a>
-                    <a type="button" class="btn btn-primary" href='/submitter/agreement'>참여신청</a>
+                <td>
+                    태스크1
+                </td>
+                <td>
+                    2020/08/06 12:00
+                </td>
+                <td class="text-center">
+                    <a type="button" class="btn btn-primary mr-2" href='/submitter/agreement'>참여신청</a>
+                    <a type="button" class="btn btn-primary mr-2" href='/task/detail'>상세</a>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
 
-<div class="container">
+<!-- <div class="container">
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
@@ -140,5 +157,5 @@
             </tr>
         </tbody>
     </table>
-</div>
+</div> -->
 {% endblock %}

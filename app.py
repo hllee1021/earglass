@@ -14,7 +14,20 @@ def inject_user():
         user = services.users.get_user_by_id(user_id)
         if user: return user
         else: return False
-    return dict(is_logged_in=is_logged_in)
+    
+    def is_submitter():
+        user_id = request.cookies.get("user_id")
+        user = services.users.get_user_by_id(user_id)
+        if user["FK_UserTypeName"] == "제출자" : return user
+        else: return False
+    
+    def is_estimator():
+        user_id = request.cookies.get("user_id")
+        user = services.users.get_user_by_id(user_id)
+        if user["FK_UserTypeName"] == "평가자": return user
+        else: return False
+
+    return dict(is_logged_in=is_logged_in, is_submitter=is_submitter, is_estimator=is_estimator)
 
 
 @app.route("/", methods=["GET"])
@@ -24,7 +37,7 @@ def index():
     if user:
         # admin:
         if user["FK_UserTypeName"] == "관리자":
-            pass
+            return redirect("/admin")
 
         # submitter:
         if user["FK_UserTypeName"] == "제출자":
@@ -32,7 +45,7 @@ def index():
 
         # estimator:
         if user["FK_UserTypeName"] == "평가자":
-            pass
+            return redirect("/estimator")
     else:
         return render_template("index.html")
 
