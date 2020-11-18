@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, request, make_response, flash
 from services import admin
+from database.connection import queryall, queryone
 
 # writed by seungsu
 
@@ -35,7 +36,14 @@ controller = Blueprint("admin", __name__)
 
 @controller.route("/", methods=["GET"])
 def admin_home():
-    return render_template("admin/admin.html")
+    tasks = queryall("""
+SELECT TASK.*,
+(SELECT COUNT(TaskName) FROM PARSING_DSF WHERE PARSING_DSF.TaskName=TASK.TaskName) as ParsingDsfCount,
+(SELECT COUNT(TaskName) FROM PARSING_DSF WHERE PARSING_DSF.Pass='P' AND PARSING_DSF.TaskName=TASK.TaskName) as PassedParsingDsfCount
+FROM TASK
+""")
+    users = queryall("SELECT * FROM USER")
+    return render_template("admin/admin.html", tasks=tasks, users=users)
 
 @controller.route("/add_task", methods=["GET"])
 def get_add_task_page():

@@ -1,14 +1,13 @@
 from flask import Blueprint, render_template, redirect, request, make_response, flash
-from services import users, submitter
+import services
 
 controller = Blueprint("submitter", __name__)
 
 
 @controller.route("/", methods=["GET"])
 def get_submitter_home():
-
     id = int(request.cookies.get("id"))
-    tasks = submitter.tasklist_detail(id)
+    tasks = services.submitter.tasklist_detail(id)
     tasks = list(zip(range(1, len(tasks)+1), tasks))
     print(tasks)
     return render_template("submitter/submitter_home.html", tasks=tasks)
@@ -16,7 +15,7 @@ def get_submitter_home():
 
 @controller.route("/agreement", methods=["GET"])
 def agreement():
-    task_id = request.args.get('id', "000000000")
+    task_id = request.args.get('task_id', 0)
     print(task_id)
     return render_template("submitter/agreement.html", task_id = task_id)
 
@@ -39,7 +38,11 @@ def submitter_home():
 
 @controller.route("/my_task", methods=["GET"])
 def get_my_task_submitter():
-    return render_template("submitter/my_task.html")
+    id = int(request.cookies.get("id"))
+    tasks = services.submitter.participating_tasklist(id)
+    tasks = list(zip(range(1, len(tasks)+1), tasks))
+    
+    return render_template("submitter/my_task.html", tasks=tasks)
 
 
 @controller.route("/submit_task", methods=["POST"])

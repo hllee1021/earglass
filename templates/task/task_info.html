@@ -3,31 +3,31 @@
     <tbody>
         <tr>
             <th>url</th>
-            <td><a href="#">{{task.get("id", 0)}}</a></td>
+            <td><a href="#">{{task_info.get("TaskName", 0)}}</a></td>
         </tr>
         <tr>
             <th>description</th>
-            <td>{{task.get("description", 0)}}</td>
+            <td>{{task_info.get("Description", 0)}}</td>
         </tr>
         <tr>
             <th>최소업로드주기</th>
-            <td>{{task.get("최소업로드주기", 0)}}</td>
+            <td>{{task_info.get("MinPeriod", 0)}}</td>
         </tr>
         <tr>
             <th>원본데이터</th>
-            <td>{{task.get("원본데이터", 0)}}</td>
+            <td>{{task_info.get("원본데이터", 0)}}</td>
         </tr>
         <tr>
             <th>최대 중복 튜플비율</th>
-            <td>{{task.get("중복튜플비율", 0)}}</td>
+            <td>{{task_info.get("MaxDuplicatedRowRatio", "None")}}</td>
         </tr>
         <tr>
             <th>최대 column별 null 비율</th>
-            <td>{{task.get("null비율", 0)}}</td>
+            <td>{{task_info.get("null비율", "None")}}</td>
         </tr>
         <tr>
             <th>평가자 채점 기준</th>
-            <td>{{task.get("평가자채점기준", 0)}}</td>
+            <td>{{task_info.get("평가자채점기준", "None")}}</td>
         </tr>
     </tbody>
 </table>

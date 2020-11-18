@@ -1,4 +1,0 @@
-﻿idORIGIN_DATA_TYPE,DataTypeName,SchemaInfo,MappingInfo
-1,SMI,<SYNC Start=######><P CLASS=KRCC>Caption / <SYNC Start=######><P CLASS=KRCC>&nbsp;,StartTime:<SYNC Start=######> / EndTime:<SYNC Start=######><P CLASS=KRCC>&nbsp; / Caption:<P CLASS=KRCC>Caption
-2,SRT,"num / ##:##:##,### --> ##:##:##,### / Caption","StartTime:##:##:##,### / EndTime:--> ##:##:##,### / Caption:Caption"
-3,CSV,"num / ##:##:##,### / ##:##:##,### / Caption","StartTime:##:##:##,### / EndTime:##:##:##,### / Caption:Caption"

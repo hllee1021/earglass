@@ -1,4 +1,4 @@
-from database.connection import connect
+from database.connection import *
 
 # connect to db
 connect = connect()
@@ -21,9 +21,10 @@ def get_tasks(page):
     return data
 
     
-def task_detail():
+def task_detail(task_id):
     # 테스크 관련 정보 모두 불러오기
-    pass
+    sql = "SELECT * FROM TASK T WHERE T.TaskName = %s"
+    return queryone(sql, (task_id,))
 
 
 
