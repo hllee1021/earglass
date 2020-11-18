@@ -1,9 +1,8 @@
 {% block body %}
-<<<<<<< HEAD
-<table class="table table-striped table-bordered" id="target-table2">
-=======
+<p style="text-align: right;">
+  <input id="search-task" type="text" placeholder="🔎 태스크 이름으로 검색">
+</p>
 <table class="table table-striped table-bordered" id="target-table-1">
->>>>>>> 6e7f1775a6eee482a1f9754f8728c6cdd6903591
     <thead>
         <th>Index</th>
         <th>ID</th>
@@ -39,9 +38,9 @@
                 <td>
                   {{ user['Address'] }} 
                 </td>
-                <td>
+                <td class="task">
                   {% for task in user['Tasks'] %}
-                    {{ task['FK_TaskName'] }}
+                    <p>{{ task['FK_TaskName'] }}</p>
                   {% endfor %}
                 </td>
             </form>
@@ -62,12 +61,37 @@
     }
 </style>
 <script>
-    $(document).ready(function() {
-<<<<<<< HEAD
-        $("#target-table2").DataTable();
-=======
-        $("#target-table-1").DataTable();
->>>>>>> 6e7f1775a6eee482a1f9754f8728c6cdd6903591
-    })
+console.log("start")
+// $('#search-task').on('change', (event) => {
+//   const task_query = event.target.value
+//   $('tbody tr').each((index, element) => {
+//     let tasks = element.get
+//     // if (tasks.includes(task_query)) {
+//     //   $(element).show()
+//     // } else {
+//     //   $(element).hide()
+//     // }
+//   })
+// })
+$(document).ready(() => {
+  $("#search-task").on('change', (event) => {
+    const task_query = event.target.value;
+    let rows = document.querySelectorAll("table#target-table-1 tbody tr")
+    for (let i = 0; i < rows.length; i++) {
+      row = rows[i];
+      let ps = row.querySelectorAll("p")
+      let tasks = []
+      for (let j = 0; j < ps.length; j++) {
+        tasks.push(ps[j].textContent)
+      }
+      console.log(tasks)
+      if (tasks.includes(task_query) || !task_query) {
+        $(row).show()
+      } else {
+        $(row).hide()
+      }
+    }
+  })
+})
 </script>
 {% endblock %}
