@@ -16,13 +16,13 @@ def inject_user():
         user = services.users.get_user_by_id(user_id)
         if user: return user
         else: return False
-    
+
     def is_submitter():
         user_id = request.cookies.get("user_id")
         user = services.users.get_user_by_id(user_id)
         if user["FK_UserTypeName"] == "제출자" : return user
         else: return False
-    
+
     def is_estimator():
         user_id = request.cookies.get("user_id")
         user = services.users.get_user_by_id(user_id)
