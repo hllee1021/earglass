@@ -11,3 +11,5 @@ database/__pycache__/
 cool/
 cool.py
 data/
+
+.vim/
