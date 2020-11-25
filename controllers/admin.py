@@ -6,6 +6,7 @@ from database.connection import queryall, queryone
 
 controller = Blueprint("admin", __name__)
 
+# /
 @controller.route("/", methods=["GET"])
 def get_admin_page():
     tasks = services.admin.get_all_tasks()
@@ -26,44 +27,45 @@ def get_admin_page():
         estimator['Tasks'] = participating_tasks
 
     users = submitters + estimators
-    return render_template("admin/admin.html", users=users, tasks=tasks)
+    return render_template("admin/index.html", users=users, tasks=tasks)
 
-# TASK CRUD
+# TASK
+# /task
 @controller.route("/add_task", methods=["GET"])
 def get_add_task_page():
+    '''태스크 추가 페이지'''
     return render_template("admin/add_task.html")
 
-@controller.route("/task_info/<task_name>", methods=["GET"])
+@controller.route("/tasks/<task_name>", methods=["GET"])
 def get_task_page(task_name):
-    '''태스크 상세페이지'''
+    '''태스크 상세/수정 페이지'''
+    print(task_name)
     task = services.admin.task_info(task_name)
     origin_data_types = services.admin.task_info_origin_data_type(task_name)
     return render_template("admin/task_info.html", task=task, origin_data_types=origin_data_types)
 
-@controller.route("/add_task", methods=["POST"])
+@controller.route("/tasks", methods=["POST"])
 def add_task():
     '''태스크 추가 엔드포인트'''
     # TODO add task
     return "Uncompleted"
 
-@controller.route("/edit_task", methods=["GET"])
-def get_edit_task_page():
-    '''태스크 수정 페이지'''
-    return render_template("admin/edit_task.html")
-
-@controller.route("/edit_task", methods=["POST"])
-def edit_task():
+@controller.route("/tasks/<task_name>", methods=["POST"])
+def edit_task(task_name):
     '''태스크 수정 엔드포인트'''
     # TODO edit task
     return "Uncompleted"
 
-@controller.route("/delete_task", methods=["GET"])
+@controller.route("/tasks", methods=["DELETE"])
 def delete_task():
     '''태스크 삭제 엔드포인트'''
     # TODO delete task
     return "Uncompleted"
 
-@controller.route("/submitter/<submitter_index>", methods=["GET"])
+
+# USERS
+# /user
+@controller.route("/submitters/<submitter_index>", methods=["GET"])
 def get_admin_submitter_page(submitter_index):
     user = services.users.get_user_by_index(submitter_index)
     participation = services.submitter.participating_tasklist(submitter_index)
@@ -73,11 +75,9 @@ def get_admin_submitter_page(submitter_index):
 
     return render_template("admin/submitter.html", user=user, participation=participation)
 
-@controller.route("/estimator", methods=["GET"])
-def get_admin_estimator_page():
+@controller.route("/estimators/<estimator_index>", methods=["GET"])
+def get_admin_estimator_page(estimator_index):
+    # TODO estimator detail page
     return render_template("admin/estimator.html")
-
-@controller.route("/my", methods=["GET"])
-def get_admin_my_page():
-    return render_template("admin/my.html")
+# Create Read Update Delete(CRUD)
 
