@@ -6,22 +6,26 @@ CREATE TRIGGER AfterTaskDoneUpdateEstimatorScore
 AFTER UPDATE ON TASK
 FOR EACH ROW
 BEGIN
-    DECLARE varEstimatorrNum
-    varFK_idEstimator
-    varFileNum
-varEvaluationNum
-varAvgScore
-varSTDScore
-varSmallIndex
-varNormZ
-varOulierCount
+    DECLARE curTaskName             varchar(45);
+    DECLARE varIndex               INT(11);
+    DECLARE varEstimatorNum        INT(11);
+    DECLARE varFK_idEstimator       INT(11);
+    DECLARE varFileNum              INT(11);
+    DECLARE varEvaluationNum        INT(11);
+    DECLARE varAvgScore             FLOAT;
+    DECLARE varSTDScore             FLOAT;
+    DECLARE varSmallIndex           INT(11);
+    DECLARE varNormZ                FLOAT;
+    DECLARE varOutlierCount          INT(11);
+    DECLARE varGoodEvaluationNum    INT(11);
+    DECLARE newEstimatorScore       FLOAT;
 
     SET curTaskName = NEW.TaskName;
     SET varIndex = 0;
 
     IF (NEW.Status = 'done') THEN
 
-        SELECT  COUNT(*) INtO varEstimatorrNum
+        SELECT  COUNT(*) INTO varEstimatorNum
         FROM EstimatorsInDoneTask
         WHERE TaskName = curTaskName;
 
@@ -37,7 +41,7 @@ varOulierCount
             SELECT COUNT(*) INTO varFileNum
             FROM EVALUATION
             WHERE FK_idEstimator = varFK_idEstimator
-            AND FK_idPARSING_DSF IN (SELECT idPARSING_DSF 
+            AND FK_idPARSING_DSF IN (SELECT idPARSING_DSF
                                     FROM PARSING_DSF
                                     WHERE TaskName = curTaskName);
 
@@ -46,33 +50,33 @@ varOulierCount
             FROM EVALUATION
             WHERE FK_idEstimator = varFK_idEstimator
             AND Status = 'done'
-            AND FK_idPARSING_DSF IN (SELECT idPARSING_DSF 
+            AND FK_idPARSING_DSF IN (SELECT idPARSING_DSF
                                     FROM PARSING_DSF
                                     WHERE TaskName = curTaskName);
 
-            SELECT AVG(Score) INTO varAvgScore, STD(Score) INTO varSTDScore
+            SELECT AVG(Score), STD(Score) INTO varAvgScore, varSTDScore
             FROM EVALUATION
-            WHERE Status = 'done' 
-            AND FK_idPARSING_DSF IN (SELECT idPARSING_DSF 
+            WHERE Status = 'done'
+            AND FK_idPARSING_DSF IN (SELECT idPARSING_DSF
                                     FROM PARSING_DSF
                                     WHERE TaskName = curTaskName);
 
             SET varSmallIndex = 0;
-            SET varOulierCount = 0;
+            SET varOutlierCount = 0;
 
             smallloop: LOOP
                 SET varSmallIndex = varSmallIndex + 1;
 
-                SELECT ABS((Score - varAvgScore)/varSTPScore) INTO varNormZ
+                SELECT ABS((Score - varAvgScore)/varSTDScore) INTO varNormZ
                 FROM EVALUATION
                 WHERE FK_idEstimator = varFK_idEstimator
                 AND Status = 'done'
-                AND FK_idPARSING_DSF IN (SELECT idPARSING_DSF 
+                AND FK_idPARSING_DSF IN (SELECT idPARSING_DSF
                                     FROM PARSING_DSF
                                     WHERE TaskName = curTaskName);
 
                 IF varNormZ > 1 THEN
-                    SET varOulierCount = varOulierCount + 1;
+                    SET varOutlierCount = varOutlierCount + 1;
                 END IF;
 
                 IF varSmallIndex = varEvaluationNum THEN
@@ -81,35 +85,27 @@ varOulierCount
             END LOOP smallloop;
 
 
-            
-            -- total score 평균 계산
-            SELECT MAX(TotalScore) INTO varMaxTotalScore
-            FROM PARSING_DSF
-            WHERE TaskName = curTaskName
-            AND TotalStatus = 'done';
+            SELECT COUNT(*) INTO varGoodEvaluationNum
+            FROM EVALUATION AS E
+            WHERE E.FK_idEstimator = varFK_idEstimator
+                AND Status = 'done'
+                AND E.Pass = (SELECT P.Pass
+                            FROM PARSING_DSF AS P
+                            WHERE P.idPARSING_DSF = E.FK_idPARSING_DSF
+                            AND P.TotalStatus = 'done')
+                AND E.FK_idPARSING_DSF IN (SELECT idPARSING_DSF
+                                    FROM PARSING_DSF
+                                    WHERE TaskName = curTaskName);
 
-            SELECT AVG(TotalScore) INTO varAvgTotalScore
-            FROM PARSING_DSF
-            WHERE TaskName = curTaskName
-            AND SubmitterID = varSubmitterID
-            AND TotalStatus = 'done';
-
-            -- 제출 수 비율
-            IF varSubmitNum > 100 THEN
-                SET varSubmitNumRatio = 1;
-            ELSE
-                SET varSubmitNumRatio = (900+varSubmitNum)/1000;
-            END IF;
-
-            SET newSubmitterScore = (varPassNum/varSubmitNum)*40
-            + 50*(varAvgTotalScore/varMaxTotalScore)
-            + 10*varSubmitNumRatio;
+            SET newEstimatorScore = 40*varEvaluationNum/varFileNum
+                                    + 30*(1-(varOutlierCount/varEvaluationNum))
+                                    + 30*varGoodEvaluationNum/varEvaluationNum;
 
             UPDATE USER
-                SET UserScore = 0.85*UserScore + 0.15*newSubmitterScore
-                WHERE idUSER = varSubmitterID;
+                SET UserScore = 0.85*UserScore + 0.15*newEstimatorScore
+                WHERE idUSER = varFK_idEstimator;
 
-            IF varIndex = varSubmitterNum THEN
+            IF varIndex = varEstimatorNum THEN
                 LEAVE myloop;
             END IF;
         END LOOP myloop;

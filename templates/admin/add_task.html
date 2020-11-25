@@ -9,8 +9,12 @@
 <form id="app">
     <!-- TODO add task handling -->
     <div class="form-group">
-        <label>TaskName</label>
-        <input type="text" class="form-control">
+        <label>태스크 이름</label>
+        <input v-model="taskName" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>설명</label>
+        <textarea v-model="description" type="text" class="form-control">
     </div>
     <div class="form-group">
         <label>기본 데이터 타입</label>
@@ -26,9 +30,8 @@
             <template v-for="defaultField in defaultFields">
                 <li class='mb-2'>
                     <span>[[ defaultField ]]</span>
-                    <button type="button" class="btn btn-info" v-on:click="deleteDefaultField(defaultField)" >삭제</button>
+                    <button type="button" class="btn btn-info" v-on:click="deleteDefaultField(defaultField)">삭제</button>
                 </li>
-
             </template>
         </ul>
     </div>
@@ -58,7 +61,8 @@
                     <template v-for="(defaultField, subField) in dataType">
                         <li class="form-row mb-2">
                             <span class="col mr-1">[[ subField ]]</span>
-                            <select class="form-control col mr-1" v-on:change="changeDefaultField(dataTypeName, $event.target.value, subField)">
+                            <select class="form-control col mr-1"
+                                v-on:change="changeDefaultField(dataTypeName, $event.target.value, subField)">
                                 <template v-for="originDefaultField in defaultFields">
                                     <option v-if="originDefaultField == defaultField" v-bind:value="originDefaultField"
                                         selected>
@@ -69,7 +73,8 @@
                                     </option>
                                 </template>
                             </select>
-                            <button class="btn btn-danger" type="button" v-on:click="deleteSubField(dataTypeName, subField)">x</button>
+                            <button class="btn btn-danger" type="button"
+                                v-on:click="deleteSubField(dataTypeName, subField)">x</button>
                             <!-- delete subField -->
                         </li>
                     </template>
@@ -91,12 +96,12 @@
     </div>
     <h5 style="margin-left: 15px; margin-bottom: 10px;"><b>시스템 Pass 기준 설정</b></h5>
     <div class="form-group">
-        <label class="form-group col-md-3">최대 중복 Tuple 비율</label>
-        <input type="text" class="form-group col-md-2" name="tuple_ratio" placeholder="0">%
+        <label class="form-group col-md-3">최대 중복 Tuple 비율(%)</label>
+        <input type="number" min="0" max="100" class="form-group col-md-2" name="tuple_ratio" placeholder="0">
     </div>
     <div class="form-group">
-        <label class="form-group col-md-3">최대 Column별 Null 비율</label>
-        <input type="text" class="form-group col-md-2" name="tuple_ratio" placeholder="0">%
+        <label class="form-group col-md-3">최대 Column별 Null 비율(%)</label>
+        <input type="number" min="0" max="100" class="form-group col-md-2" name="tuple_ratio" placeholder="0">
     </div>
     <div class="form-group">
         <label class="form-group col-md-4">
@@ -112,27 +117,21 @@
     const app = new Vue({
         el: "form#app",
         data: {
-            // form fields
             taskName: '',
             description: '',
-            minPeriod: '',
+            minPeriod: '', // number
             tableName: '',
-            defaultFields: [
-                'defaultField1', 'defaultField2'
-            ], // li this.
-            defaultFieldBuffer: '',
+            defaultFields: ['defaultField1', 'defaultField2'],
             originDataTypes: {
                 // dataTypeName: { subField1: defaultField1, subField2L: defaultField2}
                 dataType1: { subField1: 'defaultField1', subField2: 'defaultField2' },
                 dataType2: { subField3: 'defaultField1', subField4: 'defaultField2' }
             },
+            // Buffers
+            defaultFieldBuffer: '',
             originDataTypeBuffer: '',
-            subFieldBuffer: {
-                
-            },
-            subFieldMapBuffer: {
-
-            }
+            subFieldBuffer: {},
+            subFieldMapBuffer: {}
         },
         methods: {
             getUsedDefaultFields() {
@@ -167,7 +166,7 @@
                 const subField = this.subFieldBuffer[dataTypeName];
                 const subFields = Object.keys(this.originDataTypes[dataTypeName]);
                 const mappedDefaultField = this.subFieldMapBuffer[dataTypeName];
-                console.table({subField, subFields})
+                console.table({ subField, subFields })
                 if (!subField || !mappedDefaultField) {
                     alert("빈칸을 채워주세요")
                 } else if (subFields.includes(subField)) {
@@ -176,7 +175,7 @@
                     console.log(this.subFieldBuffer[dataTypeName], this.subFieldMapBuffer[dataTypeName]);
                     this.originDataTypes[dataTypeName][subField] = mappedDefaultField;
                     this.$forceUpdate();
-                    
+
                     this.subFieldBuffer[dataTypeName] = '';
                     Vue.delete(this.subFieldMapBuffer, dataTypeName);
                 }
@@ -190,7 +189,7 @@
                 if (usedDefaultFieldsSet.has(defaultField)) {
                     alert("이미 사용 중인 Default Field입니다. 매핑되는 SubField를 제거해주세요")
                 } else {
-                    Vue.delete(this.defaultFields, defaultField);
+                    this.defaultFields = this.defaultFields.filter(field => field != defaultField); // delete defaultField from defaultFields
                 }
             },
             deleteOriginDataType(dataTypeName) {

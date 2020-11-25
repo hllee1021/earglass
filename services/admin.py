@@ -49,7 +49,7 @@ def edit_task(current_task_name, description, min_period, status, task_data_tabl
 
 def task_info(task_name):
     '''태스크 정보'''
-    sql = "SELECT TaskName, Description, MinPeriod, TaskDataTableName, TaskDataTableSchemaInfo \
+    sql = "SELECT TaskName, Description, MinPeriod, TaskDataTableName, TaskDataTableSchemaInfo, MaxDuplicatedRowRatio, MaxNullRatioPerColumn \
         FROM TASK WHERE TaskName = %s"
     return queryone(sql, (task_name, ))
 
