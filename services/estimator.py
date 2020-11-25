@@ -26,7 +26,7 @@ def is_done(estimator_index, parsing_dsf_id):
     """해당 평가자에 대하여, 해당 파싱 파일이 평가완료되었는지 여부 반환 (ongoing, done)"""
     sql = "SELECT Status FROM EVALUATION WHERE FK_idEstimator = $s AND FK_idPARSING_DSF = $s"
     return queryone(sql, (int(estimator_index), int(parsing_dsf_id), ))
-done_
+
 def update_evaluation_status(parsing_dsf_id, estimator_index, score, is_passed):
     """평가를 끝냈을 때 db 업데이트"""
     return callproc('UpdateEvalutionStatus', (parsing_dsf_id, estimator_index, score, is_passed))
