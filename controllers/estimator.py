@@ -31,15 +31,14 @@ def evaluate():
     '''학림's estimator가 평가하는 라우터'''
     score = int(request.form.get("score"))
     p_np = request.form.get("p_np")
-    odsf_type_id = int(request.args.get('odsf_type_id', 0))
+    idPARSING_DSF = int(request.args.get('idPARSING_DSF', 0))
     user_index=int(request.cookies.get("user_index"))
-    print("ASJBKAGJKAS")
     if score>100 or score<0:
         flash("점수는 0이상 100사이로 입력해야합니다")
         print(123)
         return redirect("/")
     else:
-        services.estimator.update_evaluation_status(odsf_type_id,user_index,score,p_np)
+        services.estimator.update_evaluation_status(idPARSING_DSF,user_index,score,p_np)
         print(345)
         return redirect("/")
     return render_template("evaluator/evaluate_home.html")
