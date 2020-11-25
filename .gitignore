@@ -17,3 +17,7 @@ data/table_data/*
 .vim/
 **/*.swp
 .vscode/
+
+# Seungsu
+**/data/
+**/.ipynb_checkpoints/
