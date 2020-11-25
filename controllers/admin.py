@@ -79,12 +79,12 @@ def delete_task():
 @controller.route("/submitters/<submitter_index>", methods=["GET"])
 def get_admin_submitter_page(submitter_index):
     user = services.users.get_user_by_index(submitter_index)
-    participation = services.submitter.participating_tasklist(submitter_index)
+    participations = services.submitter.participating_tasklist(submitter_index)
     if not user:
         flash("해당 id에 대한 유저가 존재하지 않습니다")
         return redirect("/admin/")
 
-    return render_template("admin/submitter.html", user=user, participation=participation)
+    return render_template("admin/submitter.html", user=user, participations=participations)
 
 @controller.route("/estimators/<estimator_index>", methods=["GET"])
 def get_admin_estimator_page(estimator_index):
