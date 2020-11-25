@@ -15,18 +15,27 @@
     <div class="form-group">
         <label>기본 데이터 타입</label>
         <div class="form-row">
-            <div class="form-group">
+            <div class="form-group mr-2">
                 <input type="text" class="form-control" placeholder="기본 필드 이름" v-model="defaultFieldBuffer">
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary" v-on:click="addDefaultField()">추가하기</button>
             </div>
         </div>
+        <ul>
+            <template v-for="defaultField in defaultFields">
+                <li class='mb-2'>
+                    <span>[[ defaultField ]]</span>
+                    <button type="button" class="btn btn-info" v-on:click="deleteDefaultField(defaultField)" >삭제</button>
+                </li>
+
+            </template>
+        </ul>
     </div>
     <div class="form-group">
         <label>원본 데이터 타입</label>
         <div class="form-row">
-            <div class="form-group">
+            <div class="form-group mr-2">
                 <input type="text" class="form-control" placeholder="원본 데이터 타입 이름" v-model="originDataTypeBuffer">
             </div>
             <div class="form-group">
@@ -49,13 +58,13 @@
                     <template v-for="(defaultField, subField) in dataType">
                         <li class="form-row mb-2">
                             <span class="col mr-1">[[ subField ]]</span>
-                            <select class="form-control col mr-1">
+                            <select class="form-control col mr-1" v-on:change="changeDefaultField(dataTypeName, $event.target.value, subField)">
                                 <template v-for="originDefaultField in defaultFields">
-                                    <option v-if="originDefaultField == defaultField" value="originDefaultField"
+                                    <option v-if="originDefaultField == defaultField" v-bind:value="originDefaultField"
                                         selected>
                                         [[ originDefaultField ]]
                                     </option>
-                                    <option v-if="originDefaultField != defaultField" value="originDefaultField">
+                                    <option v-if="originDefaultField != defaultField" v-bind:value="originDefaultField">
                                         [[ originDefaultField ]]
                                     </option>
                                 </template>
@@ -66,9 +75,9 @@
                     </template>
                     <li class="form-row">
                         <input type="text" class="col form-control mr-1" v-model="subFieldBuffer[dataTypeName]">
-                        <select class="form-control col mr-1">
+                        <select class="form-control col mr-1" v-model="subFieldMapBuffer[dataTypeName]">
                             <template v-for="originDefaultField in defaultFields">
-                                <option value="originDefaultField">
+                                <option v-bind:value="originDefaultField">
                                     [[ originDefaultField ]]
                                 </option>
                             </template>
@@ -83,11 +92,11 @@
     <h5 style="margin-left: 15px; margin-bottom: 10px;"><b>시스템 Pass 기준 설정</b></h5>
     <div class="form-group">
         <label class="form-group col-md-3">최대 중복 Tuple 비율</label>
-        <input id="tuple_ratio" type="text" class="form-group col-md-2" name="tuple_ratio" placeholder="0">%
+        <input type="text" class="form-group col-md-2" name="tuple_ratio" placeholder="0">%
     </div>
     <div class="form-group">
         <label class="form-group col-md-3">최대 Column별 Null 비율</label>
-        <input id="null_ratio" type="text" class="form-group col-md-2" name="null_ratio" placeholder="0">%
+        <input type="text" class="form-group col-md-2" name="tuple_ratio" placeholder="0">%
     </div>
     <div class="form-group">
         <label class="form-group col-md-4">
@@ -120,9 +129,20 @@
             originDataTypeBuffer: '',
             subFieldBuffer: {
                 
+            },
+            subFieldMapBuffer: {
+
             }
         },
         methods: {
+            getUsedDefaultFields() {
+                let usedDefaultFields = [];
+                for (let dataTypeName in this.originDataTypes) {
+                    usedDefaultFields.push(...Object.values(this.originDataTypes[dataTypeName]))
+                }
+                let usedDefaultFieldsSet = new Set(usedDefaultFields);
+                return usedDefaultFieldsSet
+            },
             addDefaultField() {
                 if (!this.defaultFieldBuffer) {
                     alert("빈칸을 채워주세요")
@@ -144,11 +164,33 @@
                 }
             },
             addSubField(dataTypeName) {
-                if (!this.subFieldBuffer[dataTypeName]) {
+                const subField = this.subFieldBuffer[dataTypeName];
+                const subFields = Object.keys(this.originDataTypes[dataTypeName]);
+                const mappedDefaultField = this.subFieldMapBuffer[dataTypeName];
+                console.table({subField, subFields})
+                if (!subField || !mappedDefaultField) {
                     alert("빈칸을 채워주세요")
+                } else if (subFields.includes(subField)) {
+                    alert("이미 존재하는 필드입니다")
                 } else {
-                    console.log(this.subFieldBuffer[dataTypeName]);
-                    // this.subFieldBuffer[dataTypeName] = '';
+                    console.log(this.subFieldBuffer[dataTypeName], this.subFieldMapBuffer[dataTypeName]);
+                    this.originDataTypes[dataTypeName][subField] = mappedDefaultField;
+                    this.$forceUpdate();
+                    
+                    this.subFieldBuffer[dataTypeName] = '';
+                    Vue.delete(this.subFieldMapBuffer, dataTypeName);
+                }
+            },
+            changeDefaultField(dataTypeName, defaultField, subField) {
+                this.originDataTypes[dataTypeName][subField] = defaultField
+            },
+            deleteDefaultField(defaultField) {
+                // is ever used?
+                let usedDefaultFieldsSet = this.getUsedDefaultFields();
+                if (usedDefaultFieldsSet.has(defaultField)) {
+                    alert("이미 사용 중인 Default Field입니다. 매핑되는 SubField를 제거해주세요")
+                } else {
+                    Vue.delete(this.defaultFields, defaultField);
                 }
             },
             deleteOriginDataType(dataTypeName) {
@@ -160,7 +202,7 @@
             validateSchema() {
                 for (let dataTypeName in this.originDataTypes) {
                     const originDataType = this.originDataTypes[dataTypeName]
-                    const defaultFields = Object.entries(originDataType)
+                    const defaultFields = Object.values(originDataType)
                     for (let defaultField of defaultFields) {
                         if (!defaultFields.includes(defaultField)) {
                             return false;
@@ -168,6 +210,9 @@
                     }
                 }
                 return true;
+            },
+            print(something) {
+                console.log(something)
             }
         },
         delimiters: ['[[', ']]']
