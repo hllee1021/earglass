@@ -6,7 +6,7 @@
 <h1>ADD Task</h1>
 </br>
 </br>
-<form method="POST" action="/admin/tasks">
+<form id="app">
     <!-- TODO add task handling -->
     <div class="form-group">
         <label class="form-group col-md-2">TaskName</label>
@@ -25,8 +25,18 @@
         <input id="table_name" type="text" class="form-group col-md-2" name="table_name" placeholder="table_name">
     </div>
     <div class="form-group">
-        <label class="form-group col-md-2">스키마</label>
-        <input id="schema" type="text" class="form-group col-md-2" name="schema" placeholder="schema">
+        <label class="form-group col-md-2">기본 데이터 타입</label>
+        <input type="text" style="width:100%" class="form-group col-md-2" placeholder="기본 필드 이름" v-model="defaultFieldBuffer">
+        <button type="button" id="default-field-add-button" v-on:click="addDefaultField()">추가하기</button>
+        <ul id="default-field-list">
+            <li v-for="field in defaultFields">
+                [[ field ]]
+            </li>
+        </ul>
+    </div>
+    <div class="form-group">
+        <label for="" class="form-group col-md-2">스키마</label>
+        <textarea class="form-control textarea" name="schema" placeholder="(ex: field1:"></textarea>
     </div>
     <div class="form-group">
         <label class="form-group col-md-2 d-inline-block"><h5><b>원본 데이터 타입</b></h5></label>
@@ -73,4 +83,26 @@
     </br>
     <button type="submit" class="btn btn-primary float-right mb-4">Task 생성</button>
 </form>
+<script>
+    const app = new Vue({
+        el: "form#app",
+        data: {
+            defaultFields: [], // li this.
+            defaultFieldBuffer: '',
+        },
+        methods: {
+            addDefaultField() {
+                if (!this.defaultFieldBuffer) {
+                    alert("빈칸을 채워주세요")
+                } else if (this.defaultFields.includes(this.defaultFieldBuffer)) {
+                    alert("이미 존재하는 기본 필드입니다");
+                } else {
+                    this.defaultFields.push(this.defaultFieldBuffer);
+                    this.defaultFieldBuffer = '';
+                }
+            }
+        },
+        delimiters: ['[[',']]']
+    })
+</script>
 {% endblock %}
