@@ -21,7 +21,7 @@ def connect():
 
 
 def queryone(sql, fmt=tuple()):
-    # executes 1 query and fetches one
+    '''executes 1 query and fetches one'''
     try:
         conn = connect()
         cur = conn.cursor()
@@ -36,7 +36,7 @@ def queryone(sql, fmt=tuple()):
 
 
 def queryall(sql, fmt=tuple()):
-    # executes 1 query and fetches all
+    '''executes 1 query and fetches all'''
     try:
         conn = connect()
         cur = conn.cursor()
