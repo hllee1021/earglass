@@ -12,11 +12,11 @@
         <tbody>
             {% for psdf in leaderboard %}
             <tr>
-                <td>{{ psdf[0] }}</td>
-                <td>{{ psdf[1]["SubmitterID"] }}</td>
-                <td>{{ psdf[1]["DataTypeName"] }}</td>
-                <td>{{ psdf[1]["TotalScore"] }}</td>
-                <td>{{ psdf[1]["Pass"] }}</td>
+                <td>{{ loop.index }}</td>
+                <td>{{ psdf["SubmitterID"] }}</td>
+                <td>{{ psdf["DataTypeName"] }}</td>
+                <td>{{ psdf["TotalScore"] }}</td>
+                <td>{{ psdf["Pass"] }}</td>
             </tr>
             {% endfor %}
             <!-- <tr>
