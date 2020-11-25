@@ -99,3 +99,37 @@ def system_score(file):
     score_info['sys_score'] = score_info['total_tuple_score'] + score_info['duplicate_tuple_score'] + score_info['col_null_score']
     
     return score_info
+
+def check_validate(file, MNR, MDR):
+    """
+    Check validate of odsf file's duplicate tuple
+    input : filename is odsf, MaxNullRatioPerColumn, MaxDuplicatedRowRatio
+    output : boolean
+    """
+    filename = "./data/" + file
+    
+    try:
+        # read odsf file
+        odsf = pd.read_csv(filename)
+    except:
+        return "no file"
+    
+    # statistic analysis
+    null_info = null_count(odsf)
+    duplicate_info = duplicate_tuple(odsf)
+    
+    # calculate null ratio
+    for col, null in null_info.items():
+        null_ratio = null/duplicate_info['total_tuple_num']
+        if null_ratio > MNR:
+            null_info[col] = False
+        else:
+            null_info[col] = True
+    
+    # calculate duplicate ratio
+    if duplicate_info['duplicate_rate'] > MDR:
+        null_info['duplicate_ratio'] = False
+    else:
+        null_info['duplicate_ratio'] = True
+    
+    return null_info

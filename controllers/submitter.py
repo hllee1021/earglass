@@ -5,6 +5,7 @@ import pandas as pd
 from werkzeug.utils import secure_filename
 from flask import Blueprint, render_template, redirect, request, make_response, flash, Response
 import services
+import system_estimator
 from settings import UPLOAD_DIR
 
 controller = Blueprint("submitter", __name__)
@@ -29,12 +30,12 @@ def agreement():
 def submitter_home():
     agree = request.form.get("agree")
     task_name = request.form.get("task_name")
+    user_index = request.cookies.get("user_index")
     print(agree)
     if agree == "agree":
         # agreement processing code
+        services.submitter.insert_participation(task_name, user_index)
         flash("테스크 참여 신청되었습니다.")
-
-        # db 쿼리문
 
         return redirect("/")
     else:
@@ -51,11 +52,22 @@ def get_my_task_submitter():
 
 @controller.route("/submit_task", methods=["POST"])
 def submit_task():
-    # new task processing code
-    file = request.files['file']
-    fname = secure_filename(file.filename)
-    path = os.path.join(UPLOAD_DIR + "/odsf/", fname)
-    file.save(path)
+
+    try:
+        # new task processing code
+        file = request.files['file']
+        fname = secure_filename(file.filename)
+        path = os.path.join(UPLOAD_DIR + "/odsf/", fname)
+        file.save(path)
+    except:
+        flash("파일 업로드가 실패했습니다.")
+        return redirect("/")
+    
+
+        
+
+
+
     flash("제출이 완료되었습니다. ㅅㄱ~ 그만 집에 보내줘...")
 
     return redirect("/")
@@ -83,7 +95,7 @@ def csv_file_download_with_stream():
     output_stream = StringIO()
 
     # 그 결과를 앞서 만든 IO stream에 저장
-    temp_df.to_csv(output_stream)
+    temp_df.to_csv(output_stream, index=False)
     response = Response(
         output_stream.getvalue(),
         mimetype='text/csv',
