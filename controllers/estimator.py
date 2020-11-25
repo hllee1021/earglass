@@ -29,6 +29,8 @@ def get_estimator_task_info():
 #made_by 학림 evaluator_home에서 평가했을때 form action 라우터
 @controller.route("/estimator/evaluate", methods=["POST"])
 def evaluate():
-    '''explanation'''
-    #db문
+    '''estimator가 평가하는 라우터'''
+    score = request.form.get("score")
+    p_np = request.form.get("p_np")
+    
     return render_template("evaluator/evaluate_home.html")

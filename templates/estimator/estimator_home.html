@@ -43,7 +43,7 @@
             <td>{{ task[1]["Deadline"] }}</td>
             <form form method="POST" action="/estimator/evaluate">
                 <td>
-                    <a class="btn btn-primary" href="#" role="button">다운로드</a>
+                    <a class="btn btn-primary" href={{ task[1]["ParsingFile"] }} role="button">다운로드</a>
                 </td>
                 <td>
                     <div class="form group">
@@ -52,7 +52,7 @@
                 </td>
                 <td>
                     <div class="form group">
-                        <select class="form-control form-control-sm" name="pass" id="name-select">
+                        <select class="form-control form-control-sm" name="p_np" id="name-select">
                             <option value="p">P</option>
                             <option value="np">N</option>
                         </select>
