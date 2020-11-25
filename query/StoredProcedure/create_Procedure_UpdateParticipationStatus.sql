@@ -5,24 +5,26 @@ DELIMITER //
 CREATE PROCEDURE UpdateParticipationStatus
             (IN     varFK_TaskName      Varchar(45),
              IN     varFK_idUSER        int(11),
-             IN     newStatus           Varchar(45))
+             IN     newStatus           Varchar(45),
+             IN     newComment          text)
 
 BEGIN
-    IF (newStatus = "accepted" or newStatus = "rejected") THEN
+    IF (newStatus = 'accepted' or newStatus = 'rejected') THEN
         -- If exists participation row
         IF EXISTS 
         (SELECT * FROM PARTICIPATION
          WHERE  PARTICIPATION.FK_TaskName = varFK_TaskName
             AND PARTICIPATION.FK_idUSER = varFK_idUSER
-            AND PARTICIPATION.status = "waiting") THEN
+            AND PARTICIPATION.status = 'waiting') THEN
             -- update participation status to accpted or rejected
             UPDATE PARTICIPATION
-                SET     PARTICIPATION.Status = newStatus
+                SET     PARTICIPATION.Status = newStatus,
+                        PARTICIPATION.Comment = newComment
                 WHERE   (PARTICIPATION.FK_TaskName = varFK_TaskName
                     AND  PARTICIPATION.FK_idUSER = varFK_idUSER);
         END IF;
         -- print message
-        SELECT "update participation status successfully"
+        SELECT 'update participation status successfully'
         AS UpdateParticipationStausResults;
 
     ELSE

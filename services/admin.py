@@ -3,7 +3,7 @@ import math
 import csv
 from pprint import pprint
 import json
-import estimator
+from . import estimator
 
 # def get_users():
 #     '''전체 USER 상세 정보 리턴'''
@@ -41,64 +41,89 @@ def show_estimating_status(estimator_id):
     '''평가자 평가할 파싱 파일 현황'''
     return estimator.evaluate_waiting_list(estimator_id)
 
-def show_estimated_status(user_id):
+def show_estimated_status(estimator_id):
     '''평가자 평가한 파싱 파일 현황'''
-    sql = "SELECT * FROM EVALUATION WHERE FK_idUSER = %s"
+    return estimator.evaluated_list(estimator_id)
+
+# def show_submit_status(user_id):
+#     '''제출자 제출 현황'''
+#     sql = "SELECT P.SubmitterID, P.TaskName, ODT.DataTypeName, \
+#     O.DateTime, O.OriginFile, P.ParsingFile, P.SubmitNum, P.Period, \
+#     P.Round, P.SystemScore, P.AverageScore, P.TotalScore, P.Pass, P.TotalStatus \
+#     FROM ORIGIN_DSF AS O, PARSING_DSF AS P JOIN ORIGIN_DATA_TYPE AS ODT ON P.OriginDataTypeID = ODT.idORIGIN_DATA_TYPE \
+#     WHERE O.idORIGIN_DSF = P.FK_idORIGIN_DSF AND P.SubmitterID = %s"
+#     return queryall(sql, (user_id, ))
+
+def show_participating_task_info(user_id):
+    '''task 별로 통계 정보 보여주기'''
+    sql = "SELECT SQ.TaskName, SQ.Deadline, MAX(COALESCE(D.SubmitNum, 0)) AS Submit_num, \
+    SUM(CASE COALESCE(D.Pass, 'NP') WHEN 'P' THEN 1 ELSE 0 END) AS Pass_num \
+    FROM (SELECT T.TaskName, T.Deadline, COALESCE(P.Status, '') AS Status\
+        FROM TASK AS T LEFT OUTER JOIN PARTICIPATION AS P ON P.FK_TaskName = T.TaskName AND P.FK_idUSER = %s) AS SQ\
+    LEFT OUTER JOIN PARSING_DSF AS D ON D.TaskName = SQ.TaskName \
+    WHERE SQ.Status == 'ongoing' GROUP BY SQ.TaskName"
     return queryall(sql, (user_id, ))
 
-def show_submit_status(user_id):
-    '''제출자 제출 현황'''
-    sql = "SELECT P.SubmitterID, P.TaskName, ODT.DataTypeName, \
-    O.DateTime, O.OriginFile, P.ParsingFile, P.SubmitNum, P.Period, \
-    P.Round, P.SystemScore, P.AverageScore, P.TotalScore, P.Pass, P.TotalStatus \
-    FROM ORIGIN_DSF AS O, PARSING_DSF AS P JOIN ORIGIN_DATA_TYPE AS ODT ON P.OriginDataTypeID = ODT.idORIGIN_DATA_TYPE \
-    WHERE O.idORIGIN_DSF = P.FK_idORIGIN_DSF AND P.SubmitterID = %s"
-    return queryall(sql, (user_id, ))
+def update_participation_status(task_name, user_id, new_status, comment):
+    '''제출자의 참여 상태 업데이트'''
+    return callproc('UpdateParticipationStatus', (task_name, user_id, new_status, comment,))
 
-def show_task():
-    '''taskname, task 통계(제출 파일 수, pass된 파일 수), task data table 위치'''
-    sql = "SELECT TaskName, COUNT(*) AS TotalSubmitNum, "
-
-    pass
-
-def show_task_detail():
-    '''정보 다 보여주기'''
-    pass
-
-def sort_by_origin_data_type():
+def sort_by_origin_data_type(user_id, task_name):
     '''원본 데이터 타입 별로 보여주기
     제출 파일 수, pass된 파일 수'''
-    pass
+    sql = "SELECT O.DataTypeName,  MAX(COALESCE(D.SubmitNum, 0)) AS Submit_num, \
+        SUM(CASE COALESCE(D.Pass, 'NP') WHEN 'P' THEN 1 ELSE 0 END) AS Pass_num \
+        FROM PARSING_DSF AS P, ORIGIN_DATA_TYPE AS O WHERE P.OriginDataTypeID = O.idORIGIN_DATA_TYPE \
+             AND P.SubmitterID = %s AND P.TaskName = %s"
+    return queryall(sql, (user_id, task_name, ))
 
-def edit_task():
-    '''수정된 정보 update
-    taskname, description, 최소업로드주기, table 이름, 스키마, 원본 데이터 타입'''
-    pass
+def edit_task(current_task_name, description, min_period, status, task_data_table_name,
+         deadline, max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria):
+    '''수정된 정보 update'''
+    return callproc('EditTask', (current_task_name, description, min_period, status, task_data_table_name,
+         deadline, max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria,))
 
+def task_info(task_name):
+    '''태스크 정보'''
+    sql = "SELECT TaskName, Description, MinPeriod, TaskDataTableName, TaskDataTableSchemaInfo \
+        FROM TASK WHERE TaskName = %s"
+    return queryone(sql, (task_name, ))
 
-def delete_task():
+def task_info_origin_data_type(task_name):
+    '''태스크 정보에서 원본 데이터 타입 별로 제출 파일 수, Pass된 파일 수 보여주기'''
+    sql = "SELECT ODT.DataTypeName, count(P.idPARSING_DSF) AS Submit_num, SUM(CASE COALESCE(P.Pass, 'NP') WHEN 'P' THEN 1 ELSE 0 END) AS Pass_num \
+        FROM PARSING_DSF AS P LEFT JOIN ORIGIN_DATA_TYPE AS ODT ON P.OriginDataTypeID = ODT.idORIGIN_DATA_TYPE\
+        WHERE P.TaskName = %s \
+        GROUP BY ODT.DataTypeName"
+    return queryall(sql, (task_name, ))
+
+def delete_task(task_name):
     '''task delete'''
-    pass
+    return callproc('DeleteTask', (task_name,))
 
-def show_task_participation_list():
+def show_task_participation_list(task_name):
     '''index, 참여자 id, 제출자 평가 점수'''
-    pass
+    sql = "SELECT P.Status, U.Id, U.UserScore \
+        FROM PARTICIPATION AS P, USER AS U \
+        WHERE P.FK_idUSER = U.idUSER AND P.FK_TaskName = %s"
+    return queryall(sql, (task_name, ))
 
-def sort_task_participation_list():
+def sort_task_participation_list(task_name, status):
     '''참여 상태별로 sorting'''
-    pass
+    sql = "SELECT All_Status.Status, All_Status.Id, All_Status.UserScore \
+        FROM (SELECT P.Status, U.Id, U.UserScore \
+        FROM PARTICIPATION AS P, USER AS U \
+        WHERE P.FK_idUSER = U.idUSER AND P.FK_TaskName = %s) AS All_Status \
+        WHERE All_Status.Status = %s"
+    return queryall(sql, (task_name, status, ))
 
-def show_submitter_task():
-    '''각 제출자가 참여 중인 태스크 보여주기
-    태스크 통계정보 다 보여줘야 함
-    index, taskname, 제출 수, pass된 파일 수 
-    통계정보 누르면 원본 데이터 타입 별로 제출 수, pass된 파일 수'''
-    pass
 
-def add_task():
-    '''태스크 추가
-    taskname, description, 최소업로드주기, table 이름, 스키마, 원본 데이터 타입, 시스템 pass 기준, 평가자 pass 기준'''
-    pass
+def add_task(task_name, description, min_period, status, task_data_table_name,
+         deadline, max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria):
+    '''태스크 추가'''
+    return callproc('InsertNewTask', (task_name, description, min_period, status, task_data_table_name,
+         deadline, max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria,))
+
 
 def get_all_tasks():
     '''taskname, task 통계(제출 파일 수, pass된 파일 수), task data table 위치'''
@@ -108,13 +133,13 @@ def get_all_tasks():
         FROM TASK"
     return queryall(sql)
 
-def count_parsing_dsf_for_user(user_id):
-    assert user_exists(user_id)
-    parsing_dsfs = len(queryone("""SELECT * FROM TASK
-INNER JOIN PARSING_DSF
-ON TASK.TaskName=PARSING_DSF.TaskName
-"""))
-    return parsing_dsfs
+# def count_parsing_dsf_for_user(user_id):
+#     assert user_exists(user_id)
+#     parsing_dsfs = len(queryone("""SELECT * FROM TASK
+# INNER JOIN PARSING_DSF
+# ON TASK.TaskName=PARSING_DSF.TaskName
+# """))
+#     return parsing_dsfs
 
 def user_exists(user_id):
     user = queryone("SELECT * FROM USER WHERE idUSER=%d", (int(user_id), ))

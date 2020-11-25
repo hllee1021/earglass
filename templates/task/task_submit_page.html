@@ -9,7 +9,8 @@
         <h3 class="mt-4">형식 다운로드</h3>
         {% for odsf in odsf_type %}
         <h4>{{ odsf["DataTypeName"] }}</h4>
-        <a class="btn btn-outline-info" href="#">형식 다운로드</a>
+        <a class="btn btn-outline-info" href="/submitter/task/download?odsf_type_id={{ odsf['idORIGIN_DATA_TYPE'] }}">형식
+            다운로드</a>
         {% endfor %}
         <div class="form group">
             <h3 class="mt-4">제출 파일 업로드</h3>
