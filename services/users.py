@@ -25,6 +25,6 @@ def sign_up(user_id, password, name, birth, phonenumber, gender, address, role):
                                       birth, phonenumber, gender, address, role))
 
 
-def withdrawal():
-    # 회원탈퇴?
-    pass
+def withdrawal(user_id, password):
+    '''회원 탈퇴'''
+    return callproc('DeleteUser',(user_id, password,))
