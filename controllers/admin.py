@@ -43,10 +43,6 @@ def get_edit_task_page():
 def get_task_page():
     return render_template("admin/task_info.html")
 
-@controller.route("/task_info", methods=["GET"])
-def get_task_info_page():
-    return render_template("admin/task_info.html")
-
 @controller.route("/submitter/<submitter_id>", methods=["GET"])
 def get_admin_submitter_page(submitter_id):
     user = services.users.get_user_by_id(submitter_id)
