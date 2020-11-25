@@ -29,7 +29,7 @@
         <input type="text" style="width:100%" class="form-group col-md-2" placeholder="기본 필드 이름" v-model="defaultFieldBuffer">
         <button type="button" id="default-field-add-button" v-on:click="addDefaultField()">추가하기</button>
         <ul id="default-field-list">
-            <li v-for="field in defaultFields">
+            <li v-for="field in defaultField">
                 [[ field ]]
             </li>
         </ul>
@@ -87,8 +87,16 @@
     const app = new Vue({
         el: "form#app",
         data: {
+            // form fields
+            taskName: '',
+            description: '',
+            minPeriod: '',
+            tableName: '',
             defaultFields: [], // li this.
             defaultFieldBuffer: '',
+            originDataTypes: {
+                // dataTypeName: { subField1: defaultField1, subField2L: defaultField2}
+            },
         },
         methods: {
             addDefaultField() {
@@ -100,6 +108,20 @@
                     this.defaultFields.push(this.defaultFieldBuffer);
                     this.defaultFieldBuffer = '';
                 }
+            },
+            valdateSchema() {
+                for (let dataTypeName in this.originDataTypes) {
+                    const originDataType = this.originDataTypes[dataTypeName]
+                    const defaultFields = Object.entries(originDataType)
+                    for (let defaultField of defaultFields) {
+                        if (!defaultFields.includes(defaultField)) {
+                            return false;
+                        }
+                    }
+                    // if subField is 
+                }
+
+                return true;
             }
         },
         delimiters: ['[[',']]']
