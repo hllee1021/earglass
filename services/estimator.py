@@ -1,7 +1,7 @@
 from database.connection import *
 
 def evaluate_waiting_list(estimator_id):
-    """평가할 파일 리스트에 index, taskname, 제출자 id, deadline, 파싱dsf 위치"""
+    """펑가자가 평가해야 할 평가할 파일 리스트에 index, taskname, 제출자 id, deadline, ParsingFile,idPARSING_DSF"""
     sql = "SELECT ROW_NUMBER() OVER() AS num, P.TaskName, P.SubmitterID, T.Deadline, P.ParsingFile, P.idPARSING_DSF\
     FROM EVALUATION AS E, PARSING_DSF AS P LEFT JOIN TASK AS T ON P.TaskName = T.TaskName \
     WHERE P.idPARSING_DSF = E.FK_idPARSING_DSF AND E.FK_idEstimator = %s AND E.Status = 'ongoing'"

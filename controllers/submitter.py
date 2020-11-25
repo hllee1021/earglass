@@ -14,7 +14,6 @@ controller = Blueprint("submitter", __name__)
 def get_submitter_home():
     id = int(request.cookies.get("id"))
     tasks = services.submitter.tasklist_detail(id)
-    tasks = list(zip(range(1, len(tasks)+1), tasks))
     print(tasks)
     return render_template("submitter/submitter_home.html", tasks=tasks)
 
@@ -62,7 +61,7 @@ def submit_task():
 
     return redirect("/")
 
-# , method=["POST"]
+
 @controller.route("/task/download")
 def csv_file_download_with_stream():
 

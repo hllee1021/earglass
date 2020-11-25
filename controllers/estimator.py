@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, request, make_response, flash
 import services
 from services import users
+from pprint import pprint
 
 controller = Blueprint("estimator", __name__)
 
@@ -9,9 +10,7 @@ controller = Blueprint("estimator", __name__)
 def get_estimator_home():
     id = int(request.cookies.get("id"))
     tasks = services.estimator.evaluate_waiting_list(id)
-    tasks = list(zip(range(1, len(tasks)+1), tasks))
-    print(tasks)
-    # tasks = [{"id": 1, "name":"aa","submitter_name":"hllee1021", "deadline":"1234"},{"id": 2, "name":"bb", "submitter_name":"seungsu","deadline":"1234"},{"id": 3, "name":"cc","submitter_name":"귀요미","deadline":"1234"}]
+    pprint(tasks)
     return render_template("estimator/estimator_home.html", tasks=tasks)
 
 
@@ -36,7 +35,7 @@ def evaluate():
         flash("점수는 0이상 100사이로 입력해야합니다")
         return redirect("/")
     else:
-        services.estimator.done_evaluation(,,score,p_np)
+        # services.estimator.done_evaluation(,,score,p_np)
         return redirect("/")
     return render_template("evaluator/evaluate_home.html")
 
