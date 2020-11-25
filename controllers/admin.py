@@ -39,17 +39,23 @@ def get_adding_task_page():
 def get_edit_task_page():
     return render_template("admin/edit_task.html")
 
-@controller.route("/task", methods=["GET"])
+@controller.route("/task_info", methods=["GET"])
 def get_task_page():
-    return render_template("admin/task.html")
+    return render_template("admin/task_info.html")
 
 @controller.route("/task_info", methods=["GET"])
 def get_task_info_page():
     return render_template("admin/task_info.html")
 
-@controller.route("/submitter", methods=["GET"])
-def get_admin_submitter_page():
-    return render_template("admin/submitter.html")
+@controller.route("/submitter/<submitter_id>", methods=["GET"])
+def get_admin_submitter_page(submitter_id):
+    user = services.users.get_user_by_id(submitter_id)
+    participation = services.submitter.participating_tasklist(submitter_id)
+    if not user:
+        flash("해당 id에 대한 유저가 존재하지 않습니다")
+        return redirect("/admin/")
+    
+    return render_template("admin/submitter.html", user=user, participation=participation)
 
 @controller.route("/estimator", methods=["GET"])
 def get_admin_estimator_page():
