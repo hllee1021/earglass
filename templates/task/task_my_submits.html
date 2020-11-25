@@ -34,16 +34,16 @@
     <tbody>
       {% for pdsf in my_submit %}
       <tr>
-        <td>{{  pdsf[0] }}</td>
-        <td>{{  pdsf[1].get("Period", 0) }}</td>
-        <td>{{  pdsf[1].get("Round", 0) }}</td>
-        <td>{{  pdsf[1].get("ParsingFile", 0) }}</td>
-        <td>{{  pdsf[1].get("DataTypeName", 0) }}</td>
-        <td>{{  pdsf[1].get("DateTime", "None") }}</td>
-        <td>{{  pdsf[1].get("SystemScore", 0) }}</td>
-        <td>{{  pdsf[1].get("AverageScore", 0) }}</td>
-        <td>{{  pdsf[1].get("TotalScore", 0) }}</td>
-        <td>{{  pdsf[1].get("Pass", 'NP') }}</td>
+        <td>{{  loop.index }}</td>
+        <td>{{  pdsf.get("Period", 0) }}</td>
+        <td>{{  pdsf.get("Round", 0) }}</td>
+        <td>{{  pdsf.get("ParsingFile", 0) }}</td>
+        <td>{{  pdsf.get("DataTypeName", 0) }}</td>
+        <td>{{  pdsf.get("DateTime", "None") }}</td>
+        <td>{{  pdsf.get("SystemScore", 0) }}</td>
+        <td>{{  pdsf.get("AverageScore", 0) }}</td>
+        <td>{{  pdsf.get("TotalScore", 0) }}</td>
+        <td>{{  pdsf.get("Pass", 'NP') }}</td>
         <td>
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -59,9 +59,9 @@
                     <th>column 별 null 비율</th>
                   </thead>
                   <tbody>
-                    <td>{{ pdsf[1].get("전체 튜플 수", 0) }}</td>
-                    <td>{{ pdsf[1].get("중복 튜플 수", 0) }}</td>
-                    <td>{{ pdsf[1].get("column 별 null 비율", 0) }}</td>
+                    <td>{{ pdsf.get("전체 튜플 수", 0) }}</td>
+                    <td>{{ pdsf.get("중복 튜플 수", 0) }}</td>
+                    <td>{{ pdsf.get("column 별 null 비율", 0) }}</td>
                   </tbody>
                 </table>
               </a>
