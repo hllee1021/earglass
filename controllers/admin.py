@@ -39,9 +39,12 @@ def get_adding_task_page():
 def get_edit_task_page():
     return render_template("admin/edit_task.html")
 
-@controller.route("/task_info", methods=["GET"])
-def get_task_page():
-    return render_template("admin/task_info.html")
+@controller.route("/task_info/<task_name>", methods=["GET"])
+def get_task_page(task_name):
+    task = services.admin.task_info(task_name)
+    origin_data_types = services.admin.task_info_origin_data_type(task_name)
+    print(origin_data_types)
+    return render_template("admin/task_info.html", task=task, origin_data_types=origin_data_types)
 
 @controller.route("/submitter/<submitter_index>", methods=["GET"])
 def get_admin_submitter_page(submitter_index):
