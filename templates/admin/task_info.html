@@ -4,8 +4,9 @@
 <!-- form 제출로 묶어서 Task 추가되도록 설정해야함 -->
 
 <h1 class="d-inline-block">Task Info</h1>
+<!-- task 삭제 설정해야 함 -->
 <button style="margin-left: 10px; margin-top:20px;" type="submit" class="btn btn-primary float-right mb-4">삭제</button>
-<button style="margin-left: 10px; margin-top:20px;" type="submit" class="btn btn-primary float-right mb-4">수정</button>
+<a href="edit_task" style="margin-left: 10px; margin-top:20px;" type="submit" class="btn btn-primary float-right mb-4">수정</a>
 </br>
 </br>
 <form class="">
@@ -95,10 +96,10 @@
                     95
                 </td>
                 <td>
-                    <button type="submit" class="btn btn-primary">승인</button>
+                    <button id="task_participation" name="approve" type="submit" class="btn btn-primary">승인</button>
                 </td>
                 <td>
-                    <button type="submit" class="btn btn-primary">거절</button>
+                    <button id="task_participation" name="reject" type="submit" class="btn btn-primary">거절</button>
                 </td>
             </tr>
             <tr>

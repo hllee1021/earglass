@@ -20,7 +20,14 @@
               {{ user['idUSER'] }}
             </td>
             <td>
-              <a href="/">{{ user['Name'] }}</a>
+              <!-- 제출자는 admin/submitter.html로, 평가자는 admin/estimator.html로 이동 -->
+              {% if user['FK_UserTypeName'] == '제출자' %}
+                <a href="/admin/submitter/{{ user['idUSER'] }}">{{ user['Name'] }}</a>
+              {% elif user['FK_UserTypeName'] == '평가자' %}
+                <a href="/admin/estimator/{{ user['idUSER'] }}">{{ user['Name'] }}</a>
+              {% else %}
+                <a>error</a>
+              {% endif %}
             </td>
             <td>
               {{ user['FK_UserTypeName'] }}
@@ -40,7 +47,7 @@
                 </td>
                 <td class="task">
                   {% for task in user['Tasks'] %}
-                    <p>{{ task['FK_TaskName'] }}</p>
+                    <a href="task_info">{{ task['FK_TaskName'] }}</a>
                   {% endfor %}
                 </td>
             </form>

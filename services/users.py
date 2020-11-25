@@ -3,7 +3,7 @@ from database.connection import *
 
 def get_user_by_id(id):
     # user 정보 받아오기
-    return queryone("SELECT * FROM USER WHERE Id=%s", (id,))
+    return queryone("SELECT * FROM USER WHERE idUSER=%s", (id,))
 
 
 def verify_user(id, password):
