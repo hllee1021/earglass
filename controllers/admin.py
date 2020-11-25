@@ -47,6 +47,17 @@ def get_task_page(task_name):
 @controller.route("/tasks", methods=["POST"])
 def add_task():
     '''태스크 추가 엔드포인트'''
+    task_name = request.form.get("task_name")
+    description = request.form.get("description")
+    min_period = request.form.get("min_period")
+    status = request.form.get("status")
+    task_data_table_name = request.form.get("task_data_table_name")
+    deadline = request.form.get("deadline")
+    max_duplicated_row_ratio = request.form.get("max_duplicated_row_ratio")
+    max_null_ratio_per_column = request.form.get("max_null_ratio_per_column")
+    pass_criteria = request.form.get("pass_criteria")
+
+    services.admin.add_task(task_name, description, min_period, status, task_data_table_name, deadline, max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria)
     # TODO add task
     return "Uncompleted"
 
