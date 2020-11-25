@@ -1,5 +1,6 @@
 from database.connection import *
 
+
 def evaluate_waiting_list(estimator_index):
     """해당 평가자가 평가할 파일 리스트 (index, taskname, 제출자 id, deadline, 파싱dsf 위치)"""
     sql = "SELECT ROW_NUMBER() OVER() AS num, P.TaskName, P.SubmitterID, T.Deadline, P.ParsingFile, P.idPARSING_DSF\
