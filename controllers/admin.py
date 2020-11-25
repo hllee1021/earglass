@@ -14,15 +14,15 @@ def admin_home():
     submitters = queryall("SELECT * FROM USER WHERE FK_UserTypeName = '제출자'")
     for user in submitters:
         user_id = user['idUSER']
-        tasks = queryall("SELECT FK_TaskName FROM PARTICIPATION WHERE FK_idUSER=%s AND Status = 'ongoing'", (user_id, ))
-        user['Tasks'] = tasks
+        participating_tasks = queryall("SELECT FK_TaskName FROM PARTICIPATION WHERE FK_idUSER=%s AND Status = 'ongoing'", (user_id, ))
+        user['Tasks'] = participating_tasks
 
     estimators = queryall("SELECT * FROM USER WHERE FK_UserTypeName = '평가자'")
     for user in estimators:
         user_id = user['idUSER']
-        tasks = queryall("SELECT P.TaskName FROM EVALUATION AS E  \
+        participating_tasks = queryall("SELECT P.TaskName FROM EVALUATION AS E  \
             LEFT JOIN PARSING_DSF AS P ON E.FK_idPARSING_DSF = P.idPARSING_DSF WHERE E.FK_idEstimator=%s AND E.Status = 'ongoing' " , (user_id, ))
-        user['Tasks'] = tasks
+        user['Tasks'] = participating_tasks
 
     users = submitters + estimators
     return render_template("admin/admin.html", tasks=tasks, users=users)
@@ -41,10 +41,6 @@ def get_edit_task_page():
 
 @controller.route("/task_info", methods=["GET"])
 def get_task_page():
-    return render_template("admin/task_info.html")
-
-@controller.route("/task_info", methods=["GET"])
-def get_task_info_page():
     return render_template("admin/task_info.html")
 
 @controller.route("/submitter/<submitter_index>", methods=["GET"])
