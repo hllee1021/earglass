@@ -32,9 +32,9 @@
                     {{ task["Pass_num"] }}
                 </td>
                 <td>
-                    <a class="btn btn-primary" href="/task/detail?tab=info&task_id={{ task['TaskName'] }}">상세보기</a>
+                    <a class="btn btn-primary" href="/task/detail?tab=info&task_name={{ task['TaskName'] }}">상세보기</a>
                     {% if task["Status"] == "ongoing" %}
-                    <a class="btn btn-primary" href="/task/detail?tab=submit&task_id={{ task['TaskName'] }}">제출</a>
+                    <a class="btn btn-primary" href="/task/detail?tab=submit&task_name={{ task['TaskName'] }}">제출</a>
                     {% else %}
                     <button type="button" class="btn btn-primary mr-2 " disabled>승인대기중</button>
                     {% endif %}
@@ -46,7 +46,7 @@
 </div>
 
 <script>
-    function page_move(url, some_data, task_id) {
+    function page_move(url, some_data, task_name) {
         var form = document.createElement("form");
         var parm = new Array();
         var input = new Array();
@@ -55,7 +55,7 @@
         form.method = "post";
 
         parm.push(['opt', some_data]);
-        parm.push(['task_id', task_id]);
+        parm.push(['task_name', task_name]);
 
 
         for (var i = 0; i < parm.length; i++) {

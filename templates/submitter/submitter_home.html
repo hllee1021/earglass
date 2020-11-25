@@ -48,10 +48,10 @@
                     <button type="button" class="btn btn-primary mr-2 " disabled>승인대기중</button>
                     {% else %}
                     <a type="button" class="btn btn-primary mr-2"
-                        href='/submitter/agreement?task_id={{ task["TaskName"] }}'>참여신청</a>
+                        href='/submitter/agreement?task_name={{ task["TaskName"] }}'>참여신청</a>
                     {% endif %}
                     <a type="button" class="btn btn-primary mr-2"
-                        href='/task/detail?task_id={{ task["TaskName"] }}'>상세</a>
+                        href='/task/detail?task_name={{ task["TaskName"] }}'>상세</a>
                 </td>
             </tr>
 

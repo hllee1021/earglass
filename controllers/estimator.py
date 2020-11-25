@@ -8,8 +8,8 @@ controller = Blueprint("estimator", __name__)
 
 @controller.route("/", methods=["GET"])
 def get_estimator_home():
-    id = int(request.cookies.get("id"))
-    tasks = services.estimator.evaluate_waiting_list(id)
+    user_index = int(request.cookies.get("user_index"))
+    tasks = services.estimator.evaluate_waiting_list(user_index)
     pprint(tasks)
     return render_template("estimator/estimator_home.html", tasks=tasks)
 
@@ -32,11 +32,15 @@ def evaluate():
     score = request.form.get("score")
     p_np = request.form.get("p_np")
     odsf_type_id = int(request.args.get('odsf_type_id', 0))
+    user_id=int(request.args.get('user_id', 0))
+    print("ASJBKAGJKAS")
     if score>100 or score<0:
         flash("점수는 0이상 100사이로 입력해야합니다")
+        print(123)
         return redirect("/")
     else:
-        # services.estimator.done_evaluation(odsf_type_id,,score,p_np)
+        services.estimator.done_evaluation(odsf_type_id,user_wid,score,p_np)
+        print(345)
         return redirect("/")
     return render_template("evaluator/evaluate_home.html")
 
