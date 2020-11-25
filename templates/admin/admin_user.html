@@ -21,7 +21,13 @@
             </td>
             <td>
               <!-- 제출자는 admin/submitter.html로, 평가자는 admin/estimator.html로 이동 -->
-              <a href="/">{{ user['Name'] }}</a>
+              {% if user['FK_UserTypeName'] == '제출자' %}
+                <a href="/admin/submitter/{{ user['idUSER'] }}">{{ user['Name'] }}</a>
+              {% elif user['FK_UserTypeName'] == '평가자' %}
+                <a href="/admin/estimator/{{ user['idUSER'] }}">{{ user['Name'] }}</a>
+              {% else %}
+                <a>error</a>
+              {% endif %}
             </td>
             <td>
               {{ user['FK_UserTypeName'] }}

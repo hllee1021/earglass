@@ -9,7 +9,7 @@ def tasklist_detail(uid):
     return queryall(sql, (uid,))
 
 def participating_tasklist(uid):
-    """간단한 태스크 정보 taskname, deadline, submit_num, pass 수"""
+    """참여자가 참여중인 태스크 정보 taskname, deadline, submit_num, pass 수"""
     sql = "SELECT SQ.TaskName, SQ.Deadline, SQ.Status, MAX(COALESCE(D.SubmitNum, 0)) AS Submit_num, \
     SUM(CASE COALESCE(D.Pass, 'NP') WHEN 'P' THEN 1 ELSE 0 END) AS Pass_num \
     FROM (SELECT T.TaskName, T.Deadline, COALESCE(P.Status, '') AS Status\
