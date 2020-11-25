@@ -43,7 +43,7 @@
             <td>{{ task[1]["Deadline"] }}</td>
             <form form method="POST" action="/estimator/evaluate">
                 <td>
-                    <a class="btn btn-primary" href={{ task[1]["ParsingFile"] }} role="button">다운로드</a>
+                    <a class="btn btn-primary" href=/estimator/task/dowmload?odsf_type_id={{task[1][]}} role="button">다운로드</a>
                 </td>
                 <td>
                     <div class="form group">
