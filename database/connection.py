@@ -21,7 +21,7 @@ def connect():
 
 
 def queryone(sql, fmt=tuple()):
-    '''executes 1 query and fetches one'''
+    '''쿼리문을 실행시키고, 찾은 항목 중 첫번째 튜플 반환'''
     try:
         conn = connect()
         cur = conn.cursor()
@@ -36,7 +36,7 @@ def queryone(sql, fmt=tuple()):
 
 
 def queryall(sql, fmt=tuple()):
-    '''executes 1 query and fetches all'''
+    '''쿼리문을 실행시키고, 찾은 항목 전체 튜플 리스트 반환'''
     try:
         conn = connect()
         cur = conn.cursor()
@@ -50,6 +50,7 @@ def queryall(sql, fmt=tuple()):
         conn.close()
 
 def execute(sql, fmt=tuple()):
+    '''쿼리문을 실행시키고, 변화를 저장'''
     try:
         conn = connect()
         cur = conn.cursor()
@@ -63,6 +64,7 @@ def execute(sql, fmt=tuple()):
         conn.close()
 
 def callproc(sql, fmt=tuple()):
+    '''프로시져를 실행시키고, 변화를 저장'''
     try:
         conn = connect()
         cur = conn.cursor()
