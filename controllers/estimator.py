@@ -31,11 +31,12 @@ def evaluate():
     '''학림's estimator가 평가하는 라우터'''
     score = request.form.get("score")
     p_np = request.form.get("p_np")
+    odsf_type_id = int(request.args.get('odsf_type_id', 0))
     if score>100 or score<0:
         flash("점수는 0이상 100사이로 입력해야합니다")
         return redirect("/")
     else:
-        # services.estimator.done_evaluation(,,score,p_np)
+        services.estimator.done_evaluation(odsf_type_id,,score,p_np)
         return redirect("/")
     return render_template("evaluator/evaluate_home.html")
 
@@ -43,7 +44,6 @@ def evaluate():
 def csv_file_download_with_stream():
     """승수형이 submitter download한거 복사함 일단"""
     odsf_type_id = int(request.args.get('odsf_type_id', 0))
-
     if odsf_type_id != 0:
         odsf_type = services.submitter.odsf_type_schema_info(odsf_type_id)
     else:
