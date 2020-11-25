@@ -6,10 +6,8 @@ from database.connection import queryall, queryone
 
 controller = Blueprint("admin", __name__)
 
-
-
 @controller.route("/", methods=["GET"])
-def admin_home():
+def get_admin_page():
     tasks = services.admin.get_all_tasks()
 
     # 제출자들이 참여하는 태스크 목록
@@ -30,24 +28,40 @@ def admin_home():
     users = submitters + estimators
     return render_template("admin/admin.html", users=users, tasks=tasks)
 
+# TASK CRUD
 @controller.route("/add_task", methods=["GET"])
 def get_add_task_page():
     return render_template("admin/add_task.html")
 
+@controller.route("/task_info/<task_name>", methods=["GET"])
+def get_task_page(task_name):
+    '''태스크 상세페이지'''
+    task = services.admin.task_info(task_name)
+    origin_data_types = services.admin.task_info_origin_data_type(task_name)
+    return render_template("admin/task_info.html", task=task, origin_data_types=origin_data_types)
+
 @controller.route("/add_task", methods=["POST"])
-def get_adding_task_page():
-    return render_template("admin/add_task.html")
+def add_task():
+    '''태스크 추가 엔드포인트'''
+    # TODO add task
+    return "Uncompleted"
 
 @controller.route("/edit_task", methods=["GET"])
 def get_edit_task_page():
+    '''태스크 수정 페이지'''
     return render_template("admin/edit_task.html")
 
-@controller.route("/task_info/<task_name>", methods=["GET"])
-def get_task_page(task_name):
-    task = services.admin.task_info(task_name)
-    origin_data_types = services.admin.task_info_origin_data_type(task_name)
-    print(origin_data_types)
-    return render_template("admin/task_info.html", task=task, origin_data_types=origin_data_types)
+@controller.route("/edit_task", methods=["POST"])
+def edit_task():
+    '''태스크 수정 엔드포인트'''
+    # TODO edit task
+    return "Uncompleted"
+
+@controller.route("/delete_task", methods=["GET"])
+def delete_task():
+    '''태스크 삭제 엔드포인트'''
+    # TODO delete task
+    return "Uncompleted"
 
 @controller.route("/submitter/<submitter_index>", methods=["GET"])
 def get_admin_submitter_page(submitter_index):

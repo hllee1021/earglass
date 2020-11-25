@@ -22,6 +22,12 @@ def task_detail(task_name):
     FROM TASK WHERE TaskName = %s"
     return queryone(sql, (task_name, ))
 
+def odsf_mapping_info(task_name):
+    '''해당 태스크의 원본 데이터 타입 스키마 매핑 정보를 가져와서 태스크 상세 페이지에 보여주기'''
+    sql = "SELECT DataTypeName, MappingInfo FROM ORIGIN_DATA_TYPE WHERE TaskName = %s"
+    return queryall(sql, (task_name, ))
+
+    
 def is_done(estimator_index, parsing_dsf_id):
     """해당 평가자에 대하여, 해당 파싱 파일이 평가완료되었는지 여부 반환 (ongoing, done)"""
     sql = "SELECT Status FROM EVALUATION WHERE FK_idEstimator = $s AND FK_idPARSING_DSF = $s"
