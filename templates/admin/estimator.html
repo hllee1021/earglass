@@ -8,32 +8,28 @@
 </br>
 <form class="">
     <div class="form-group">
-        <label class="form-group col-md-2">UserID</label>
-        <input placeholder="gyusika" type="text" class="form-group col-md-2" disabled>
+        <label class="form-group col-md-2">idUSER</label>
+        <input placeholder="{{ user['idUSER'] }}" type="text" class="form-group col-md-2" disabled>
     </div>
     <div class="form-group">
         <label class="form-group col-md-2">역할</label>
-        <input placeholder="평가자" type="text" class="form-group col-md-2" disabled>
+        <input placeholder="{{ user['Name'] }}" type="text" class="form-group col-md-2" disabled>
     </div>
     <div class="form-group">
         <label class="form-group col-md-2">성별</label>
-        <input placeholder="M" type="text" class="form-group col-md-2" disabled>
-    </div>
-    <div class="form-group">
-        <label class="form-group col-md-2">나이</label>
-        <input placeholder="25" type="text" class="form-group col-md-2" disabled>
+        <input placeholder="{{ user['Gender'] }}" type="text" class="form-group col-md-2" disabled>
     </div>
     <div class="form-group">
         <label class="form-group col-md-2">생년월일</label>
-        <input placeholder="960316" type="text" class="form-group col-md-2" disabled>
+        <input placeholder="{{ user['BirthDate'] }}" type="text" class="form-group col-md-2" disabled>
     </div>
     <div class="form-group">
         <label class="form-group col-md-2">휴대전화</label>
-        <input placeholder="01031104029" type="text" class="form-group col-md-2" disabled>
+        <input placeholder="{{ user['PhoneNum'] }}" type="text" class="form-group col-md-2" disabled>
     </div>
     <div class="form-group">
         <label class="form-group col-md-2">주소</label>
-        <input placeholder="서울시 서초구" type="text" class="form-group col-md-2" disabled>
+        <input placeholder="{{ user['Address'] }}" type="text" class="form-group col-md-2" disabled>
     </div>
     </br>
     <h5><b>평가완료된 파일 목록</b></h5>
