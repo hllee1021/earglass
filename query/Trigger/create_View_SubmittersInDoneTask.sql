@@ -1,8 +1,10 @@
 -- submitters in done task
 
 CREATE VIEW SubmittersInDoneTask AS
-    SELECT ROW_NUMBER() OVER() AS INDEX, T.TaskName, DISTINCT P.SubmitterID
-    FROM TASK AS T, PARSING_DSF AS P
-    WHERE T.Status = 'done'
+    SELECT DISTINCT P.SubmitterId, ROW_NUMBER() over (PARTITION BY T.TaskName) AS Index, T.TaskName
+    FROM PARSING_DSF AS P, TASK AS T
+    WHERE T.Status = 'ongoing'
     AND T.TaskName = P.TaskName
+    AND P.SubmitNum = 1;
+
 
