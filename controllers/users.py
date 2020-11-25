@@ -15,8 +15,7 @@ def post_login_data():
     if services.users.verify_user(user_id, password):
         user = services.users.get_user_by_id(user_id)
         response.set_cookie("user_id", user_id)
-        response.set_cookie("id", str(user["idUSER"]))
-        print(user["idUSER"])
+        response.set_cookie("user_index", str(user["idUSER"]))
         return response
     else:
         flash("로그인 실패. 다시 시도하세요")

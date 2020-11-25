@@ -12,23 +12,23 @@ controller = Blueprint("submitter", __name__)
 
 @controller.route("/", methods=["GET"])
 def get_submitter_home():
-    id = int(request.cookies.get("id"))
-    tasks = services.submitter.tasklist_detail(id)
+    user_index = int(request.cookies.get("user_index"))
+    tasks = services.submitter.tasklist_detail(user_index)
     print(tasks)
     return render_template("submitter/submitter_home.html", tasks=tasks)
 
 
 @controller.route("/agreement", methods=["GET"])
 def agreement():
-    task_id = request.args.get('task_id', 0)
-    print(task_id)
-    return render_template("submitter/agreement.html", task_id = task_id)
+    task_name = request.args.get('task_name', 0)
+    print(task_name)
+    return render_template("submitter/agreement.html", task_name = task_name)
 
 
 @controller.route("/agree", methods=["POST"])
 def submitter_home():
     agree = request.form.get("agree")
-    task_id = request.form.get("task_id")
+    task_name = request.form.get("task_name")
     print(agree)
     if agree == "agree":
         # agreement processing code
@@ -43,8 +43,8 @@ def submitter_home():
 
 @controller.route("/my_task", methods=["GET"])
 def get_my_task_submitter():
-    id = int(request.cookies.get("id"))
-    tasks = services.submitter.participating_tasklist(id)
+    user_index = int(request.cookies.get("user_index"))
+    tasks = services.submitter.participating_tasklist(user_index)
 
     return render_template("submitter/my_task.html", tasks=tasks)
 
@@ -74,6 +74,7 @@ def csv_file_download_with_stream():
     filename = f"{odsf_type['TaskName']}_{odsf_type['DataTypeName']}"
 
     # schema에 맞는 df 생성
+    #승수형 기다리기
     schema = json.loads(odsf_type['MappingInfo'])
     schema = list(schema.keys())
     temp_df = pd.DataFrame(columns=schema)

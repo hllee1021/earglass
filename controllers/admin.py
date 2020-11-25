@@ -11,27 +11,30 @@ controller = Blueprint("admin", __name__)
 @controller.route("/", methods=["GET"])
 def admin_home():
     tasks = services.admin.get_all_tasks()
-    submitters = queryall("SELECT * FROM USER WHERE FK_UserTypeName = '제출자'")
-    for user in submitters:
-        user_id = user['idUSER']
-        participating_tasks = queryall("SELECT FK_TaskName FROM PARTICIPATION WHERE FK_idUSER=%s AND Status = 'ongoing'", (user_id, ))
-        user['Tasks'] = participating_tasks
 
+    # 제출자들이 참여하는 태스크 목록
+    submitters = queryall("SELECT * FROM USER WHERE FK_UserTypeName = '제출자'")
+    for submitter in submitters:
+        user_index = submitter['idUSER']
+        participating_tasks = queryall("SELECT FK_TaskName FROM PARTICIPATION WHERE FK_idUSER=%s AND Status = 'ongoing'", (user_index, ))
+        submitter['Tasks'] = participating_tasks
+
+    # 평가자들이 참여하는 태스크 목록
     estimators = queryall("SELECT * FROM USER WHERE FK_UserTypeName = '평가자'")
-    for user in estimators:
-        user_id = user['idUSER']
+    for estimator in estimators:
+        user_index = estimator['idUSER']
         participating_tasks = queryall("SELECT P.TaskName FROM EVALUATION AS E  \
-            LEFT JOIN PARSING_DSF AS P ON E.FK_idPARSING_DSF = P.idPARSING_DSF WHERE E.FK_idEstimator=%s AND E.Status = 'ongoing' " , (user_id, ))
-        user['Tasks'] = participating_tasks
+            LEFT JOIN PARSING_DSF AS P ON E.FK_idPARSING_DSF = P.idPARSING_DSF WHERE E.FK_idEstimator=%s AND E.Status = 'ongoing' " , (user_index, ))
+        estimator['Tasks'] = participating_tasks
 
     users = submitters + estimators
-    return render_template("admin/admin.html", tasks=tasks, users=users)
+    return render_template("admin/admin.html", users=users, tasks=tasks)
 
 @controller.route("/add_task", methods=["GET"])
 def get_add_task_page():
     return render_template("admin/add_task.html")
 
-@controller.route("/adding_task", methods=["POST"])
+@controller.route("/add_task", methods=["POST"])
 def get_adding_task_page():
     return render_template("admin/add_task.html")
 
