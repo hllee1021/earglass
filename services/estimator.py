@@ -9,7 +9,7 @@ def evaluate_waiting_list(estimator_index):
     return queryall(sql, (estimator_index, ))
 
 def evaluated_list(estimator_index):
-    """해당 평가자가 평가한 파일 리스트 (index, taskname, 제출자 id, 평가점수, pass여부, 평가날짜)"""
+    """해당 평가자가 평가한 파일 리스트 (index, taskname, 제출자 id, 평가점수, pass여부, 평가한날짜와시간)"""
     sql = "SELECT ROW_NUMBER() OVER() AS num, P.TaskName, P.SubmitterID, E.Score, E.Pass, E.EndTime\
     FROM EVALUATION AS E, PARSING_DSF AS P LEFT JOIN TASK AS T ON P.TaskName = T.TaskName \
     WHERE P.idPARSING_DSF = E.FK_idPARSING_DSF AND E.FK_idEstimator = %s AND E.Status = 'done'"
