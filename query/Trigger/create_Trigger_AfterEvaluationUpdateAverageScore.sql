@@ -6,7 +6,7 @@ CREATE Trigger AfterUsingCoupon
 AFTER UPDATE ON EVALUATION
 FOR EACH ROW
 	Begin
-		IF NEW.Status == 'done' THEN
+		IF NEW.Status != 'done' THEN
 			
 
 
