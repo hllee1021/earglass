@@ -35,14 +35,14 @@
         <tbody>
             {%for task in tasks%}
             <tr>
-                <td>{{task["id"]}}</td>
+                <td>{{loop.index}}</td>
                 <td>
-                    <a href="/estimator/estimator_task_info">{{task["name"]}}</a>
+                    <a href="/estimator/estimator_task_info?task_name={{task['TaskName']}}">{{task["TaskName"]}}</a>
                 </td>
-                <td>{{task["submitter_name"]}}</td>
-                <td>{{task["score"]}}</td>
-                <td>{{task["pass"]}}</td>
-                <td>{{task["date"]}}</td>
+                <td>{{task["SubmitterID"]}}</td>
+                <td>{{task["Score"]}}</td>
+                <td>{{task["Pass"]}}</td>
+                <td>{{task["EndTime"]}}</td>
             </tr>
             {%endfor%}
         </tbody>
