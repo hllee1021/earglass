@@ -8,8 +8,8 @@ controller = Blueprint("estimator", __name__)
 
 @controller.route("/", methods=["GET"])
 def get_estimator_home():
-    id = int(request.cookies.get("id"))
-    tasks = services.estimator.evaluate_waiting_list(id)
+    user_index = int(request.cookies.get("user_index"))
+    tasks = services.estimator.evaluate_waiting_list(user_index)
     pprint(tasks)
     return render_template("estimator/estimator_home.html", tasks=tasks)
 
@@ -26,16 +26,21 @@ def get_estimator_task_info():
     return render_template("/estimator/estimator_task_info.html",tasks=tasks)
 
 #made_by 학림 evaluator_home에서 평가했을때 form action 라우터
-@controller.route("/estimator/evaluate", methods=["POST"])
+@controller.route("/evaluate", methods=["POST"])
 def evaluate():
     '''학림's estimator가 평가하는 라우터'''
-    score = request.form.get("score")
+    score = int(request.form.get("score"))
     p_np = request.form.get("p_np")
+    odsf_type_id = int(request.args.get('odsf_type_id', 0))
+    user_index=int(request.cookies.get("user_index"))
+    print("ASJBKAGJKAS")
     if score>100 or score<0:
         flash("점수는 0이상 100사이로 입력해야합니다")
+        print(123)
         return redirect("/")
     else:
-        # services.estimator.done_evaluation(,,score,p_np)
+        services.estimator.update_evaluation_status(odsf_type_id,user_index,score,p_np)
+        print(345)
         return redirect("/")
     return render_template("evaluator/evaluate_home.html")
 
@@ -43,7 +48,6 @@ def evaluate():
 def csv_file_download_with_stream():
     """승수형이 submitter download한거 복사함 일단"""
     odsf_type_id = int(request.args.get('odsf_type_id', 0))
-
     if odsf_type_id != 0:
         odsf_type = services.submitter.odsf_type_schema_info(odsf_type_id)
     else:
