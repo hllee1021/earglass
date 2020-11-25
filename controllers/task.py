@@ -19,5 +19,4 @@ def task_detail():
     my_submit = list(zip(range(1, len(my_submit)+1), my_submit))
 
     odsf_type = services.submitter.all_origin_data_type(task_id);
-    
     return render_template("task/task_detail.html", opt=tab, task_info=task_info, leaderboard=leaderboard, my_submit=my_submit, odsf_type=odsf_type)
