@@ -25,8 +25,15 @@
         <input type="text" class="form-group col-md-2" name="table_name" placeholder="table_name">
     </div>
     <div class="form-group">
-        <label class="form-group col-md-2">스키마</label>
-        <input type="text" class="form-group col-md-2" name="schema" placeholder="schema">
+        <label class="form-group col-md-2">기본 데이터 타입</label>
+        <input type="text" style="width:100%" class="form-group col-md-2" id="default-field-to-add" placeholder="기본 필드 이름">
+        <button type="button" id="default-field-add-button">추가하기</button>
+        <ul id="default-field-list">
+        </ul>
+    </div>
+    <div class="form-group">
+        <label for="" class="form-group col-md-2">스키마</label>
+        <textarea class="form-control textarea" name="schema" placeholder="(ex: field1:"></textarea>
     </div>
     <div class="form-group">
         <label class="form-group col-md-2 d-inline-block"><h5><b>원본 데이터 타입</b></h5></label>
@@ -73,4 +80,7 @@
     </br>
     <button type="submit" class="btn btn-primary float-right mb-4">Task 생성</button>
 </form>
+<script>
+
+</script>
 {% endblock %}
