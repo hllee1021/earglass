@@ -36,7 +36,7 @@ def evaluate():
         flash("점수는 0이상 100사이로 입력해야합니다")
         return redirect("/")
     else:
-        services.estimator.done_evaluation(odsf_type_id,,score,p_np)
+        # services.estimator.done_evaluation(odsf_type_id,,score,p_np)
         return redirect("/")
     return render_template("evaluator/evaluate_home.html")
 
