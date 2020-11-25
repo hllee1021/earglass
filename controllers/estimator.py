@@ -26,20 +26,20 @@ def get_estimator_task_info():
     return render_template("/estimator/estimator_task_info.html",tasks=tasks)
 
 #made_by 학림 evaluator_home에서 평가했을때 form action 라우터
-@controller.route("/estimator/evaluate", methods=["POST"])
+@controller.route("/evaluate", methods=["POST"])
 def evaluate():
     '''학림's estimator가 평가하는 라우터'''
-    score = request.form.get("score")
+    score = int(request.form.get("score"))
     p_np = request.form.get("p_np")
     odsf_type_id = int(request.args.get('odsf_type_id', 0))
-    user_id=int(request.args.get('user_id', 0))
+    user_index=int(request.cookies.get("user_index"))
     print("ASJBKAGJKAS")
     if score>100 or score<0:
         flash("점수는 0이상 100사이로 입력해야합니다")
         print(123)
         return redirect("/")
     else:
-        services.estimator.done_evaluation(odsf_type_id,user_wid,score,p_np)
+        services.estimator.update_evaluation_status(odsf_type_id,user_index,score,p_np)
         print(345)
         return redirect("/")
     return render_template("evaluator/evaluate_home.html")

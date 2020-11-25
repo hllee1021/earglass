@@ -29,7 +29,7 @@ def is_done(estimator_index, parsing_dsf_id):
 
 def update_evaluation_status(parsing_dsf_id, estimator_index, score, is_passed):
     """평가를 끝냈을 때 db 업데이트"""
-    return callproc('UpdateEvalutionStatus', (parsing_dsf_id, estimator_index, score, is_passed))
+    return callproc('UpdateEvaluationStatus', (parsing_dsf_id, estimator_index, score, is_passed))
 
 def update_system_score():
     '''파일이 제출되었을 때, system score 계산하여 DB 업데이트'''

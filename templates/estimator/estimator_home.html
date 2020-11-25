@@ -41,7 +41,7 @@
             <td>{{ task["TaskName"] }}</td>
             <td>{{ task["SubmitterID"] }}</td>
             <td>{{ task["Deadline"] }}</td>
-            <form form method="POST" action="/estimator/evaluate?odsf_type_id={{ task['idPARSING_DSF']}}&user_id={{id}}">
+            <form method="POST" action="/estimator/evaluate?odsf_type_id={{ task['idPARSING_DSF']}}">
                 <td>
                     <a class="btn btn-primary" href="/estimator/task/dowmload" role="button">다운로드</a>
                 </td>
