@@ -57,6 +57,10 @@ def submit_odsf(origin_file, datetime, period, task_name, user_index, origin_dat
     """제출자 파일을 받으면 origin_dsf로 저장"""
     return callproc('InsertOriginDSF', (origin_file, datetime, period, task_name, user_index, origin_data_type_id, round ))
 
+def search_odsf_by_filepath(odsf_file):
+    sql = "SELECT * FROM ORIGIN_DATA_TYPE WHERE OriginFile = %s"
+    return queryone(sql, (odsf_file, ))
+
 def insert_participation(task_name, user_index):
     """참여 요청"""
     return callproc('InsertNewParticipation', (task_name, user_index,))

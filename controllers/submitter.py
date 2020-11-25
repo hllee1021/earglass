@@ -16,7 +16,6 @@ controller = Blueprint("submitter", __name__)
 def get_submitter_home():
     user_index = int(request.cookies.get("user_index"))
     tasks = services.submitter.tasklist_detail(user_index)
-    print(tasks)
     return render_template("submitter/submitter_home.html", tasks=tasks)
 
 
@@ -56,9 +55,11 @@ def submit_task():
 
     user_index = int(request.cookies.get("user_index"))
     task_name = request.form.get("task_name")
-    round = request.form.get("round")
+    round = int(request.form.get("round"))
     period = request.form.get("period")
-    origin_data_type_id = request.form.get("data_type")
+    origin_data_type_id = int(request.form.get("data_type"))
+    task_data = services.submitter.task_info(task_name)
+
     file = request.files['file']
     fname = secure_filename(file.filename)
     path = os.path.join(UPLOAD_DIR + "/odsf/", fname)
@@ -66,12 +67,13 @@ def submit_task():
     try:
         # new task processing code
         file.save(path)
-        services.submitter.submit(path, time.strftime('%Y-%m-%d %H:%M:%S'), period, task_name, user_index, origin_data_type_id, round)
+        services.submitter.submit_odsf(path, time.strftime('%Y-%m-%d %H:%M:%S'), period, task_name, user_index, origin_data_type_id, round)
+        origin_dsf_id = services.submitter.search_odsf_by_filepath(path)['idORIGIN_DSF']
     except:
         flash("파일 업로드가 실패했습니다.")
         return redirect("/")
 
-    validation = system_estimator.statistic.check_validate(fname)
+    validation = system_estimator.statistic.check_validate(fname, task_data['MaxNullRatioPerColumn'], task_data['MaxDuplicatedRowRatio'])
 
     # check duplicate tuple
     if not validation['duplicate_ratio']:
@@ -90,14 +92,7 @@ def submit_task():
     
     # data is validate
     pdsf_file = system_estimator.statistic.to_pdsf(fname)
-
-
-        
-
-        
-
-
-
+    services.submitter.submit_pdsf(task_name, pdsf_file, origin_data_type_id, user_index, period, round, origin_dsf_id)
     flash("제출이 완료되었습니다. ㅅㄱ~ 그만 집에 보내줘...")
 
     return redirect("/")
