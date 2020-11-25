@@ -94,4 +94,5 @@ def sign_up():
 def edit():
     user_id = request.cookies.get("user_id")
     user = services.users.get_user_by_id(user_id)
+    print(user)
     return render_template("auth/modify_my.html",user=user)
