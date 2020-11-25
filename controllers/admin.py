@@ -42,6 +42,10 @@ def get_adding_task_page():
 def get_edit_task_page():
     return render_template("admin/edit_task.html")
 
+@controller.route("/edit_task", methods=["POST"])
+def get_edit_task_page():
+    return render_template("admin/edit_task.html")
+
 @controller.route("/task_info", methods=["GET"])
 def get_task_page():
     return render_template("admin/task_info.html")
