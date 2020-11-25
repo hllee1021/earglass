@@ -11,7 +11,7 @@
         {% for task in tasks %}
         <tr>
             <td>
-              <a href="task_info/{{ task['TaskName'] }}">{{ task['TaskName'] }}</a>
+              <a href="/admin/tasks/{{ task['TaskName'] }}">{{ task['TaskName'] }}</a>
             </td>
             <td>
               {{ task['ParsingDsfCount'] }}
@@ -21,10 +21,11 @@
             </td>
             <form>
                 <td>
-                    <a class="btn btn-primary" href="task_info" role="button">상세</a>
+                    <a class="btn btn-primary" href="/admin/tasks/{{ task['TaskName'] }}" role="button">상세</a>
                 </td>
                 <td>
                     <button type="submit" class="btn btn-primary">튜플 다운로드</button>
+                    <!-- TODO - download -->
                 </td>
             </form>
         </tr>
