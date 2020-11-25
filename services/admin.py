@@ -5,38 +5,6 @@ from pprint import pprint
 import json
 from . import estimator
 
-# def get_users():
-#     '''전체 USER 상세 정보 리턴'''
-#     sql = "SELECT Id, Name, Gender, BirthDate, PhoneNum, Address, UserScore \
-#             FROM USER WHERE FK_UserTypeName != \'관리자\';"
-#     return queryall(sql)
-
-
-# def show_submitter(user_id):
-#     '''Submitter 에 대한 상세 정보 및 참여중인 task 열람'''
-#     sql = "SELECT U.Id, U.Name, U.Gender, U.BirthDate, U.PhoneNum, U.Address, U.UserScore, P.FK_TaskName \
-#             FROM USER AS U \
-#             INNER JOIN PARTICIPATION AS P \
-#             ON U.idUSER = P.FK_idUSER \
-#             WHERE U.Id = %s AND U.FK_UserTypeName = \'제출자\' \
-#             AND P.Status = \'ongoing\' \
-#             ORDER BY U.Id, P.FK_TASKName;"
-#     return queryall(sql, (user_id, ))
-
-
-# def show_estimator(user_id):
-#     '''Estimator에 대한 상세 정보 및 참여중인 task 열람'''
-#     sql = "SELECT U.Id, U.Name, U.Gender, U.BirthDate, U.PhoneNum, U.Address, U.UserScore, P.TaskName \
-#             FROM USER AS U INNER JOIN EVALUATION AS E \
-#             ON U.idUSER = E.FK_idEstimator \
-#             LEFT JOIN PARSING_DSF AS P\
-#             ON E.FK_idPARSING_DSF = P.idPARSING_DSF \
-#             WHERE U.Id = %s AND E.FK_UserTypeName = \'평가자\' \
-#             AND E.Status = \'ongoing\' \
-#             ORDER BY U.Id, P.TaskName;"
-#     return queryall(sql, (user_id, ))
-
-
 def show_estimating_status(estimator_id):
     '''평가자 평가할 파싱 파일 현황'''
     return estimator.evaluate_waiting_list(estimator_id)
@@ -44,15 +12,6 @@ def show_estimating_status(estimator_id):
 def show_estimated_status(estimator_id):
     '''평가자 평가한 파싱 파일 현황'''
     return estimator.evaluated_list(estimator_id)
-
-# def show_submit_status(user_id):
-#     '''제출자 제출 현황'''
-#     sql = "SELECT P.SubmitterID, P.TaskName, ODT.DataTypeName, \
-#     O.DateTime, O.OriginFile, P.ParsingFile, P.SubmitNum, P.Period, \
-#     P.Round, P.SystemScore, P.AverageScore, P.TotalScore, P.Pass, P.TotalStatus \
-#     FROM ORIGIN_DSF AS O, PARSING_DSF AS P JOIN ORIGIN_DATA_TYPE AS ODT ON P.OriginDataTypeID = ODT.idORIGIN_DATA_TYPE \
-#     WHERE O.idORIGIN_DSF = P.FK_idORIGIN_DSF AND P.SubmitterID = %s"
-#     return queryall(sql, (user_id, ))
 
 def show_participating_task_info(user_id):
     '''task 별로 통계 정보 보여주기'''
@@ -133,28 +92,23 @@ def get_all_tasks():
         FROM TASK"
     return queryall(sql)
 
-# def count_parsing_dsf_for_user(user_id):
-#     assert user_exists(user_id)
-#     parsing_dsfs = len(queryone("""SELECT * FROM TASK
-# INNER JOIN PARSING_DSF
-# ON TASK.TaskName=PARSING_DSF.TaskName
-# """))
-#     return parsing_dsfs
-
 def user_exists(user_id):
-    user = queryone("SELECT * FROM USER WHERE idUSER=%d", (int(user_id), ))
+    '''user_id가 존재하면 true, 존재하지 않으면 false'''
+    user = queryone("SELECT * FROM USER WHERE Id=%d", (user_id, ))
     if user:
         return True
     return False
 
 # Exists
 def task_exists(task_name):
+    '''taskname이 존재하면 true, 존재하지 않으면 false'''
     task = queryone("SELECT * FROM TASK WHERE TaskName=%s", (task_name, ))
     if task:
         return True
     return False
 
 def data_type_name_exists(task_name, data_type_name):
+    '''data type name이 존재하면 true, 존재하지 않으면 false'''
     assert task_exists(task_name)
     found = queryone("SELECT * FROM ORIGIN_DATA_TYPE WHERE TaskName=%s AND DataTypeName=%s", (task_name, data_type_name))
     if not found:
@@ -163,13 +117,13 @@ def data_type_name_exists(task_name, data_type_name):
 
 # Doesn't Exists
 def get_default_fields_of_task(task_name):
-    # 해당 task의 고유 스키마 정보 반환
+    '''해당 task의 고유 스키마 정보 반환'''
     task = queryone("SELECT (TaskDataTableSchemaInfo) FROM TASK WHERE `TaskName`=%s", (task_name, ))
     result = task['TaskDataTableSchemaInfo'].split(',')
     return result
 
 def set_default_fields_of_task(task_name, default_fields):
-    #해당 tastk의 고유 스키마 정보 수정(삽입)
+    '''해당 tastk의 고유 스키마 정보 수정(삽입)'''
     assert task_exists(task_name)
     default_fields = ",".join(default_fields)
     execute("UPDATE TASK SET TaskDataTableSchemaInfo=%s WHERE TaskName=%s", (default_fields, task_name))
