@@ -7,6 +7,7 @@ from flask import Blueprint, render_template, redirect, request, make_response, 
 import services
 import system_estimator
 from settings import UPLOAD_DIR
+import time
 
 controller = Blueprint("submitter", __name__)
 
@@ -53,16 +54,22 @@ def get_my_task_submitter():
 @controller.route("/submit_task", methods=["POST"])
 def submit_task():
 
+    user_index = int(request.cookies.get("user_index"))
+    task_name = request.form.get("task_name")
+    round = request.form.get("round")
+    period = request.form.get("period")
+    origin_data_type_id = request.form.get("data_type")
+    file = request.files['file']
+    fname = secure_filename(file.filename)
+    path = os.path.join(UPLOAD_DIR + "/odsf/", fname)
+
     try:
         # new task processing code
-        file = request.files['file']
-        fname = secure_filename(file.filename)
-        path = os.path.join(UPLOAD_DIR + "/odsf/", fname)
         file.save(path)
+        services.submitter.submit(path, time.strftime('%Y-%m-%d %H:%M:%S'), period, task_name, user_index, origin_data_type_id, round)
     except:
         flash("파일 업로드가 실패했습니다.")
         return redirect("/")
-    
 
     validation = system_estimator.statistic.check_validate(fname)
 
@@ -82,7 +89,8 @@ def submit_task():
         return redirect("/")
     
     # data is validate
-    
+    pdsf_file = system_estimator.statistic.to_pdsf(fname)
+
 
         
 
