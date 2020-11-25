@@ -47,7 +47,7 @@ def get_my_task_submitter():
     id = int(request.cookies.get("id"))
     tasks = services.submitter.participating_tasklist(id)
     tasks = list(zip(range(1, len(tasks)+1), tasks))
-    
+
     return render_template("submitter/my_task.html", tasks=tasks)
 
 
@@ -86,11 +86,11 @@ def csv_file_download_with_stream():
     # 그 결과를 앞서 만든 IO stream에 저장
     temp_df.to_csv(output_stream)
     response = Response(
-        output_stream.getvalue(), 
-        mimetype='text/csv', 
+        output_stream.getvalue(),
+        mimetype='text/csv',
         content_type='application/octet-stream',
     )
 
     response.headers["Content-Disposition"] = f"attachment; filename={filename}.csv"
 
-    return response 
+    return response

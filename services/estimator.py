@@ -30,3 +30,19 @@ def is_done(estimator_id, parsing_dsf_id):
 def done_evaluation(parsing_dsf_id, estimator_id, score, is_passed):
     """평가를 끝냈을 때 db 업데이트"""
     return callproc('UpdateEvalutionStatus', (parsing_dsf_id, estimator_id, score, is_passed))
+
+def update_system_score():
+    '''파일이 제출되었을 때, system score 계산하여 DB 업데이트'''
+    pass
+
+def update_total_score(system_score, average_score):
+    '''system score과 average score을 이용해 total score 계산 후 DB 업데이트'''
+    pass
+
+# def update_estimator_score():
+#     '''평가자 점수 계산 후 user 테이블 업데이트'''
+#     pass
+
+# def update_submitter_score():
+#     '''제출자 점수 계산 후 user 테이블 업데이트'''
+#     pass
