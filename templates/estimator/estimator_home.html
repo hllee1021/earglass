@@ -37,31 +37,33 @@
         </thead>
         <tbody>
             {%for task in tasks%}
-            <td>{{ loop.index }}</td>
-            <td>{{ task["TaskName"] }}</td>
-            <td>{{ task["SubmitterID"] }}</td>
-            <td>{{ task["Deadline"] }}</td>
-            <form method="POST" action="/estimator/evaluate?idPARSING_DSF={{ task['idPARSING_DSF']}}">
-                <td>
-                    <a class="btn btn-primary" href="/estimator/task/dowmload?idPARSING_DSF={{ task['idPARSING_DSF']}}" role="button">다운로드</a>
-                </td>
-                <td>
-                    <div class="form group">
-                        <input type="score" class="form-control" id="score1" aria-describedby="emailHelp" name="score" placeholder="100" required>
-                    </div>
-                </td>
-                <td>
-                    <div class="form group">
-                        <select class="form-control form-control-sm" name="p_np" id="name-select">
-                            <option value="P">P</option>
-                            <option value="NP">N</option>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-primary">평가완료</button>
-                </td>
-            </form>
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ task["TaskName"] }}</td>
+                <td>{{ task["SubmitterID"] }}</td>
+                <td>{{ task["Deadline"] }}</td>
+                <form method="POST" action="/estimator/evaluate?idPARSING_DSF={{ task['idPARSING_DSF']}}">
+                    <td>
+                        <a class="btn btn-primary" href="/estimator/task/dowmload?idPARSING_DSF={{ task['idPARSING_DSF']}}" role="button">다운로드</a>
+                    </td>
+                    <td>
+                        <div class="form group">
+                            <input type="score" class="form-control" id="score1" aria-describedby="emailHelp" name="score" placeholder="100" required>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form group">
+                            <select class="form-control form-control-sm" name="p_np" id="name-select">
+                                <option value="P">P</option>
+                                <option value="NP">N</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">평가완료</button>
+                    </td>
+                </form>
+            </tr>
             {%endfor%}
         </tbody>
     </table>
