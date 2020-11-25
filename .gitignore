@@ -1,15 +1,19 @@
+# Database Config Files
 database/config.py
-__pycache__/
-database/__pycache__/
-.venv/
-.vscode/
-*.swp
 
+# Caches
+**/__pycache__/
 **/*.pyc
 
-# cool
-cool/
-cool.py
-data/
+# Virtual Machines
+.venv/
 
+# Upload Data
+data/odsf/*
+data/pdsf/*
+data/table_data/*
+
+# Editor Files
 .vim/
+**/*.swp
+.vscode/
