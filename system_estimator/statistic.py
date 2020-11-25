@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import math
+
 
 def null_count(df):
     total_row = len(df.index)
@@ -63,3 +65,37 @@ def to_pdsf(file):
     pdsf.to_csv(f'./data/{pdsf_filename}.csv', index=False)
     
     return f'./data/{pdsf_filename}.csv'
+
+
+def system_score(file):
+    """
+    calculate system score of given file.
+    input : filename is odsf
+    output : system score
+    """
+    filename = "./data/" + file
+    
+    try:
+        # read odsf file
+        odsf = pd.read_csv(filename)
+    except:
+        return "no file"
+    
+    score_info = dict()
+    # statistic analysis
+    null_info = null_count(odsf)
+    duplicate_info = duplicate_tuple(odsf)
+      
+    score_info['total_tuple_score'] = math.log2(duplicate_info['total_tuple_num'])*(7.5)*(30/100)
+    score_info['duplicate_tuple_score'] = (1 - duplicate_info['duplicate_rate'])*(30)
+    
+    null_score_list = []
+    for col in null_info.keys():
+        tmp = 1 - (null_info[col] / duplicate_info['total_tuple_num'])
+        null_score_list.append(tmp)
+    
+    score_info['col_null_score'] = (sum(null_score_list)/len(null_score_list))*(40)
+    
+    score_info['sys_score'] = score_info['total_tuple_score'] + score_info['duplicate_tuple_score'] + score_info['col_null_score']
+    
+    return score_info
