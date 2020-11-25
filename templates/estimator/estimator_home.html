@@ -41,9 +41,9 @@
             <td>{{ task["TaskName"] }}</td>
             <td>{{ task["SubmitterID"] }}</td>
             <td>{{ task["Deadline"] }}</td>
-            <form method="POST" action="/estimator/evaluate?odsf_type_id={{ task['idPARSING_DSF']}}">
+            <form method="POST" action="/estimator/evaluate?idPARSING_DSF={{ task['idPARSING_DSF']}}">
                 <td>
-                    <a class="btn btn-primary" href="/estimator/task/dowmload" role="button">다운로드</a>
+                    <a class="btn btn-primary" href="/estimator/task/dowmload?idPARSING_DSF={{ task['idPARSING_DSF']}}" role="button">다운로드</a>
                 </td>
                 <td>
                     <div class="form group">
@@ -53,8 +53,8 @@
                 <td>
                     <div class="form group">
                         <select class="form-control form-control-sm" name="p_np" id="name-select">
-                            <option value="p">P</option>
-                            <option value="np">N</option>
+                            <option value="P">P</option>
+                            <option value="NP">N</option>
                         </select>
                     </div>
                 </td>
