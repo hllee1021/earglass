@@ -9,6 +9,36 @@
 <form id="app">
     <!-- TODO add task handling -->
     <div class="form-group">
+<<<<<<< HEAD
+        <label class="form-group col-md-2">TaskName</label>
+        <input id="taskname" name="taskname" type="text" class="form-group col-md-2" name="task_name" placeholder="taskname">
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">Description</label>
+        <textarea id="task_description" style="margin-left:15px;"cols="30" rows="10" class="form-control" name="task_description" placeholder="description"></textarea>
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">최소 업로드 주기</label>
+        <input id="period" type="text" class="form-group col-md-2" name="period" placeholder="0"> week
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">테이블 이름</label>
+        <input id="table_name" type="text" class="form-group col-md-2" name="table_name" placeholder="table_name">
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">기본 데이터 타입</label>
+        <input type="text" style="width:100%" class="form-group col-md-2" placeholder="기본 필드 이름" v-model="defaultFieldBuffer">
+        <button type="button" id="default-field-add-button" v-on:click="addDefaultField()">추가하기</button>
+        <ul id="default-field-list">
+            <li v-for="field in defaultFields">
+                [[ field ]]
+            </li>
+        </ul>
+    </div>
+    <div class="form-group">
+        <label for="" class="form-group col-md-2">스키마</label>
+        <textarea class="form-control textarea" name="schema" placeholder="(ex: field1:"></textarea>
+=======
         <label>TaskName</label>
         <input type="text" class="form-control">
     </div>
@@ -22,6 +52,7 @@
                 <button type="button" class="btn btn-primary" v-on:click="addDefaultField()">추가하기</button>
             </div>
         </div>
+>>>>>>> 85f0a42616bb1fa8e36347cdefee55183f6a544b
     </div>
     <div class="form-group">
         <label>원본 데이터 타입</label>
@@ -83,18 +114,23 @@
     <h5 style="margin-left: 15px; margin-bottom: 10px;"><b>시스템 Pass 기준 설정</b></h5>
     <div class="form-group">
         <label class="form-group col-md-3">최대 중복 Tuple 비율</label>
-        <input type="text" class="form-group col-md-2" name="tuple_ratio" placeholder="0">%
+        <input id="tuple_ratio" type="text" class="form-group col-md-2" name="tuple_ratio" placeholder="0">%
     </div>
     <div class="form-group">
         <label class="form-group col-md-3">최대 Column별 Null 비율</label>
-        <input type="text" class="form-group col-md-2" name="tuple_ratio" placeholder="0">%
+        <input id="null_ratio" type="text" class="form-group col-md-2" name="null_ratio" placeholder="0">%
     </div>
     <div class="form-group">
+<<<<<<< HEAD
+        <label class="form-group col-md-4"><h5><b>평가자 정성평가 Pass 기준설명</b></h5></label>
+        <textarea id="pass_criteria_description" style="margin-left: 15px;"cols="30" rows="10" class="form-control" name="pass_criteria_description" placeholder="description"></textarea>
+=======
         <label class="form-group col-md-4">
             <h5><b>평가자 정성평가 Pass 기준설명</b></h5>
         </label>
         <textarea style="margin-left: 15px;" cols="30" rows="10" class="form-control" name="pass_criteria_description"
             placeholder="description"></textarea>
+>>>>>>> 85f0a42616bb1fa8e36347cdefee55183f6a544b
     </div>
     </br>
     <button type="submit" class="btn btn-primary float-right mb-4">Task 생성</button>
