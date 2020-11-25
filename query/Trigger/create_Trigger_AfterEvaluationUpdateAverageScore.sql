@@ -1,4 +1,4 @@
--- 평가자 평가 완료시마다 평균 데이터 품질 점수 계산하여 업데이트
+-- 평가자 평가 완료시마다 평균 데이터 품질 점수와 Total Score, PASS 계산하여 업데이트
 
 DELIMITER //
 
@@ -6,8 +6,28 @@ CREATE Trigger AfterUsingCoupon
 AFTER UPDATE ON EVALUATION
 FOR EACH ROW
 	Begin
-		IF NEW.Status != 'done' THEN
+
+		DECLARE varidEVALUATION int(11);
+		DECLARE varEstimatorNum int(11);
+		DECLARE varidPARSING_DSF int(11);
+		DECLARE varScoreSum int(11);
+		DECLARE varAverageScore float;
+
+
+		SET varidEVALUATION = NEW.idEVALUATION;
+		SET varidPARSING_DSF = NEW.varidPARSING_DSF;
+
+		IF NEW.Status = 'done' THEN
+			SELECT COUNT(FK_idEstimator) INTO varEstimatorNum, SUM(Score) INTO varScoreSum
+			FROM EVALUATION
+			WHERE FK_idPARSING_DSF = varidPARSING_DSF;
 			
+			SET varAverageScore = varScoreSum / varEstimatorNum;
+
+			IF varEstimatorNum > 1 THEN
+				UPDATE PARSING_DSF
+				SET AverageScore = varAverageScore
+				WHERE idPARING_DSF = varidPARSING_DSF;
 
 
 		DECLARE varUserID Char(36);
