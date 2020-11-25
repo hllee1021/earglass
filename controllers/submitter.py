@@ -64,6 +64,28 @@ def submit_task():
         return redirect("/")
     
 
+    validation = system_estimator.statistic.check_validate(fname)
+
+    # check duplicate tuple
+    if not validation['duplicate_ratio']:
+        flash("중복 튜플 비율이 기준을 벗어납니다.")
+        return redirect("/")
+
+    # check null ratio
+    rejects = []
+    for c, v in validation.items():
+        if c != "duplicate_ratio" and not v:
+            rejects.append(c)
+
+    if len(rejects) != 0:
+        flash(f"{rejects} 컬럼의 Null 값 비율이 기준을 벗어납니다.")
+        return redirect("/")
+    
+    # data is validate
+    
+
+        
+
         
 
 

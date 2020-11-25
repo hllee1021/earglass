@@ -1,6 +1,8 @@
+import os
 import pandas as pd
 import numpy as np
 import math
+from settings import UPLOAD_DIR
 
 
 def null_count(df):
@@ -25,7 +27,7 @@ def to_pdsf(file):
     input : filename is odsf
     output : pdsf locate
     """
-    filename = "./data/" + file
+    filename = os.path.join(UPLOAD_DIR + "/odsf/", file)
     
     try:
         # read odsf file
@@ -59,12 +61,10 @@ def to_pdsf(file):
     # combine dataframe to pdsf
     pdsf = pd.concat([pdsf_statistic_df, n_df, h_df, odsf]).reset_index(drop=True)
     
-    pdsf_filename = filename.split("/")
+    pdsf_filename = os.path.join(UPLOAD_DIR + "/pdsf/", file)
+    pdsf.to_csv(pdsf_filename, index=False)
     
-    pdsf_filename = f"{file[:file.find('_')]}_pdsf"
-    pdsf.to_csv(f'./data/{pdsf_filename}.csv', index=False)
-    
-    return f'./data/{pdsf_filename}.csv'
+    return pdsf_filename
 
 
 def system_score(file):
@@ -73,7 +73,7 @@ def system_score(file):
     input : filename is odsf
     output : system score
     """
-    filename = "./data/" + file
+    filename = os.path.join(UPLOAD_DIR + "/odsf/", file)
     
     try:
         # read odsf file
@@ -106,7 +106,7 @@ def check_validate(file, MNR, MDR):
     input : filename is odsf, MaxNullRatioPerColumn, MaxDuplicatedRowRatio
     output : boolean
     """
-    filename = "./data/" + file
+    filename = os.path.join(UPLOAD_DIR + "/odsf/", file)
     
     try:
         # read odsf file
