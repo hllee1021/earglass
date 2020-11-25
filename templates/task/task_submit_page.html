@@ -3,7 +3,7 @@
         <div class="form-group mb-4">
             <h3>태스크 이름</h3>
             <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                value={{ task_info["TaskName"] }} disabled>
+                value="{{ task_info['TaskName'] }}" disabled>
             <small class="form-text text-muted"></small>
         </div>
         <h3 class="mt-4">형식 다운로드</h3>
@@ -20,8 +20,8 @@
                         {% for odsf in odsf_type %}
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="data_type"
-                                id={{ odsf["idORIGIN_DATA_TYPE"] }} value={{ odsf["idORIGIN_DATA_TYPE"] }} checked>
-                            <label class="form-check-label" for={{ odsf["idORIGIN_DATA_TYPE"] }}>
+                                id="{{ odsf['idORIGIN_DATA_TYPE'] }}" value="{{ odsf['idORIGIN_DATA_TYPE'] }}" checked>
+                            <label class="form-check-label" for="{{ odsf['idORIGIN_DATA_TYPE'] }}">
                                 {{ odsf["DataTypeName"] }}
                             </label>
                         </div>
