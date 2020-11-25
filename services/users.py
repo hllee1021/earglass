@@ -1,15 +1,16 @@
 from database.connection import *
 
 def get_user_by_index(user_index):
+    '''유저 인덱스로 유저 가져오기'''
     return queryone("SELECT * FROM USER WHERE idUSER=%s", (user_index,))
 
 def get_user_by_id(user_id):
-    '''user 정보 받아오기'''
+    '''유저 아이디로 유저 가져오기'''
     return queryone("SELECT * FROM USER WHERE Id=%s", (user_id,))
 
 
 def verify_user(user_id, password):
-    '''유저 로그인 확인'''
+    '''주어진 아이디와 비밀번호랑 일치하는 유저가 있는지의 여부 확인'''
     user = get_user_by_id(user_id)
     if not user:
         return False
@@ -19,7 +20,7 @@ def verify_user(user_id, password):
 
 
 def sign_up(user_id, password, name, birth, phonenumber, gender, address, role):
-    # 회원가입
+    '''새로운 유저 생성'''
     return callproc('InsertNewUser', (user_id, password, name,
                                       birth, phonenumber, gender, address, role))
 
