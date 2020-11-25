@@ -49,10 +49,13 @@ def odsf_type_schema_info(odsf_type_id):
     sql = "SELECT * FROM ORIGIN_DATA_TYPE WHERE idORIGIN_DATA_TYPE = %s"
     return queryone(sql, (odsf_type_id, ))
 
+def submit_pdsf(task_name, parsing_file, origin_data_type_id, submitter_id, period, round, origin_dsf_id):
+    '''시스템을 거쳐서 orgin_dsf를 parsing_dsf로 변환하여 저장'''
+    return callproc('InsertParsingDSF', (task_name, parsing_file, origin_data_type_id, submitter_id, period, round, origin_dsf_id))
 
-def submit(origin_file, datetime, period, task_name, user_index, origin_data_id):
+def submit_odsf(origin_file, datetime, period, task_name, user_index, origin_data_type_id, round):
     """제출자 파일을 받으면 origin_dsf로 저장"""
-    return callproc('InsertOriginDSF', (origin_file, datetime, period, task_name, user_index, origin_data_id, ))
+    return callproc('InsertOriginDSF', (origin_file, datetime, period, task_name, user_index, origin_data_type_id, round ))
 
 def insert_participation(task_name, user_index):
     """참여 요청"""
