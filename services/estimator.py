@@ -31,10 +31,6 @@ def update_evaluation_status(parsing_dsf_id, estimator_index, score, is_passed):
     """평가를 끝냈을 때 db 업데이트"""
     return callproc('UpdateEvaluationStatus', (parsing_dsf_id, estimator_index, score, is_passed))
 
-def update_system_score():
-    '''파일이 제출되었을 때, system score 계산하여 DB 업데이트'''
-    pass
-
-def update_total_score(system_score, average_score):
-    '''system score과 average score을 이용해 total score 계산 후 DB 업데이트'''
-    pass
+def update_system_score(parsing_dsf_id, system_score):
+    '''파일이 제출되었을 때, system score 받아와서 DB 업데이트'''
+    return callproc('UpdateSystemScore', (parsing_dsf_id, system_score))
