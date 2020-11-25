@@ -1,3 +1,4 @@
+import math
 from database.connection import *
 
 # connect to db
@@ -16,11 +17,11 @@ def get_TaskPage():
 def get_tasks(page):
     # 페이지 번호에 따른 task 리턴
     sql = "SELECT * FROM TASK LIMIT %s OFFSET %s"
-    cursor.execute(sql, (20, 20*int(page)))    
+    cursor.execute(sql, (20, 20*int(page)))
     data = cursor.fetchall()
     return data
 
-    
+
 def task_detail(task_id):
     # 테스크 관련 정보 모두 불러오기
     sql = "SELECT * FROM TASK T WHERE T.TaskName = %s"
@@ -32,7 +33,7 @@ def task_detail(task_id):
 ### Task Add, Delete, Update
 def add_task(task_name, description, min_period, manager_id):
     # 테스크 생성
-    cursor.callproc('InsertNewTask', (task_name, description, min_period, manager_id))    
+    cursor.callproc('InsertNewTask', (task_name, description, min_period, manager_id))
     message = cursor.fetchall()
     connect.commit()
     return message
