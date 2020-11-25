@@ -39,10 +39,10 @@ def update_total_score(system_score, average_score):
     '''system score과 average score을 이용해 total score 계산 후 DB 업데이트'''
     pass
 
-def update_estimator_score():
-    '''평가자 점수 계산 후 user 테이블 업데이트'''
-    pass
+# def update_estimator_score():
+#     '''평가자 점수 계산 후 user 테이블 업데이트'''
+#     pass
 
-def update_submitter_score():
-    '''제출자 점수 계산 후 user 테이블 업데이트'''
-    pass
+# def update_submitter_score():
+#     '''제출자 점수 계산 후 user 테이블 업데이트'''
+#     pass
