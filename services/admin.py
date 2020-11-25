@@ -23,9 +23,9 @@ def show_participating_task_info(user_id):
     WHERE SQ.Status == 'ongoing' GROUP BY SQ.TaskName"
     return queryall(sql, (user_id, ))
 
-def update_participation_status(task_name, user_id, new_status, comment):
+def update_participation_status(task_name, user_index, new_status, comment):
     '''제출자의 참여 상태 업데이트'''
-    return callproc('UpdateParticipationStatus', (task_name, user_id, new_status, comment,))
+    return callproc('UpdateParticipationStatus', (task_name, user_index, new_status, comment,))
 
 def sort_by_origin_data_type(user_id, task_name):
     '''원본 데이터 타입 별로 보여주기
@@ -129,17 +129,19 @@ def set_default_fields_of_task(task_name, default_fields):
     execute("UPDATE TASK SET TaskDataTableSchemaInfo=%s WHERE TaskName=%s", (default_fields, task_name))
 
 def add_origin_data_type(task_name, data_type_name, mapping_info):
-    #해당 task의 원본 데이터 타입 정보 추가
+    '''해당 task의 원본 데이터 타입 정보 추가'''
     assert task_exists(task_name)
     assert not data_type_name_exists(task_name, data_type_name)
     print(mapping_info, data_type_name, task_name)
     execute("INSERT INTO ORIGIN_DATA_TYPE (MappingInfo, DataTypeName, TaskName) VALUE (%s, %s, %s)", (json.dumps(mapping_info), data_type_name, task_name))
 
 def remove_origin_data_type(task_name, data_type_name):
+    '''해당 task name에서 특정 origin data type 삭제'''
     assert task_exists(task_name)
     execute("DELETE FROM ORIGIN_DATA_TYPE WHERE DataTypeName=%s AND TaskName=%s", (data_type_name, task_name))
 
 def get_mapping_info(task_name, data_type_name):
+    '''mapping info 리턴'''
     assert task_exists(task_name)
     assert data_type_name_exists(task_name, data_type_name)
     original_data_type = queryone("SELECT (MappingInfo) FROM ORIGIN_DATA_TYPE")
@@ -147,6 +149,7 @@ def get_mapping_info(task_name, data_type_name):
     return mapping_info
 
 def set_mapping_info(task_name, data_type_name, mapping_info):
+    '''mapping info 업데이트'''
     assert task_exists(task_name)
     assert data_type_name_exists(task_name, data_type_name)
     used_default_fields = set(mapping_info.values())
