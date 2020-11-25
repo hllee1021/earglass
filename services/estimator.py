@@ -1,16 +1,16 @@
 from database.connection import *
 
 
-def evaluate_waiting_list(estimator_index):
+def evaluate_waiting_list(estimator_index):#ROW_NUMBER 지움
     """해당 평가자가 평가할 파일 리스트 (index, taskname, 제출자 id, deadline, 파싱dsf 위치)"""
-    sql = "SELECT ROW_NUMBER() OVER() AS num, P.TaskName, P.SubmitterID, T.Deadline, P.ParsingFile, P.idPARSING_DSF\
+    sql = "SELECT P.TaskName, P.SubmitterID, T.Deadline, P.ParsingFile, P.idPARSING_DSF\
     FROM EVALUATION AS E, PARSING_DSF AS P LEFT JOIN TASK AS T ON P.TaskName = T.TaskName \
     WHERE P.idPARSING_DSF = E.FK_idPARSING_DSF AND E.FK_idEstimator = %s AND E.Status = 'ongoing'"
     return queryall(sql, (estimator_index, ))
 
-def evaluated_list(estimator_index):
+def evaluated_list(estimator_index): #ROW_NUMBER 지움
     """해당 평가자가 평가한 파일 리스트 (index, taskname, 제출자 id, 평가점수, pass여부, 평가한날짜와시간)"""
-    sql = "SELECT ROW_NUMBER() OVER() AS num, P.TaskName, P.SubmitterID, E.Score, E.Pass, E.EndTime\
+    sql = "SELECT P.TaskName, P.SubmitterID, E.Score, E.Pass, E.EndTime\
     FROM EVALUATION AS E, PARSING_DSF AS P LEFT JOIN TASK AS T ON P.TaskName = T.TaskName \
     WHERE P.idPARSING_DSF = E.FK_idPARSING_DSF AND E.FK_idEstimator = %s AND E.Status = 'done'"
     return queryall(sql, (estimator_index, ))
@@ -22,6 +22,12 @@ def task_detail(task_name):
     FROM TASK WHERE TaskName = %s"
     return queryone(sql, (task_name, ))
 
+def odsf_mapping_info(task_name):
+    '''해당 태스크의 원본 데이터 타입 스키마 매핑 정보를 가져와서 태스크 상세 페이지에 보여주기'''
+    sql = "SELECT DataTypeName, MappingInfo FROM ORIGIN_DATA_TYPE WHERE TaskName = %s"
+    return queryall(sql, (task_name, ))
+
+    
 def is_done(estimator_index, parsing_dsf_id):
     """해당 평가자에 대하여, 해당 파싱 파일이 평가완료되었는지 여부 반환 (ongoing, done)"""
     sql = "SELECT Status FROM EVALUATION WHERE FK_idEstimator = $s AND FK_idPARSING_DSF = $s"

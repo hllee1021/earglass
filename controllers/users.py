@@ -4,9 +4,29 @@ import services
 
 controller = Blueprint("users", __name__)
 
+# Pages
+@controller.route("/", methods=['GET'])
+def get_user():
+    # 쿠키가 있다 -> 로그인된 유저라면
+    user_id = request.cookies.get("user_id")
+    user = services.users.get_user_by_id(user_id)
 
+    if user:  # 로그인 된 경우
+        return render_template("auth/my.html", user=user)
+    else:
+        flash("로그인되지 않았습니다")
+        return redirect("/")
+
+# template가 불안정
+@controller.route("/", methods=['POST'])
+def edit_user():
+    # TODO 개인정보수정
+    return "Incompleted"
+
+
+# Auth Stuff
 @controller.route("/login", methods=["POST"])
-def post_login_data():
+def login():
     user_id = request.form.get("username")
     password = request.form.get("password")
 
@@ -29,7 +49,7 @@ def logout():
     return response
 
 @controller.route("/signup", methods=["GET"])
-def sign_up_form():
+def get_signup_page():
     return render_template("auth/sign_up.html")
 
 
@@ -69,28 +89,3 @@ def sign_up():
         pass
 
     return redirect("/")
-
-
-@controller.route("/my", methods=['GET'])
-def mypage():
-    # 쿠키가 있다 -> 로그인된 유저라면
-    user_id = request.cookies.get("user_id")
-    user = services.users.get_user_by_id(user_id)
-
-    if user:  # 로그인 된 경우
-        return render_template("auth/my.html", user=user)
-    else:
-        flash("로그인되지 않았습니다")
-        return redirect("/")
-
-# template가 불안정
-@controller.route("/my/edit", methods=['GET'])
-def edit_my_form():
-    return render_template("auth/modify_my.html")
-
-
-
-# made by 학림, 함수명은 목적 페이지로!
-@controller.route("/tests", methods=["GET"])
-def tests():
-    return render_template("admin/task.html")

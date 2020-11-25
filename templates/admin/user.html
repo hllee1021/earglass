@@ -21,9 +21,9 @@
             </td>
             <td>
               {% if user['FK_UserTypeName'] == '제출자' %}
-                <a href="/admin/submitter/{{ user['idUSER'] }}">{{ user['Name'] }}</a>
+                <a href="/admin/submitters/{{ user['idUSER'] }}">{{ user['Name'] }}</a>
               {% elif user['FK_UserTypeName'] == '평가자' %}
-                <a href="/admin/estimator/{{ user['idUSER'] }}">{{ user['Name'] }}</a>
+                <a href="/admin/estimators/{{ user['idUSER'] }}">{{ user['Name'] }}</a>
               {% else %}
                 <a>error</a>
               {% endif %}
@@ -46,7 +46,7 @@
                 </td>
                 <td class="task">
                   {% for task in user['Tasks'] %}
-                    <a href="task_info">{{ task['FK_TaskName'] }}</a>
+                    <a href="/admin/tasks/{{ task['FK_TaskName'] }}">{{ task['FK_TaskName'] }}</a>
                   {% endfor %}
                 </td>
             </form>
@@ -68,17 +68,6 @@
 </style>
 <script>
 console.log("start")
-// $('#search-task').on('change', (event) => {
-//   const task_query = event.target.value
-//   $('tbody tr').each((index, element) => {
-//     let tasks = element.get
-//     // if (tasks.includes(task_query)) {
-//     //   $(element).show()
-//     // } else {
-//     //   $(element).hide()
-//     // }
-//   })
-// })
 $(document).ready(() => {
   $("#search-task").on('change', (event) => {
     const task_query = event.target.value;
