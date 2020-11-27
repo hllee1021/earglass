@@ -21,12 +21,18 @@ triggers: Begin
 		LEAVE triggers;
 	END IF;
 
+	CREATE TEMPORARY TABLE IF NOT EXISTS RandomEstimatorIDs AS
+	    SELECT *
+	    FROM RandomEstimatorID;
+
 	IF varEstimatorNum < 3 THEN
 		SET varIndexNum = 0;
+
 		myloop: LOOP
 			SET varIndexNum = varIndexNum + 1;
+
 			SELECT idUSER INTO varEstimatorID
-			FROM RandomEstimatorID
+			FROM RandomEstimatorIDs
 			WHERE IndexNum = varIndexNum;
 
 			INSERT INTO EVALUATION
@@ -43,7 +49,7 @@ triggers: Begin
 		myloop2: LOOP
 			SET varIndexNum = varIndexNum + 1;
 			SELECT idUSER INTO varEstimatorID
-			FROM RandomEstimatorID
+			FROM RandomEstimatorIDs
 			WHERE IndexNum = varIndexNum;
 
 			INSERT INTO EVALUATION
