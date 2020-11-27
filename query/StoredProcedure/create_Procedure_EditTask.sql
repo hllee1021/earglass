@@ -10,7 +10,6 @@ CREATE PROCEDURE EditTask
              IN newMinPeriod                Int(11),
              IN newStatus                   Varchar(45),
              IN newTaskDataTableName        Varchar(100),
-             IN newDeadLine                 datetime,
              IN newMaxDuplicatedRowRatio    Float,
              IN newMaxNullRatioPerColumn    Float,
              IN newPassCriteria             Text)
@@ -39,7 +38,7 @@ checkrow:BEGIN
         UPDATE TASK
         SET Description = newDescription, MinPeriod = newMinPeriod,
             Status = newStatus, TaskDataTableName = newTaskDataTableName,
-            Deadline = newDeadLine, MaxDuplicatedRowRatio = newMaxDuplicatedRowRatio,
+            MaxDuplicatedRowRatio = newMaxDuplicatedRowRatio,
             MaxNullRatioPerColumn = newMaxNullRatioPerColumn,
             PassCriteria = newPassCriteria
         WHERE TaskName = currentTaskName;
