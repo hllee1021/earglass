@@ -3,8 +3,8 @@ from database.connection import *
 
 def evaluate_waiting_list(estimator_index):#ROW_NUMBER 지움
     """해당 평가자가 평가할 파일 리스트 (index, taskname, 제출자 id, deadline, 파싱dsf 위치)"""
-    sql = "SELECT P.TaskName, P.SubmitterID, T.Deadline, P.ParsingFile, P.idPARSING_DSF\
-    FROM EVALUATION AS E, PARSING_DSF AS P LEFT JOIN TASK AS T ON P.TaskName = T.TaskName \
+    sql = "SELECT P.TaskName, P.SubmitterID, E.Deadline, P.ParsingFile, P.idPARSING_DSF\
+    FROM EVALUATION AS E, PARSING_DSF AS P\
     WHERE P.idPARSING_DSF = E.FK_idPARSING_DSF AND E.FK_idEstimator = %s AND E.Status = 'ongoing'"
     return queryall(sql, (estimator_index, ))
 
@@ -18,7 +18,7 @@ def evaluated_list(estimator_index): #ROW_NUMBER 지움
 def task_detail(task_name):
     """태스크 이름으로 태스크 상세 가져오기"""
     sql = "SELECT TaskName, Description, MinPeriod, Status, TaskDataTableName, TaskDataTableSchemaInfo, \
-    TaskDataTableLocation, Deadline, MaxDuplicatedRowRatio, MaxNullRatioPerColumn \
+    TaskDataTableLocation, MaxDuplicatedRowRatio, MaxNullRatioPerColumn \
     FROM TASK WHERE TaskName = %s"
     return queryone(sql, (task_name, ))
 
