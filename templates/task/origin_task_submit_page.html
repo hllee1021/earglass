@@ -42,41 +42,12 @@
                 placeholder="n회차" required>
             <small class="form-text text-muted"></small>
         </div>
-        <!-- <div class="form-group mb-4">
+        <div class="form-group mb-4">
             <h3>기간 정보</h3>
             <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="period"
                 placeholder="2020-01-01~2020-06-30" required>
             <small class="form-text text-muted"></small>
-        </div> -->
-        <div>
-            <h3>기간 정보</h3>
-            <br>
-            <div>
-                <div class="form-group"> 
-                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" value="01/01/2020" name="start_date"> 
-                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                            <div class="input-group-text">
-                                <i class="fa fa-calendar"></i>
-                            </div> 
-                        </div> 
-                    </div> 
-                </div> 
-            </div>
-            <div>
-                <div class="form-group">
-                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" value="01/01/2020" name="end_date"> 
-                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker"> 
-                            <div class="input-group-text">
-                                <i class="fa fa-calendar"></i>
-                            </div> 
-                        </div> 
-                    </div> 
-                </div> 
-            </div>
         </div>
-
         <div>
             <button type="submit" class="btn btn-info mb-4 float-right">제출</button>
         </div>
@@ -88,12 +59,3 @@
         }
     </style>
 </div>
-
-
-
-<script type="text/javascript">
-$(function () { $('#datetimepicker1').datetimepicker({ format: 'L'});
-    $('#datetimepicker2').datetimepicker({ format: 'L', useCurrent: false });
-    $("#datetimepicker1").on("change.datetimepicker", function (e) { $('#datetimepicker2').datetimepicker('minDate', e.date); }); 
-    $("#datetimepicker2").on("change.datetimepicker", function (e) { $('#datetimepicker1').datetimepicker('maxDate', e.date); }); }); 
-</script>
