@@ -63,7 +63,7 @@ def task_info_origin_data_type(task_name):
 
 def stop_task(task_name):
     '''task 강제 종료'''
-    return callproc('StopTask'), (task_name, ))
+    return callproc('StopTask', (task_name,))
 
 def delete_task(task_name):
     '''task delete'''

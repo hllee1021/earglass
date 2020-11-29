@@ -57,7 +57,9 @@ def submit_task():
     user_index = int(request.cookies.get("user_index"))
     task_name = request.form.get("task_name")
     round = request.form.get("round")
-    period = request.form.get("period")
+    start_date= request.form.get("start_date")
+    end_date= request.form.get("end_date")
+    period = start_date+end_date
     origin_data_type_id = request.form.get("data_type")
     file = request.files['file']
     fname = secure_filename(file.filename)
