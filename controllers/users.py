@@ -18,10 +18,44 @@ def get_user():
         return redirect("/")
 
 # template가 불안정
-@controller.route("/", methods=['POST'])
+@controller.route("/edit", methods=['POST'])
 def edit_user():
-    # TODO 개인정보수정
-    return "Incompleted"
+    user_id = request.cookies.get("user_id")
+    user = services.users.get_user_by_id(user_id)
+    print(request.form)
+    data = request.form
+
+    # check validation by
+    valid_password = re.fullmatch("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$", data["password"])
+    valid_birth = re.fullmatch('\d{8}', data["birth"])
+    valid_phonenumber = re.fullmatch('^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$', data["phonenumber"])
+
+    if not (valid_password):
+        flash("비밀번호는 8~24자 영문대소문자, 숫자, 특수문자 혼합 사용해야합니다.")
+        return render_template("back.html")
+
+    if not (valid_birth):
+        flash("생년월일 형식이 알맞지 않습니다. YYYYMMDD")
+        return render_template("back.html")
+
+    if not (valid_phonenumber):
+        flash("전화번호 형식이 알맞지 않습니다. XXX-XXXX-XXXX")
+        return render_template("back.html")
+
+    # 디비가 구축되고 나면 해야함!!!
+    # [{'InsertNewUserErrorMessage': 'User ID already exists.'}]
+    # [{'InsertNewUserSuccessMessage': 'Insert new User successfully'}]
+    try:
+        # try sign up
+        log = services.users.modify_user_info(data["id"], data["password"], data["name"], data["birth"], data["phonenumber"], data["address"])
+        print(log)
+        log_type = log[0].keys()[0]
+        log_value = log[0].items()[0]
+        print(log_type, log_value)
+    except:
+        pass
+
+    return render_template("auth/my.html",user=user)
 
 
 # Auth Stuff

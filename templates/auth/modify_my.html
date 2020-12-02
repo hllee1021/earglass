@@ -1,62 +1,48 @@
 {% extends "./partials/layout.html" %}
 {% block body %}
-<h3>개인 정보 수정</h3>
-<br>
-<form method="POST" action="/users/signup">
+
+<!-- form 제출로 묶어서 Task 추가되도록 설정해야함 -->
+<h1 class="d-inline-block">Submitter Info</h1>
+<br><br><br><br><br>
+<form method="POST" action="/users/edit">
+    <!-- TODO template submitter detail -->
     <div class="form-group">
-        <label for="exampleInputEmail1">ID</label>
-        <input type="text" name="id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-            placeholder="{{ user['Id']}}">
+        <label class="form-group col-md-2">Id</label>
+        <input value="{{ user['Id'] }}" type="text" class="form-group col-md-2" required name="id">
     </div>
     <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="text" name="password" class="form-control" id="exampleInputPassword1"
-        placeholder="{{ user['Password']}}">
+        <label class="form-group col-md-2">비밀번호</label>
+        <input value="{{ user['Password'] }}" type="text" class="form-group col-md-2" required name="password">
     </div>
     <div class="form-group">
-        <label for="exampleInputEmail1">Name</label>
-        <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-        placeholder="{{ user['Name']}}">
+        <label class="form-group col-md-2">이름</label>
+        <input value="{{ user['Name'] }}" type="text" class="form-group col-md-2" required name="name">
     </div>
     <div class="form-group">
-        <label for="exampleInputEmail1">Date of Birth</label>
-        <input type="text" name="birth" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-        placeholder="{{ user['BirthDate']}}">
+        <label class="form-group col-md-2">생년월일</label>
+        <input value="{{ user['BirthDate'] }}" type="text" class="form-group col-md-2" required name="birth">
     </div>
     <div class="form-group">
-        <label for="exampleInputEmail1">Phone Number</label>
-        <input type="text" name="phonenumber" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-        placeholder="{{ user['PhoneNum']}}">
+        <label class="form-group col-md-2">휴대전화</label>
+        <input value="{{ user['PhoneNum'] }}" type="text" class="form-group col-md-2" required name="phonenumber">
     </div>
-    <fieldset class="form-group">
-        <div class="row">
-            <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
-            <div class="col-sm-10">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" id="M" value="M" checked>
-                    <label class="form-check-label" for="M">
-                        Male
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" id="W" value="W">
-                    <label class="form-check-label" for="W">
-                        Female
-                    </label>
-                </div>
-            </div>
-        </div>
-    </fieldset>
     <div class="form-group">
-        <label for="inputAddress">Address</label>
-        <input type="text" name="address" class="form-control" id="inputAddress" placeholder="{{ user['Address']}}">
+        <label class="form-group col-md-2">주소</label>
+        <input value="{{ user['Address'] }}" type="text" class="form-group col-md-2" required name="address">
     </div>
-    <button type="submit" class="btn btn-primary">Sign Up</button>
+    <!-- <div class="form group">
+        <label class="form-group col-md-2">성별</label>
+        <select class="form-group col-md-2" name="gender" id="name-select">
+            <option value="P">M</option>
+            <option value="NP">W</option>
+        </select>
+    </div> -->
+    <div class="form-group">
+        <label class="form-group col-md-2">성별</label>
+        <input value="{{ user['Gender'] }}" type="text" class="form-group col-md-2" disabled>
+    </div>
+    <button type="submit" class="btn btn-primary">수정완료</button>
 </form>
-<ul>
-    <li><a href="/users/modify_my">수정</a></li>
-    <li><a href="/users/modify_my">탈퇴</a></li>
-    <li><a href="/">홈으로 돌아가기</a></li>
-    <li><a href="/users/logout">로그아웃</a></li>
-</ul>
-{% endblock %}
+
+<!-- <a type="button" class="btn btn-primary mr-2" href='/users'>수정완료</a> -->
+    {% endblock %}
