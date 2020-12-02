@@ -16,7 +16,6 @@ controller = Blueprint("submitter", __name__)
 def get_submitter_home():
     user_index = int(request.cookies.get("user_index"))
     tasks = services.submitter.tasklist_detail(user_index)
-    print(tasks)
     return render_template("submitter/submitter_home.html", tasks=tasks)
 
 
@@ -83,6 +82,7 @@ def submit_task():
         # new task processing code
         file.save(path)
         services.submitter.submit_odsf(path, time.strftime('%Y-%m-%d %H:%M:%S'), period, task_name, user_index, origin_data_type_id, round)
+        origin_dsf_id = services.submitter.search_odsf_by_filepath(path)['idORIGIN_DSF']
     except:
         flash("파일 업로드가 실패했습니다.")
         return redirect("/")
@@ -111,14 +111,7 @@ def submit_task():
     
     # data is validate
     pdsf_file = system_estimator.statistic.to_pdsf(fname)
-
-
-        
-
-        
-
-
-
+    services.submitter.submit_pdsf(task_name, pdsf_file, origin_data_type_id, user_index, period, round, origin_dsf_id)
     flash("제출이 완료되었습니다. ㅅㄱ~ 그만 집에 보내줘...")
 
     return redirect("/")
