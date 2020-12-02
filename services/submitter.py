@@ -2,14 +2,14 @@ from database.connection import *
 
 
 def tasklist_detail(user_index):
-    """진행 중인 태스크에 taskname, deadline
+    """진행 중인 태스크에 taskname,
     참여상태(진행중, 대기중, 거절됨.. 이거는 버튼에 반영) 보여주기""" 
     sql = "SELECT T.TaskName, COALESCE(P.Status, '') AS Status \
     FROM TASK AS T LEFT OUTER JOIN PARTICIPATION AS P ON P.FK_TaskName = T.TaskName AND P.FK_idUSER = %s WHERE T.Status = 'ongoing'"
     return queryall(sql, (user_index,))
 
 def participating_tasklist(user_index):
-    """참여자가 참여중인 태스크 정보 taskname, deadline, submit_num, pass 수"""
+    """참여자가 참여중인 태스크 정보 taskname, submit_num, pass 수"""
     sql = "SELECT SQ.TaskName, SQ.Status, MAX(COALESCE(D.SubmitNum, 0)) AS Submit_num, \
     SUM(CASE COALESCE(D.Pass, 'NP') WHEN 'P' THEN 1 ELSE 0 END) AS Pass_num \
     FROM (SELECT T.TaskName, COALESCE(P.Status, '') AS Status\
@@ -49,9 +49,9 @@ def odsf_type_schema_info(odsf_type_id):
     sql = "SELECT * FROM ORIGIN_DATA_TYPE WHERE idORIGIN_DATA_TYPE = %s"
     return queryone(sql, (odsf_type_id, ))
 
-def submit_pdsf(task_name, parsing_file, origin_data_type_id, submitter_id, period, round, origin_dsf_id):
+def submit_pdsf(task_name, parsing_file, origin_data_type_id, submitter_id, period, round, origin_dsf_id, system_score):
     '''시스템을 거쳐서 orgin_dsf를 parsing_dsf로 변환하여 저장'''
-    return callproc('InsertParsingDSF', (task_name, parsing_file, origin_data_type_id, submitter_id, period, round, origin_dsf_id))
+    return callproc('InsertParsingDSF', (task_name, parsing_file, origin_data_type_id, submitter_id, period, round, origin_dsf_id, system_score))
 
 def submit_odsf(origin_file, datetime, period, task_name, user_index, origin_data_type_id, round):
     """제출자 파일을 받으면 origin_dsf로 저장"""

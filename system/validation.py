@@ -1,16 +1,34 @@
 import os
+import json
 import pandas as pd
 import numpy as np
 import math
 from settings import UPLOAD_DIR
 from .statistic import *
+import services
 
 
-def validate_odsf_schema(odst_id, file):
+def validate_odsf_schema(file, odsf_type_id):
     """
     Check validate of file schema
     """
-    pass
+    filename = os.path.join(UPLOAD_DIR + "/odsf/", file)
+    
+    try:
+        # read odsf file
+        odsf = pd.read_csv(filename)
+    except:
+        return "no file"
+    
+    file_schema = set(odsf.columns)
+    odsf_type = services.submitter.odsf_type_schema_info(odsf_type_id)
+    schema = json.loads(odsf_type['MappingInfo'])
+    schema = set(schema.keys())
+
+    if file_schema == schema:
+        return True
+    else:
+        return False
 
 def validate_odsf_data(file, MNR, MDR):
     """
