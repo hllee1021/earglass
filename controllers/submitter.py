@@ -69,14 +69,6 @@ def submit_task():
     # filename rename
     fname = secure_filename(file.filename)
     path = os.path.join(UPLOAD_DIR + "/odsf/", fname)
-    print(user_index)
-    print(task_name)
-    print(round)
-    print(start_date)
-    print(end_date)
-    print(origin_data_type_id)
-    print(fname)
-    print(path)
 
     try:
         # new task processing code
@@ -87,13 +79,11 @@ def submit_task():
         flash("파일 업로드가 실패했습니다.")
         return redirect("/")
 
-    # get task info
+    # validation check of odsf data
     task_info = services.estimator.task_detail(task_name)
     mnr = task_info.get("MaxNullRatioPerColumn")
     mdr = task_info.get("MaxDuplicatedRowRatio")
-    validation = system_estimator.statistic.check_validate(fname, mnr, mdr)
-
-    print(validation)
+    validation = system_estimator.validation.validate_odsf_data(fname, mnr, mdr)
 
     # check duplicate tuple
     if not validation['duplicate_ratio']:
