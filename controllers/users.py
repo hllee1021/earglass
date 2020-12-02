@@ -55,7 +55,7 @@ def edit_user():
     except:
         pass
 
-    return render_template("auth/my.html",user=user)
+    return redirect("/users/")
 
 
 # Auth Stuff
