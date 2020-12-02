@@ -6,33 +6,7 @@ import math
 from settings import UPLOAD_DIR
 from .statistic import *
 import services
-
-
-def transform_encoding(file):
-    filename = os.path.join(UPLOAD_DIR + "/odsf/", file)
-
-    try:
-        df = pd.read_csv(filename)
-        df.to_csv(filename, encoding='utf-8')
-        return True
-    except:
-        pass
-
-    try:
-        df = pd.read_csv(filename, encoding='euc-kr')
-        df.to_csv(filename, encoding='utf-8')
-        return True
-    except:
-        pass
-
-    try:
-        df = pd.read_csv(filename, encoding='cp949')
-        df.to_csv(filename, encoding='utf-8')
-        return True
-    except:
-        pass
-
-    return False
+from .utils import *
 
 
 def to_pdsf(file):
@@ -41,14 +15,8 @@ def to_pdsf(file):
     input : filename is odsf
     output : pdsf locate
     """
-    filename = os.path.join(UPLOAD_DIR + "/odsf/", file)
-    
-    try:
-        # read odsf file
-        odsf = pd.read_csv(filename, encoding='utf-8')
-    except:
-        return "no file"
-    
+    odsf = read_csv_to_df(file)
+        
     # statistic analysis
     statistic_data = null_count(odsf)
     duplicate_info = duplicate_tuple(odsf)

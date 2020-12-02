@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import math
 from settings import UPLOAD_DIR
+from .utils import *
 
 
 def null_count(df):
@@ -28,13 +29,7 @@ def system_score(file):
     input : filename is odsf
     output : system score
     """
-    filename = os.path.join(UPLOAD_DIR + "/odsf/", file)
-    
-    try:
-        # read odsf file
-        odsf = pd.read_csv(filename, encoding='utf-8')
-    except:
-        return "no file"
+    odsf = read_csv_to_df(file)
     
     score_info = dict()
     # statistic analysis

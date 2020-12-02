@@ -80,7 +80,7 @@ def submit_task():
         return redirect("/")
 
     # change encoding
-    if not system.transform.transform_encoding(fname):
+    if not system.utils.encoding(fname):
         flash("지원하지 않는 인코딩 형식입니다.")
         return redirect("/")
 

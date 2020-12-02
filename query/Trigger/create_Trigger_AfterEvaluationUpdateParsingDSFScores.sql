@@ -26,7 +26,10 @@ FOR EACH ROW
 			WHERE E.FK_idEstimator = U.idUSER
 			AND E.FK_idPARSING_DSF = varidPARSING_DSF;
 
-			SET varAverageScore = varScoreSum / 100;
+			SET varAverageScore = varScoreSum / 70;
+            IF varAverageScore > 100 THEN
+                SET varAverageScore = 100;
+            END IF;
 
 			SELECT COUNT(*) INTO varPassCount
 			FROM EVALUATION
