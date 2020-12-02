@@ -57,23 +57,42 @@ def submit_task():
     user_index = int(request.cookies.get("user_index"))
     task_name = request.form.get("task_name")
     round = request.form.get("round")
-    start_date= request.form.get("start_date")
-    end_date= request.form.get("end_date")
-    period = start_date+end_date
+
+    start_date = request.form.get("start_date").split("/")
+    start_date = start_date[2] + "-" + start_date[0] + "-" +start_date[1]
+    end_date = request.form.get("end_date").split("/")
+    end_date = end_date[2] + "-" + end_date[0] + "-" +end_date[1]
+    period = start_date + "~" + end_date
+
     origin_data_type_id = request.form.get("data_type")
     file = request.files['file']
+
+    # filename rename
     fname = secure_filename(file.filename)
     path = os.path.join(UPLOAD_DIR + "/odsf/", fname)
+    print(user_index)
+    print(task_name)
+    print(round)
+    print(start_date)
+    print(end_date)
+    print(origin_data_type_id)
+    print(fname)
+    print(path)
 
     try:
         # new task processing code
         file.save(path)
-        services.submitter.submit(path, time.strftime('%Y-%m-%d %H:%M:%S'), period, task_name, user_index, origin_data_type_id, round)
+        services.submitter.submit_odsf(path, time.strftime('%Y-%m-%d %H:%M:%S'), period, task_name, user_index, origin_data_type_id, round)
     except:
         flash("파일 업로드가 실패했습니다.")
         return redirect("/")
 
-    validation = system_estimator.statistic.check_validate(fname)
+    # get task info
+    task_info = services.estimator.task_detail(task_name)
+    mnr = task_info.get("MaxNullRatioPerColumn")
+    mdr = task_info.get("MaxDuplicatedRowRatio")
+
+    validation = system_estimator.statistic.check_validate(fname, mnr, mdr)
 
     # check duplicate tuple
     if not validation['duplicate_ratio']:
