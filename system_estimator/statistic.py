@@ -108,6 +108,8 @@ def check_validate(file, MNR, MDR):
     output : boolean
     """
     filename = os.path.join(UPLOAD_DIR + "/odsf/", file)
+
+    print(f"mnr {MNR}   mdr {MDR}")
     
     try:
         # read odsf file
@@ -122,15 +124,17 @@ def check_validate(file, MNR, MDR):
     # calculate null ratio
     for col, null in null_info.items():
         null_ratio = null / duplicate_info['total_tuple_num']
-        if null_ratio > MNR:
+        if null_ratio > MNR/100:
             null_info[col] = False
         else:
             null_info[col] = True
+        print(f"{col} : {null_ratio}")
     
     # calculate duplicate ratio
-    if duplicate_info['duplicate_rate'] > MDR:
+    if duplicate_info['duplicate_rate'] > MDR/100:
         null_info['duplicate_ratio'] = False
     else:
         null_info['duplicate_ratio'] = True
+    print(f"dup : {duplicate_info['duplicate_rate']}")
     
     return null_info

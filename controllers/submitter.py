@@ -91,8 +91,9 @@ def submit_task():
     task_info = services.estimator.task_detail(task_name)
     mnr = task_info.get("MaxNullRatioPerColumn")
     mdr = task_info.get("MaxDuplicatedRowRatio")
-
     validation = system_estimator.statistic.check_validate(fname, mnr, mdr)
+
+    print(validation)
 
     # check duplicate tuple
     if not validation['duplicate_ratio']:

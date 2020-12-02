@@ -58,7 +58,7 @@ def submit_odsf(origin_file, datetime, period, task_name, user_index, origin_dat
     return callproc('InsertOriginDSF', (origin_file, datetime, period, task_name, user_index, origin_data_type_id, round ))
 
 def search_odsf_by_filepath(odsf_file):
-    sql = "SELECT * FROM ORIGIN_DATA_TYPE WHERE OriginFile = %s"
+    sql = "SELECT * FROM ORIGIN_DSF WHERE OriginFile = %s"
     return queryone(sql, (odsf_file, ))
 
 def insert_participation(task_name, user_index):
