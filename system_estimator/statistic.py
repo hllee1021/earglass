@@ -19,7 +19,8 @@ def duplicate_tuple(df):
         tmp.add(tuple(df.iloc[k,:]))
     isol_tuple_num = len(tmp)
     duplicate_rate = 1 - (isol_tuple_num / total_tuple_num)
-    return duplicate_rate
+    duplicate = {"total_tuple_num": total_tuple_num,"duplicate_num":total_tuple_num - isol_tuple_num, "duplicate_rate":duplicate_rate}
+    return duplicate
 
 def to_pdsf(file):
     """
@@ -55,7 +56,7 @@ def to_pdsf(file):
     
     
     
-    n_df = s_df.add([np.nan for i in range(s_df.shape[1])])
+    n_df = pdsf_statistic_df.add([np.nan for i in range(pdsf_statistic_df.shape[1])])
     h_df = pd.DataFrame(dict(zip(odsf.columns, list(map(lambda x : [x],odsf.columns)))))
     
     # combine dataframe to pdsf
@@ -120,7 +121,7 @@ def check_validate(file, MNR, MDR):
     
     # calculate null ratio
     for col, null in null_info.items():
-        null_ratio = null/duplicate_info['total_tuple_num']
+        null_ratio = null / duplicate_info['total_tuple_num']
         if null_ratio > MNR:
             null_info[col] = False
         else:
