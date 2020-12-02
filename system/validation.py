@@ -16,7 +16,7 @@ def validate_odsf_schema(file, odsf_type_id):
     
     try:
         # read odsf file
-        odsf = pd.read_csv(filename)
+        odsf = pd.read_csv(filename, encoding='utf-8')
     except:
         return "no file"
     
@@ -40,7 +40,7 @@ def validate_odsf_data(file, MNR, MDR):
     
     try:
         # read odsf file
-        odsf = pd.read_csv(filename)
+        odsf = pd.read_csv(filename, encoding='utf-8')
     except:
         return "no file"
     

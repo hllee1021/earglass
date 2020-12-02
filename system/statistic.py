@@ -32,7 +32,7 @@ def system_score(file):
     
     try:
         # read odsf file
-        odsf = pd.read_csv(filename)
+        odsf = pd.read_csv(filename, encoding='utf-8')
     except:
         return "no file"
     

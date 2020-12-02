@@ -8,6 +8,33 @@ from .statistic import *
 import services
 
 
+def transform_encoding(file):
+    filename = os.path.join(UPLOAD_DIR + "/odsf/", file)
+
+    try:
+        df = pd.read_csv(filename)
+        df.to_csv(filename, encoding='utf-8')
+        return True
+    except:
+        pass
+
+    try:
+        df = pd.read_csv(filename, encoding='euc-kr')
+        df.to_csv(filename, encoding='utf-8')
+        return True
+    except:
+        pass
+
+    try:
+        df = pd.read_csv(filename, encoding='cp949')
+        df.to_csv(filename, encoding='utf-8')
+        return True
+    except:
+        pass
+
+    return False
+
+
 def to_pdsf(file):
     """
     when odsf is submitted, then call this method to change odsf to pdsf.
@@ -18,7 +45,7 @@ def to_pdsf(file):
     
     try:
         # read odsf file
-        odsf = pd.read_csv(filename)
+        odsf = pd.read_csv(filename, encoding='utf-8')
     except:
         return "no file"
     
@@ -49,6 +76,6 @@ def to_pdsf(file):
     pdsf = pd.concat([pdsf_statistic_df, n_df, h_df, odsf]).reset_index(drop=True)
     
     pdsf_filename = os.path.join(UPLOAD_DIR + "/pdsf/", file)
-    pdsf.to_csv(pdsf_filename, index=False)
+    pdsf.to_csv(pdsf_filename, index=False, encoding='utf-8')
     
     return pdsf_filename

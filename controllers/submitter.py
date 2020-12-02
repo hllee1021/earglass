@@ -79,6 +79,11 @@ def submit_task():
         flash("파일 업로드가 실패했습니다.")
         return redirect("/")
 
+    # change encoding
+    if not system.transform.transform_encoding(fname):
+        flash("지원하지 않는 인코딩 형식입니다.")
+        return redirect("/")
+
     # validation check of odsf schema
     if not system.validation.validate_odsf_schema(fname, origin_data_type_id):
         flash("제출한 파일과 원본데이터 스키마가 일치하지 않습니다.")
@@ -91,6 +96,7 @@ def submit_task():
     validation = system.validation.validate_odsf_data(fname, mnr, mdr)
 
     # check duplicate tuple
+    print(validation)
     if not validation['duplicate_ratio']:
         flash("중복 튜플 비율이 기준을 벗어납니다.")
         return redirect("/")
@@ -108,9 +114,11 @@ def submit_task():
     # data is validate
     # transform odsf to pdsf
     pdsf_file = system.transform.to_pdsf(fname)
-    system_score = system.statistic.system_score(fname)
+    system_score = system.statistic.system_score(fname)["sys_score"]
+    system_score = float(system_score)
+    
     services.submitter.submit_pdsf(task_name, pdsf_file, origin_data_type_id, user_index, period, round, origin_dsf_id, system_score)
-    flash("제출이 완료되었습니다. ㅅㄱ~ 그만 집에 보내줘...")
+    flash("제출이 완료되었습니다.")
 
     return redirect("/")
 
