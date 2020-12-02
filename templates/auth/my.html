@@ -1,29 +1,40 @@
-{% extends "./partials/layout.html" %} {% block body %}
-<h1>Welcome, {{ user['Name']}} !</h1>
-<ul>
-    <li>
-        <p>id: {{ user['Id'] }}</p>
-    </li>
-    <li>
-        <p>Name: {{ user['Name'] }}</p>
-    </li>
-    <!-- <li><p>password: {{ user['Password'] }}</p></li> -->
-    <li>
-        <p>gender: {{ user['Gender'] }}</p>
-    </li>
-    <li>
-        <p>address: {{ user['Address'] }}</p>
-    </li>
-    <li>
-        <p>birth: {{ user['BirthDate'] }}</p>
-    </li>
-    <li>
-        <p>phonenumber: {{ user['PhoneNum'] }}</p>
-    </li>
-    <li>
-        <p>usertype: {{ user['FK_UserTypeName'] }}</p>
-    </li>
-    <a href="/users/my/edit">수정</a>
-    <a href="">탈퇴</a>
-    <a href="/users/logout">로그아웃</a>
+{% extends "./partials/layout.html" %}
+{% block body %}
+
+<!-- form 제출로 묶어서 Task 추가되도록 설정해야함 -->
+<h1 class="d-inline-block">Submitter Info</h1>
+<br><br><br><br><br>
+<form>
+    <!-- TODO template submitter detail -->
+    <div class="form-group">
+        <label class="form-group col-md-2">Id</label>
+        <input placeholder="gyusika" type="text" class="form-group col-md-2" disabled value="{{ user['Id'] }}">
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">비밀번호</label>
+        <input value="{{ user['Password'] }}" type="text" class="form-group col-md-2" disabled>
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">역할</label>
+        <input placeholder="제출자" type="text" class="form-group col-md-2" disabled value="{{ user['Name'] }}">
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">생년월일</label>
+        <input placeholder="{{ user['BirthDate'] }}" type="text" class="form-group col-md-2" disabled>
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">휴대전화</label>
+        <input placeholder="{{ user['PhoneNum'] }}" type="text" class="form-group col-md-2" disabled>
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">주소</label>
+        <input placeholder="{{ user['Address'] }}" type="text" class="form-group col-md-2" disabled>
+    </div>
+    <div class="form-group">
+        <label class="form-group col-md-2">성별</label>
+        <input placeholder="{{ user['Gender'] }}" type="text" class="form-group col-md-2" disabled>
+    </div>
+</form>
+
+<a type="button" class="btn btn-primary mr-2" href='/users/my/edit'>수정</a>
     {% endblock %}
