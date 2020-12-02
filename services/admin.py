@@ -18,9 +18,9 @@ def get_completed_dsf_by_estimator_index(estimator_index):
 
 def get_participating_tasks_by_user_index(user_index):
     '''해당 유저가 참여 중인 태스크 목록'''
-    sql = "SELECT SQ.TaskName, SQ.Deadline, MAX(COALESCE(D.SubmitNum, 0)) AS SubmitNum, \
+    sql = "SELECT SQ.TaskName, MAX(COALESCE(D.SubmitNum, 0)) AS SubmitNum, \
     SUM(CASE COALESCE(D.Pass, 'NP') WHEN 'P' THEN 1 ELSE 0 END) AS PassNum \
-    FROM (SELECT T.TaskName, T.Deadline, COALESCE(P.Status, '') AS Status\
+    FROM (SELECT T.TaskName, COALESCE(P.Status, '') AS Status\
         FROM TASK AS T LEFT OUTER JOIN PARTICIPATION AS P ON P.FK_TaskName = T.TaskName AND P.FK_idUSER = %s) AS SQ\
     LEFT OUTER JOIN PARSING_DSF AS D ON D.TaskName = SQ.TaskName \
     WHERE SQ.Status = 'ongoing' GROUP BY SQ.TaskName"
@@ -42,14 +42,14 @@ def update_participation_status(task_name, user_index, new_status, comment):
 
 
 def edit_task(current_task_name, description, min_period, status, task_data_table_name,
-         deadline, max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria):
+         max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria):
     '''수정된 정보 update'''
     return callproc('EditTask', (current_task_name, description, min_period, status, task_data_table_name,
-         deadline, max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria,))
+         max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria,))
 
 def task_info(task_name):
-    '''태스크 정보'''
-    sql = "SELECT TaskName, Description, MinPeriod, TaskDataTableName, TaskDataTableSchemaInfo \
+    '''태스크 정보 반환'''
+    sql = "SELECT TaskName, Description, MinPeriod, TaskDataTableName, TaskDataTableSchemaInfo, MaxDuplicatedRowRatio, MaxNullRatioPerColumn \
         FROM TASK WHERE TaskName = %s"
     return queryone(sql, (task_name, ))
 
@@ -60,6 +60,10 @@ def task_info_origin_data_type(task_name):
         WHERE P.TaskName = %s \
         GROUP BY ODT.DataTypeName"
     return queryall(sql, (task_name, ))
+
+def stop_task(task_name):
+    '''task 강제 종료'''
+    return callproc('StopTask', (task_name,))
 
 def delete_task(task_name):
     '''task delete'''
@@ -83,10 +87,10 @@ def sort_task_participation_list(task_name, status):
 
 
 def add_task(task_name, description, min_period, status, task_data_table_name,
-         deadline, max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria):
+         max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria):
     '''태스크 추가'''
     return callproc('InsertNewTask', (task_name, description, min_period, status, task_data_table_name,
-         deadline, max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria,))
+         max_duplicated_row_ratio, max_null_ratio_per_column, pass_criteria,))
 
 
 def get_all_tasks():

@@ -35,9 +35,11 @@ checkexist:BEGIN
     IF (varSubmitNum = 0) THEN
         INSERT INTO PARSING_DSF (TaskName, ParsingFile, OriginDataTypeID, SubmitterID, SubmitNum, Period, TotalStatus, FK_idORIGIN_DSF, Round)
         VALUES (newTaskName, newParsingFile, newOriginDataTypeID, newSubmitterID, 1, newPeriod, 'ongoing', newFK_idORIGIN_DSF, newRound);
+        SELECT LAST_INSERT_ID();
     ELSE
         INSERT INTO PARSING_DSF (TaskName, ParsingFile, OriginDataTypeID, SubmitterID, SubmitNum, Period, TotalStatus, FK_idORIGIN_DSF, Round)
         VALUES (newTaskName, newParsingFile, newOriginDataTypeID, newSubmitterID, varSubmitNum+1, newPeriod, 'ongoing', newFK_idORIGIN_DSF, newRound);
+        SELECT LAST_INSERT_ID();
     END IF;
 
 -- END checkexist
