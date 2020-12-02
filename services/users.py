@@ -28,3 +28,7 @@ def sign_up(user_id, password, name, birth, phonenumber, gender, address, role):
 def withdrawal(user_id, password):
     '''회원 탈퇴'''
     return callproc('DeleteUser',(user_id, password,))
+
+def modify_user_info(user_id, password, name, birth, phonenumber, address):
+    '''회원 정보 수정'''
+    return callproc('UpdateUserInfo',(user_id, password, name, birth, phonenumber, address,))

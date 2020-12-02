@@ -5,7 +5,7 @@ import pandas as pd
 from werkzeug.utils import secure_filename
 from flask import Blueprint, render_template, redirect, request, make_response, flash, Response
 import services
-import system_estimator
+import system
 from settings import UPLOAD_DIR
 import time
 
@@ -56,11 +56,17 @@ def submit_task():
     user_index = int(request.cookies.get("user_index"))
     task_name = request.form.get("task_name")
     round = request.form.get("round")
-    start_date= request.form.get("start_date")
-    end_date= request.form.get("end_date")
-    period = start_date+end_date
+
+    start_date = request.form.get("start_date").split("/")
+    start_date = start_date[2] + "-" + start_date[0] + "-" +start_date[1]
+    end_date = request.form.get("end_date").split("/")
+    end_date = end_date[2] + "-" + end_date[0] + "-" +end_date[1]
+    period = start_date + "~" + end_date
+
     origin_data_type_id = request.form.get("data_type")
     file = request.files['file']
+
+    # filename rename
     fname = secure_filename(file.filename)
     path = os.path.join(UPLOAD_DIR + "/odsf/", fname)
 
@@ -73,7 +79,16 @@ def submit_task():
         flash("파일 업로드가 실패했습니다.")
         return redirect("/")
 
-    validation = system_estimator.statistic.check_validate(fname, task_data['MaxNullRatioPerColumn'], task_data['MaxDuplicatedRowRatio'])
+    # validation check of odsf schema
+    if not system.validation.validate_odsf_schema(fname, origin_data_type_id):
+        flash("제출한 파일과 원본데이터 스키마가 일치하지 않습니다.")
+        return redirect("/")
+
+    # validation check of odsf data
+    task_info = services.estimator.task_detail(task_name)
+    mnr = task_info.get("MaxNullRatioPerColumn")
+    mdr = task_info.get("MaxDuplicatedRowRatio")
+    validation = system.validation.validate_odsf_data(fname, mnr, mdr)
 
     # check duplicate tuple
     if not validation['duplicate_ratio']:
@@ -91,8 +106,10 @@ def submit_task():
         return redirect("/")
     
     # data is validate
-    pdsf_file = system_estimator.statistic.to_pdsf(fname)
-    services.submitter.submit_pdsf(task_name, pdsf_file, origin_data_type_id, user_index, period, round, origin_dsf_id)
+    # transform odsf to pdsf
+    pdsf_file = system.transform.to_pdsf(fname)
+    system_score = system.statistic.system_score(fname)
+    services.submitter.submit_pdsf(task_name, pdsf_file, origin_data_type_id, user_index, period, round, origin_dsf_id, system_score)
     flash("제출이 완료되었습니다. ㅅㄱ~ 그만 집에 보내줘...")
 
     return redirect("/")

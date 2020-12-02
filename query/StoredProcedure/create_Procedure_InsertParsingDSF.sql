@@ -9,7 +9,8 @@ CREATE PROCEDURE InsertParsingDSF
              IN newSubmitterID              Int(11),
              IN newPeriod                   Varchar(45),
              IN newFK_idORIGIN_DSF          Int(11),
-             IN newRound                    Int(11))
+             IN newRound                    Int(11),
+             IN newSystemScore              Float)
 
 checkexist:BEGIN
 
@@ -33,12 +34,12 @@ checkexist:BEGIN
     WHERE TaskName = newTaskName AND SubmitterID = newSubmitterID;
 
     IF (varSubmitNum = 0) THEN
-        INSERT INTO PARSING_DSF (TaskName, ParsingFile, OriginDataTypeID, SubmitterID, SubmitNum, Period, TotalStatus, FK_idORIGIN_DSF, Round)
-        VALUES (newTaskName, newParsingFile, newOriginDataTypeID, newSubmitterID, 1, newPeriod, 'ongoing', newFK_idORIGIN_DSF, newRound);
+        INSERT INTO PARSING_DSF (TaskName, ParsingFile, OriginDataTypeID, SubmitterID, SubmitNum, Period, TotalStatus, FK_idORIGIN_DSF, Round, SystemScore)
+        VALUES (newTaskName, newParsingFile, newOriginDataTypeID, newSubmitterID, 1, newPeriod, 'ongoing', newFK_idORIGIN_DSF, newRound, newSystemScore);
         SELECT LAST_INSERT_ID();
     ELSE
-        INSERT INTO PARSING_DSF (TaskName, ParsingFile, OriginDataTypeID, SubmitterID, SubmitNum, Period, TotalStatus, FK_idORIGIN_DSF, Round)
-        VALUES (newTaskName, newParsingFile, newOriginDataTypeID, newSubmitterID, varSubmitNum+1, newPeriod, 'ongoing', newFK_idORIGIN_DSF, newRound);
+        INSERT INTO PARSING_DSF (TaskName, ParsingFile, OriginDataTypeID, SubmitterID, SubmitNum, Period, TotalStatus, FK_idORIGIN_DSF, Round, SystemScore)
+        VALUES (newTaskName, newParsingFile, newOriginDataTypeID, newSubmitterID, varSubmitNum+1, newPeriod, 'ongoing', newFK_idORIGIN_DSF, newRound, newSystemScore);
         SELECT LAST_INSERT_ID();
     END IF;
 

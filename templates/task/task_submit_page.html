@@ -8,14 +8,18 @@
         </div>
         <h3 class="mt-4">형식 다운로드</h3>
         {% for odsf in odsf_type %}
-        <div>
-            <h4>{{ odsf["DataTypeName"] }}</h4>
+        <div style="float: left; margin-right: 15px;">
+            <h5 style="text-align: center;">{{ odsf["DataTypeName"] }}</h5>
             <a class="btn btn-outline-info"
                 href="/submitter/task/download?odsf_type_id={{ odsf['idORIGIN_DATA_TYPE'] }}">형식
                 다운로드</a>
         </div>
         {% endfor %}
+    </br>
+</br>
         <div class="form group">
+        </br>
+        <hr style="border: solid 1px gray;">
             <h3 class="mt-4">제출 형식</h3>
             <fieldset class="form-group">
                 <div class="row">
