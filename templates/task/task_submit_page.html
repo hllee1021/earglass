@@ -27,7 +27,7 @@
                         {% for odsf in odsf_type %}
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="data_type"
-                                id="{{ odsf['idORIGIN_DATA_TYPE'] }}" value="{{ odsf['idORIGIN_DATA_TYPE'] }}">
+                                id="{{ odsf['idORIGIN_DATA_TYPE'] }}" value="{{ odsf['idORIGIN_DATA_TYPE'] }}" required>
                             <label class="form-check-label" for="{{ odsf['idORIGIN_DATA_TYPE'] }}">
                                 {{ odsf["DataTypeName"] }}
                             </label>
